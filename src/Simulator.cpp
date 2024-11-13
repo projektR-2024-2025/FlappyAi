@@ -9,33 +9,7 @@ Simulator::Simulator() : running(true), birdPosition(10), scoreScreen(true) {
         }
     }
 
-    //temporary test obstacle
-    obstacleMap[0][4] = true;
-    obstacleMap[1][4] = true;
-    obstacleMap[2][4] = true;
-    obstacleMap[3][4] = true;
-    obstacleMap[4][4] = true;
-    obstacleMap[5][4] = true;
-    obstacleMap[6][4] = true;
-    obstacleMap[7][4] = true;
-    obstacleMap[8][4] = true;
-
-    obstacleMap[0][20] = true;
-    obstacleMap[1][20] = true;
-    obstacleMap[2][20] = true;
-    obstacleMap[3][20] = true;
-    obstacleMap[4][20] = true;
-    obstacleMap[5][20] = true;
-    obstacleMap[6][20] = true;
-    obstacleMap[7][20] = true;
-    obstacleMap[8][20] = true;
-
-
-    obstacleMap[15][14] = true;
-    obstacleMap[16][14] = true;
-    obstacleMap[17][14] = true;
-    obstacleMap[18][14] = true;
-    obstacleMap[19][14] = true;
+    initializeMap();
 }
 
 bool Simulator::isRunning() const {
@@ -78,9 +52,10 @@ void Simulator::update(Agent& agent) {
         }
     }
     // Add missing column;
-    for (int i = 0; i < groundLevel; i++) {
+    /*for (int i = 0; i < groundLevel; i++) {
         obstacleMap[i][viewWidth - 1] = false;
-    }
+    }*/
+    loadNextColumn();
 
     // Update game elements like bird position, collision detection, etc.
     agent.update(birdPosition);
@@ -120,4 +95,61 @@ void Simulator::render() {
     // Ground;
     for (int j = 0; j < viewWidth; j++) std::cout << "=";
     std::cout << "\n";
+}
+
+
+// Map initialization.
+// za sad je smao placeholder
+void Simulator::initializeMap() {
+            // placeholder pillar 1
+            mapEmpty.push_back(20);
+            mapCeiling.push_back(3);
+            mapGround.push_back(5);
+
+            // placeholder pillar 2
+            mapEmpty.push_back(30);
+            mapCeiling.push_back(7);
+            mapGround.push_back(1);
+
+            // placeholder pillar 3
+            mapEmpty.push_back(25);
+            mapCeiling.push_back(8);
+            mapGround.push_back(6);
+
+    // Load map from file.
+
+    // Fill the initial view.
+    for (int j = 0; j < viewWidth; j++) {
+        loadNextColumn(j);
+    }
+}
+
+// Next Column loader
+void Simulator::loadNextColumn(int pos) {
+    if (mapReadIndex >= mapEmpty.size()) {
+        for (int i = 0; i < groundLevel; i++) {
+            obstacleMap[i][pos] = false;
+        }
+    }
+    else if (pillarFlag) {
+        pillarFlag = false;
+        for (int i = 0; i < groundLevel; i++) {
+            obstacleMap[i][pos] = false;
+            if (i <= mapCeiling[mapReadIndex] - 1 || i >= groundLevel - mapGround[mapReadIndex]) obstacleMap[i][pos] = true;
+        }
+        mapReadIndex += 1;
+    }
+    else if (mapEmpty[mapReadIndex] == 0) {
+        for (int i = 0; i < groundLevel; i++) {
+            obstacleMap[i][pos] = false;
+            if (i <= mapCeiling[mapReadIndex] - 1 || i >= groundLevel - mapGround[mapReadIndex]) obstacleMap[i][pos] = true;
+        }
+        pillarFlag = true;
+    }
+    else {
+        for (int i = 0; i < groundLevel; i++) {
+            obstacleMap[i][pos] = false;
+        }
+        mapEmpty[mapReadIndex] -= 1;
+    }
 }

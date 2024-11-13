@@ -16,7 +16,7 @@ int main() {
         std::this_thread::sleep_for(std::chrono::milliseconds(60)); // Control game speed
     }
 
-    system("cls");
+    //system("cls");
     std::cout << "Press q to exit...\n";
     while (simulator.isScoreScreenActive()) {
         simulator.handleScoreEvents();
