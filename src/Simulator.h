@@ -17,7 +17,9 @@ private:
     bool running;
     bool scoreScreen;
     int birdPosition;
-    int groundLevel;
+    static constexpr int groundLevel = 20;
+    static constexpr int viewWidth = 50;
+    bool obstacleMap[groundLevel][viewWidth];
     // Add other game elements like pipes here
 };
 

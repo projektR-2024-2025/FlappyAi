@@ -2,7 +2,24 @@
 #include <iostream>
 #include <conio.h> // For _kbhit() and _getch()
 
-Simulator::Simulator() : running(true), birdPosition(10), groundLevel(20), scoreScreen(true) {}
+Simulator::Simulator() : running(true), birdPosition(10), scoreScreen(true) {
+    for (int i = 0; i < groundLevel; i++) {
+        for (int j = 0; j < viewWidth; j++) {
+            obstacleMap[i][j] = false;
+        }
+    }
+
+    //temporary test obstacle
+    obstacleMap[0][4] = true;
+    obstacleMap[1][4] = true;
+    obstacleMap[2][4] = true;
+    obstacleMap[3][4] = true;
+    obstacleMap[4][4] = true;
+    obstacleMap[5][4] = true;
+    obstacleMap[6][4] = true;
+    obstacleMap[7][4] = true;
+    obstacleMap[8][4] = true;
+}
 
 bool Simulator::isRunning() const {
     return running;
@@ -46,14 +63,25 @@ void Simulator::update(Agent& agent) {
 void Simulator::render() {
     system("cls"); // Clear the console
 
-    std::cout << "====================\n"; // Ceiling
-    for (int i = 0; i < groundLevel; ++i) {
-        if (i == birdPosition) {
+    // Ceiling;
+    for (int j = 0; j < viewWidth; j++) std::cout << "=";
+    std::cout << "\n";
+    for (int i = 0; i < groundLevel; i++) {
+        for (int j = 0; j < viewWidth; j++) {
+            if (i == birdPosition && j == 0) std::cout << "O";
+            else if (obstacleMap[i][j] == false) std::cout << " ";
+            else if (obstacleMap[i][j] == true) std::cout << "#";
+        }
+        std::cout << "\n";
+        //std::cout << i << ": ";
+        /*if (i == birdPosition) {
             std::cout << "O\n"; // Bird
         }
         else {
             std::cout << "\n";
-        }
+        }*/
     }
-    std::cout << "====================\n"; // Ground
+    // Ground;
+    for (int j = 0; j < viewWidth; j++) std::cout << "=";
+    std::cout << "\n";
 }
