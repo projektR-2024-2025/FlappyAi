@@ -1,22 +1,27 @@
 #include "Agent.h"
 #include <cmath>
 
-float velocity = 0;
-
 void Agent::handleInput(char input) {
     if (input == ' ') {
         isJumping = true;
     }
 }
 
-void Agent::update(int& birdPosition) {
+// returns new position
+double Agent::update(int& birdPosition) {
     if (isJumping) {
-        birdPosition -= jumpStrength; // Move bird up
+        //position -= jumpStrength; // option a) move bird up
+        velocity = -jumpStrength;   // option b) set upwards velocity (like in the original)
+        //velocity -= jumpStrength;   // option c) increase upwards velocity component
+
         isJumping = false;
-        velocity = 0;
     }
-    else {
-        velocity += gravity;
-        birdPosition += std::floor(velocity); // Apply gravity
+    //else 
+    {
+        velocity += gravity;    // Apply gravity
+        if (velocity > maxVelocity)
+            velocity = maxVelocity;
+        position += velocity;
     }
+    return position;
 }

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <conio.h> // For _kbhit() and _getch()
 
-Simulator::Simulator() : running(true), birdPosition(10), scoreScreen(true) {
+Simulator::Simulator() : running(true), scoreScreen(true) {
     for (int i = 0; i < groundLevel; i++) {
         for (int j = 0; j < viewWidth; j++) {
             obstacleMap[i][j] = false;
@@ -58,7 +58,9 @@ void Simulator::update(Agent& agent) {
     loadNextColumn();
 
     // Update game elements like bird position, collision detection, etc.
-    agent.update(birdPosition);
+    double y = agent.update(birdPosition);
+    // calculate integer birdPosition
+    birdPosition = (int) (y * groundLevel);
     // Ground and ceiling collision.
     if (birdPosition >= groundLevel || birdPosition <= 0) {
         running = false; // Game over if bird hits the ground or the ceiling

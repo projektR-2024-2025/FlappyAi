@@ -4,13 +4,23 @@
 class Agent {
 public:
     void handleInput(char input);
-    void update(int& birdPosition);
+    double update(int& birdPosition);
     // Add methods for AI control here
+
+    double velocity;
+    double position;    // domain: [0, 1] [top, bottom]
+
+    Agent()
+    {
+        velocity = 0;
+        position = 0.5;
+    }
 
 private:
     bool isJumping = false;
-    int jumpStrength = 2; // How high the bird jumps
-    float gravity = 0.7; // Gravity effect
+    double jumpStrength = 0.15; // How high the bird jumps
+    double gravity = 0.05; // Gravity effect
+    double maxVelocity = 0.15; // max downward velocity
 };
 
 #endif // AGENT_H
