@@ -20,7 +20,7 @@ bool Simulator::isScoreScreenActive() const {
     return scoreScreen;
 }
 
-void Simulator::handleEvents(Agent& agent) {
+bool Simulator::handleEvents(Agent& agent) {
     if (_kbhit()) {
         char ch = _getch();
         if (ch == 'q') {
@@ -29,7 +29,9 @@ void Simulator::handleEvents(Agent& agent) {
         else {
             agent.handleInput(ch);
         }
+        return true;
     }
+    return false;
 }
 
 // Handling events for score screen.

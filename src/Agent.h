@@ -9,6 +9,7 @@ public:
 
     double velocity;
     double position;    // domain: [0, 1] [top, bottom]
+    bool isJumping = false;
 
     Agent()
     {
@@ -17,10 +18,9 @@ public:
     }
 
 private:
-    bool isJumping = false;
-    double jumpStrength = 0.15; // How high the bird jumps
+    double jumpStrength = 0.15; // How powerfull the bird jumps
     double gravity = 0.05; // Gravity effect
-    double maxVelocity = 0.15; // max downward velocity
+    double maxVelocity = 0.05; // max downward velocity
 };
 
 #endif // AGENT_H

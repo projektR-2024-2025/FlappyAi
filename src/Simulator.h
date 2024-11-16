@@ -12,10 +12,14 @@ public:
 
     bool isRunning() const;
     bool isScoreScreenActive() const;
-    void handleEvents(Agent& agent);
+    bool handleEvents(Agent& agent);
     void handleScoreEvents();
     void update(Agent& agent);
     void render();
+
+    static constexpr int groundLevel = 20;
+    static constexpr int viewWidth = 35;
+    bool obstacleMap[groundLevel][viewWidth];
 
 private:
     std::vector<int> mapEmpty;
@@ -27,9 +31,6 @@ private:
     bool running;
     bool scoreScreen;
     int birdPosition;
-    static constexpr int groundLevel = 20;
-    static constexpr int viewWidth = 50;
-    bool obstacleMap[groundLevel][viewWidth];
     // Add other game elements like pipes here
 };
 
