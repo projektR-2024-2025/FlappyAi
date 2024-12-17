@@ -1,7 +1,8 @@
 #pragma once
 #include "Agent.h"
 #include "Simulator.h"
-
+#include "CGP.h"
+#include <vector>
 
 class Controller
 {
@@ -16,20 +17,31 @@ public:
 class MyController : public Controller
 {
 public:
-    bool action(Agent& agent, Simulator& simulator)
+    bool action(Agent& agent, Simulator& simulator, Individual& individual)
     {
+        // input vector za cgp mrezu
+        std::vector<double> input;
+
         // get current position
-        int yPos = agent.position * simulator.groundLevel;
+        double yPos = agent.position * simulator.groundLevel;
         // is obstacle ahead
-        bool obstacleAhead = false;
+        double obstacleAhead = 0;
         simulator.obstacleMap;
-        for (int i = 0; i < simulator.viewWidth; i++)
-            if (simulator.obstacleMap[yPos][i] == true) {
-                obstacleAhead = true;
+        for (int i = 0; i < VIEW_DISTANCE; i++)
+            if (simulator.obstacleMap[(int) yPos][i] == true) {
+                obstacleAhead = 1;
                 break;
             }
-        // jump if obstacle ahead or too low, but not if too high
-        if ((yPos > simulator.groundLevel * 0.35) && (obstacleAhead || yPos > simulator.groundLevel * 0.85)) {
+        // stavi informacije u vektor
+        input.push_back(obstacleAhead);
+        input.push_back(agent.position);
+        input.push_back(agent.velocity);
+        input.push_back(simulator.groundLevel);
+        
+        // odredi vrijednost izlazne vrijednosti cgp mreze
+        individual.evaluateValue(input);
+        
+        if (individual.outputGene[0].value > OUT_VALUE) {
             agent.isJumping = true;
             return true;
         }

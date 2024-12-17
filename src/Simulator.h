@@ -2,12 +2,14 @@
 #define SIMULATOR_H
 
 #include <vector>
+#include <string>
 #include "Agent.h"
 
 class Simulator {
 public:
     Simulator();
-    void initializeMap();
+    Simulator(std::string map);
+    void initializeMap(std::string map);
     void loadNextColumn(int pos = viewWidth - 1);
 
     bool isRunning() const;
