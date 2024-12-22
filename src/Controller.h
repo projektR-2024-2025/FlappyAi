@@ -89,6 +89,15 @@ public:
         }
         bellowNxtTop = yPos > lastTopY;
 
+        // 19
+        obstacleAhead = false;
+        //simulator.obstacleMap;
+        for (int i = 0; i < simulator.viewWidth; i++)
+            if (simulator.obstacleMap[yPos][i] == true) {
+                obstacleAhead = true;
+                break;
+            }
+
         double calcResult = calcNode(passedRoot);
 
         /*
@@ -130,6 +139,7 @@ public:
         else if (currNode->value == 16) return bellowNxtTop;
         else if (currNode->value == 17) return velocity;
         else if (currNode->value == 18) return yPos;
+        else if (currNode->value == 19) return obstacleAhead;
         else return 0;
 
     }
@@ -139,4 +149,5 @@ private:
     int nextPillarDist;
     bool aboveNxtBot;
     bool bellowNxtTop;
+    bool obstacleAhead;
 };

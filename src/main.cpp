@@ -22,8 +22,8 @@ void printPopulation(Tree population[]) {
 
 Node* createOperatorNode(int a = -1, int b = -1, int c = -1){
     if (a == -1) a = rand() % 12;
-    if (b == -1) b = 12 + rand() % 7;
-    if (c == -1) c = 12 + rand() % 7;
+    if (b == -1) b = 12 + rand() % 8;
+    if (c == -1) c = 12 + rand() % 8;
 
     Node* returnNode = new Node(a);
     if (a < 11) returnNode->left = new Node(b);

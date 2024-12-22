@@ -8,9 +8,9 @@
 // BINARNI 0-10
 // UNARNI 11
 // konst 12-18
-//                    0    1    2    3    4    5     6     7    8     9     10     11    12   13      14                       15            16                 17                    18
-//                    A    B    C    D    E    F     G     H    I     J     K      L     M    N       O                       P                Q                R                     S
-std::string ops[] = {"+", "-", "*", "/", "<", ">", "<=", ">=", "=", "and", "or", "not", "0", "1", "nextPillarDist()", "aboveNextBot()", "bellowNextTop()", "currentVelocity()", "currentYPOS()"};
+//                    0    1    2    3    4    5     6     7    8     9     10     11    12   13      14                       15            16                 17                    18                 19
+//                    A    B    C    D    E    F     G     H    I     J     K      L     M    N       O                       P                Q                R                     S                   T
+std::string ops[] = {"+", "-", "*", "/", "<", ">", "<=", ">=", "=", "and", "or", "not", "0", "1", "nextPillarDist()", "aboveNextBot()", "bellowNextTop()", "currentVelocity()", "currentYPOS()", "obstacleAhead()"};
 
 // Definition of Node class constructor
 Node::Node(int initialValue) : value(initialValue), left(nullptr), right(nullptr) {}
