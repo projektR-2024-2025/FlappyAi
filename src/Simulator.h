@@ -16,7 +16,9 @@ public:
     void handleScoreEvents();
     void update(Agent& agent);
     void render();
+    int mapLenght();
 
+    int mapLen;
     static constexpr int groundLevel = 20;
     static constexpr int viewWidth = 35;
     bool obstacleMap[groundLevel][viewWidth];

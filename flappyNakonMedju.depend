@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1734625311 source:c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\agent.cpp
+	"Agent.h"
+	<cmath>
+
+1734625311 c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\agent.h
+
+1734889730 source:c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\main.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<thread>
+	<chrono>
+	"Simulator.h"
+	"Agent.h"
+	"Controller.h"
+	"TreeControll.h"
+
+1734786036 c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\simulator.h
+	<vector>
+	"Agent.h"
+
+1734887782 c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\controller.h
+	"Agent.h"
+	"Simulator.h"
+	"TreeControll.h"
+
+1734888507 source:c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\simulator.cpp
+	"Simulator.h"
+	<iostream>
+	<conio.h>
+
+1734687601 source:c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\maincopy.cpp
+	<thread>
+	<chrono>
+	"Simulator.h"
+	"Agent.h"
+	"Controller.h"
+
+1734879749 c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\treecontroll.h
+	<string>
+	"Simulator.h"
+	"Agent.h"
+
+1734881806 source:c:\docs\01 - filip\02 - fer\050 -g3s5\00 - projekt\03 - simulator\radnakonmedjuispita\flappyai\src\treecontroll.cpp
+	<iostream>
+	<string>
+	"TreeControll.h"
+	"Simulator.h"
+	"Agent.h"
+

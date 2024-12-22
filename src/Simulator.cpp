@@ -64,7 +64,7 @@ void Simulator::update(Agent& agent) {
     // calculate integer birdPosition
     birdPosition = (int) (y * groundLevel);
     // Ground and ceiling collision.
-    if (birdPosition >= groundLevel || birdPosition <= 0) {
+    if (birdPosition >= groundLevel || birdPosition < 0) {
         running = false; // Game over if bird hits the ground or the ceiling
     }
 
@@ -120,7 +120,18 @@ void Simulator::initializeMap() {
             mapCeiling.push_back(8);
             mapGround.push_back(6);
 
+            mapEmpty.push_back(40);
+            mapCeiling.push_back(1);
+            mapGround.push_back(0);
+
+            mapEmpty.push_back(4);
+            mapCeiling.push_back(1);
+            mapGround.push_back(15);
+
     // Load map from file.
+
+    // Calculate map size.
+    mapLen = mapLenght();
 
     // Fill the initial view.
     for (int j = 0; j < viewWidth; j++) {
@@ -156,4 +167,13 @@ void Simulator::loadNextColumn(int pos) {
         }
         mapEmpty[mapReadIndex] -= 1;
     }
+}
+
+int Simulator::mapLenght() {
+    int mapLen = 0;
+    for (int i = 0; i < mapEmpty.size(); i++){
+        mapLen += mapEmpty[i];
+        mapLen += 2;
+    }
+    return mapLen;
 }
