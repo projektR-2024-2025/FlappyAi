@@ -1,6 +1,9 @@
 #include "Simulator.h"
 #include <iostream>
 #include <conio.h> // For _kbhit() and _getch()
+#include <fstream>
+#include <string>
+#include <sstream>
 
 Simulator::Simulator() : running(true), scoreScreen(true) {
     for (int i = 0; i < groundLevel; i++) {
@@ -9,7 +12,17 @@ Simulator::Simulator() : running(true), scoreScreen(true) {
         }
     }
 
-    initializeMap();
+    initializeMap("map1.txt");
+}
+
+Simulator::Simulator(std::string map) : running(true), scoreScreen(true) {
+    for (int i = 0; i < groundLevel; i++) {
+        for (int j = 0; j < viewWidth; j++) {
+            obstacleMap[i][j] = false;
+        }
+    }
+
+    initializeMap(map);
 }
 
 bool Simulator::isRunning() const {
@@ -62,7 +75,7 @@ void Simulator::update(Agent& agent) {
     // Update game elements like bird position, collision detection, etc.
     double y = agent.update(birdPosition);
     // calculate integer birdPosition
-    birdPosition = (int) (y * groundLevel);
+    birdPosition = (int)(y * groundLevel);
     // Ground and ceiling collision.
     if (birdPosition >= groundLevel || birdPosition <= 0) {
         running = false; // Game over if bird hits the ground or the ceiling
@@ -101,26 +114,33 @@ void Simulator::render() {
     std::cout << "\n";
 }
 
-
 // Map initialization.
-// za sad je smao placeholder
-void Simulator::initializeMap() {
-            // placeholder pillar 1
-            mapEmpty.push_back(20);
-            mapCeiling.push_back(3);
-            mapGround.push_back(5);
-
-            // placeholder pillar 2
-            mapEmpty.push_back(30);
-            mapCeiling.push_back(7);
-            mapGround.push_back(1);
-
-            // placeholder pillar 3
-            mapEmpty.push_back(25);
-            mapCeiling.push_back(8);
-            mapGround.push_back(6);
-
+void Simulator::initializeMap(std::string map) {
     // Load map from file.
+    std::ifstream file(map);
+
+    // Check if the file opened successfully
+    if (!file.is_open()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return;
+    }
+
+    // Read the file line by line
+    std::string line;
+    while (std::getline(file, line)) {
+        std::vector<std::string> tokens;
+        std::stringstream ss(line);
+        std::string token;
+        while (std::getline(ss, token, ' ')) {
+            tokens.push_back(token);
+        }
+        mapEmpty.push_back(std::stoi(tokens[0]));
+        mapCeiling.push_back(std::stoi(tokens[1]));
+        mapGround.push_back(std::stoi(tokens[2]));
+    }
+
+    // Close the file
+    file.close();
 
     // Fill the initial view.
     for (int j = 0; j < viewWidth; j++) {

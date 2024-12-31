@@ -1,6 +1,7 @@
 #pragma once
 #include "Agent.h"
 #include "Simulator.h"
+#include "../../Ptica/Ptica/NeuralNetwork.h"
 
 
 class Controller
@@ -16,6 +17,7 @@ public:
 class MyController : public Controller
 {
 public:
+    // dodaj model
     bool action(Agent& agent, Simulator& simulator)
     {
         // get current position
@@ -34,5 +36,58 @@ public:
             return true;
         }
         return false;
+    }
+};
+
+class NeuralController : public Controller
+{
+private:
+    NeuralNetwork nn;
+
+public:
+    NeuralController(const NeuralNetwork& nn) : nn(nn) {}
+
+    bool action(Agent& agent, Simulator& simulator)
+    {
+        // input vector za nn
+        std::vector<double> input;
+
+        // get current position
+        double yPos = agent.position * simulator.groundLevel;
+        // is obstacle ahead
+        double obstacleAhead = 0;
+        simulator.obstacleMap;
+        for (int i = 0; i < 12; i++) {
+            if (simulator.obstacleMap[(int)yPos][i] == true) {
+                obstacleAhead = 1;
+                break;
+            }
+        }
+
+        // priprema input data
+        input.push_back(obstacleAhead);
+        input.push_back(agent.position);
+        input.push_back(agent.velocity);
+        input.push_back(simulator.groundLevel);
+
+        // dobi outpute iz nn
+        std::vector<double> output = nn.predict(input);
+
+        // koristi nn outpute za odredjivanje actiona
+        //std::cout << output[0] << " " << output[1] << std::endl;
+        if ((output[0] + output[1]) / 2.f > 0.33) {
+            agent.isJumping = true;
+        }
+        else {
+            agent.isJumping = false;
+        }
+        return agent.isJumping;
+        /*if (output[0] < output[1]) {
+            agent.isJumping = true;
+        }
+        else {
+            agent.isJumping = false;
+        }
+        return agent.isJumping;*/
     }
 };

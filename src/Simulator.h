@@ -2,12 +2,14 @@
 #define SIMULATOR_H
 
 #include <vector>
+#include <string>
 #include "Agent.h"
 
 class Simulator {
 public:
     Simulator();
-    void initializeMap();
+    Simulator(std::string map);
+    void initializeMap(std::string map);
     void loadNextColumn(int pos = viewWidth - 1);
 
     bool isRunning() const;
@@ -18,7 +20,7 @@ public:
     void render();
 
     static constexpr int groundLevel = 20;
-    static constexpr int viewWidth = 35;
+    static constexpr int viewWidth = 35; // 35
     bool obstacleMap[groundLevel][viewWidth];
 
 private:
