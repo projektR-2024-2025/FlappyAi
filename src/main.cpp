@@ -7,7 +7,8 @@
 #include "CGP.h"
 #include "Individual.h"
 
-#define MAP "map2.txt"
+#define MAP "map1.txt"
+#define MAP_NUM 1
 
 int main() {
 
@@ -18,7 +19,7 @@ int main() {
     std::cin >> choice;
 
     if (choice == 0) {
-        CGP cgp(MAP);
+        CGP cgp(MAP, MAP_NUM);
         ind = cgp.runCGP(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
     }
     else if (choice == 1) {
@@ -33,7 +34,7 @@ int main() {
     Simulator simulator(MAP);
     Agent agent;
     //Controller* controller = new Controller;  // base controller: takes no action
-    MyController* controller = new MyController;  // plug in your controller here
+    CGPController* controller = new CGPController;  // plug in your controller here
 
     // Main game loop
     while (simulator.isRunning()) {
@@ -44,7 +45,6 @@ int main() {
         std::this_thread::sleep_for(std::chrono::milliseconds(60)); // Control game speed
     }
 
-    //system("cls");
     std::cout << "Press q to exit...\n";
     while (simulator.isScoreScreenActive()) {
         simulator.handleScoreEvents();

@@ -14,7 +14,7 @@ public:
 };
 
 
-class MyController : public Controller
+class CGPController : public Controller
 {
 public:
     bool action(Agent& agent, Simulator& simulator, Individual& individual)

@@ -13,11 +13,28 @@
 using namespace std;
 
 CGP::CGP() {
-    this->map = "map1.txt";
+    this->map.map = "map1.txt";
+    this->map.mapNum = 1;
 }
 
-CGP::CGP(std::string map) {
-    this->map = map;
+CGP::CGP(std::string map, int mapNum) {
+    this->map.map = map;
+    this->map.mapNum = mapNum;
+}
+
+void CGP::switchMap() {
+    switch (map.mapNum) {
+    case 1:
+        map.mapNum = 2;
+        map.map = "map2.txt";
+        break;
+    case 2:
+        map.mapNum = 1;
+        map.map = "map1.txt";
+        break;
+    default:
+        break;
+    }
 }
 
 vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs) {
@@ -49,6 +66,7 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
             node.used = false;
             node.operand = operandDis(gen);
             node.connection1 = connectionDis(gen);
+            node.outValue = NAN;
 
             while (true) {
                 if (node.connection1 < inputs)
@@ -90,14 +108,41 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
         }
 
         Individual individual(genes, outputGene, rows, columns, levelsBack, inputs, outputs);
+
+        //vector<int> nodeSet;
+        //bool hasLoop = individual.findLoops(individual.outputGene[0].connection, nodeSet);
+        //for (int i = 0; i < individual.branches.size(); i++)
+        //{
+        //    for (int j = 0; j < individual.branches[i].size(); j++) {
+        //        cout << individual.branches[i][j] << " ";
+        //    }
+        //    cout << endl;
+        //}
+        //cout << (hasLoop ? "true" : "false") << endl;
+
+        individual.resolveLoops();
+
+        //bool hasLoop2 = individual.findLoops(individual.outputGene[0].connection, nodeSet);
+        //for (int i = 0; i < individual.branches.size(); i++)
+        //{
+        //    for (int j = 0; j < individual.branches[i].size(); j++) {
+        //        cout << individual.branches[i][j] << " ";
+        //    }
+        //    cout << endl;
+        //}
+        //cout << (hasLoop2 ? "true" : "false") << endl;
+        //exit(0);
+
         population.push_back(individual);
     }
 
     return population;
 }
 
+// point mutacija
 vector<Individual> CGP::mutate(int numMut, Individual parent) {
     vector<Individual> population;
+    parent.evaluateUsed();
     population.push_back(parent);
 
     random_device rd;
@@ -156,14 +201,17 @@ vector<Individual> CGP::mutate(int numMut, Individual parent) {
         }
 
         Individual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
+        individual.resolveLoops();
         population.push_back(individual);
     }
 
     return population;
 }
 
+// goldman mutacija
 vector<Individual> CGP::mutate(Individual parent) {
     vector<Individual> population;
+    parent.evaluateUsed();
     population.push_back(parent);
 
     random_device rd;
@@ -225,6 +273,7 @@ vector<Individual> CGP::mutate(Individual parent) {
             genes[z].used = false;
 
         Individual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
+        individual.resolveLoops();
         population.push_back(individual);
     }
 
@@ -234,18 +283,18 @@ vector<Individual> CGP::mutate(Individual parent) {
 
 Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations) {
     vector<Individual> population;
-    int minInd = 0;
+    int bestInd = 0;
     population = generatePopulation(rows, columns, levelsBack, inputs, outputs);
 
-    for (int p = 0; p < generations; p++) {
-        TYPE min = -1;
-        minInd = 0;
+    for (int actualMut = 0; actualMut < generations; actualMut++) {
+        TYPE bestFit = 0;
+        bestInd = 0;
         for (int i = 0; i < 5; i++) {
 
             int lenght = 0;
-            Simulator simulator(map);
+            Simulator simulator(map.map);
             Agent agent;
-            MyController* controller = new MyController;
+            CGPController* controller = new CGPController;
 
             while (simulator.isRunning()) {
                 controller->action(agent, simulator, population[i]);
@@ -256,27 +305,28 @@ Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, i
             }
 
             TYPE fit = population[i].calculateFitness(lenght);
-            if (min == -1) {
-                min = fit;
-                minInd = 0;
-            }
-            else if (fit <= min) {
-                min = fit;
-                minInd = i;
+            if (fit >= bestFit) {
+                bestFit = fit;
+                bestInd = i;
             }
         }
-        std::cout << min << endl;
+        std::cout << bestFit << endl;
 
-        population = mutate(mutations, population[minInd]);
+        if (bestFit == MAX_MAP_SIZE)
+            break;
+
+        if (actualMut != generations - 1)
+            population = mutate(population[bestInd]);
     }
 
-    population[minInd].printNodes();
+
+    population[bestInd].printNodes();
     std::ofstream outFile("CGP_best.txt");
     if (outFile.is_open()) {
-        outFile << population[minInd];
+        outFile << population[bestInd];
         outFile.close();
         std::cout << "Object written to text file." << std::endl;
     }
 
-    return population[minInd];
+    return population[bestInd];
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <random>
 
 using namespace std;
 
@@ -28,9 +29,12 @@ TYPE computeNode(int operand, TYPE value1, TYPE value2) {
     }
 }
 
-Individual::Individual() {}
+Individual::Individual() {
+}
 
 Individual::Individual(vector<Node> genes, vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs) {
+    vector<vector<int>> branches;
+    this->branches = branches;
     this->genes = genes;
     this->outputGene = outputGene;
     this->rows = rows;
@@ -43,6 +47,8 @@ Individual::Individual(vector<Node> genes, vector<Output> outputGene, int rows, 
 }
 
 Individual::Individual(vector<Node> genes, vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone, int fitness) {
+    vector<vector<int>> branches;
+    this->branches = branches;
     this->genes = genes;
     this->outputGene = outputGene;
     this->rows = rows;
@@ -65,52 +71,50 @@ void Individual::printNodes() {
 }
 
 void Individual::evaluateUsed() {
-    for (size_t i = 0; i < outputs; i++)
-        genes[outputGene[i].connection].used = true;
+    isUsed(outputGene[0].connection);
 
-
-    for (int j = columns * rows + inputs - 1; j >= (columns - 1) * rows + inputs - 1; j--)
-    {
-        for (int k = j; k >= inputs; k = k - columns)
-        {
-            if (genes[k].used) {
-                genes[genes[k].connection1].used = true;
-
-                int conn2 = genes[k].connection2;
-                if (conn2 > -1)
-                    genes[conn2].used = true;
-            }
-        }
-    }
     evalDone = true;
 }
 
+void Individual::isUsed(int nodeNum) {
+    genes[nodeNum].used = true;
+
+    if (genes[nodeNum].connection1 >= inputs && nodeNum >= inputs)
+        isUsed(genes[nodeNum].connection1);
+
+    if (genes[nodeNum].connection2 >= inputs && nodeNum >= inputs)
+        isUsed(genes[nodeNum].connection2);
+}
+
 void Individual::evaluateValue(vector<TYPE> input) {
-    if (!evalDone)
-        evaluateUsed();
+    clearInd();
 
     for (int l = 0; l < inputs; l++)
         genes[l].outValue = input[l];
 
-    for (int j = (columns - 1) * rows + inputs - 1; j < columns * rows + inputs; j++)
-    {
-        for (int k = j; k >= inputs; k = k - columns)
-        {
-            if (genes[k].used) {
-                TYPE value1 = genes[genes[k].connection1].outValue;
-                TYPE value2 = genes[k].connection2 < 0 ? 0 : genes[genes[k].connection2].outValue;
-
-                genes[k].outValue = computeNode(genes[k].operand, value1, value2);
-            }
-        }
-    }
-
     for (int m = 0; m < outputs; m++)
-        outputGene[m].value = genes[outputGene[m].connection].outValue;
+        outputGene[m].value = evalNode(outputGene[m].connection);
+}
+
+TYPE Individual::evalNode(int nodeNum) {
+
+    if (isnan(genes[nodeNum].outValue)) {
+        TYPE value1 = evalNode(genes[nodeNum].connection1);
+        TYPE value2 = genes[nodeNum].connection2 < 0 ? 0 : evalNode(genes[nodeNum].connection2);
+
+        genes[nodeNum].outValue = computeNode(genes[nodeNum].operand, value1, value2);
+    }
+    
+    return genes[nodeNum].outValue;
+}
+
+void Individual::clearInd() {
+    for (int i = inputs; i < genes.size(); i++)
+        genes[i].outValue = NAN;
 }
 
 TYPE Individual::calculateFitness(TYPE lenght) {
-    return 1 - lenght/MAX_MAP_SIZE;
+    return lenght;
 }
 
 Individual Individual::deserialize(std::istream& is) {
@@ -140,4 +144,74 @@ Individual Individual::deserialize(std::istream& is) {
     }
 
     return Individual(std::move(genes), std::move(outputGene), rows, columns, levelsBack, inputs, outputs, evalDone, fitness);
+}
+
+bool Individual::findLoops(int nodeNum, std::vector<int> nodeSet) {
+    branches.clear();
+
+    return loopFinder(nodeNum, nodeSet);
+}
+
+bool Individual::loopFinder(int nodeNum, std::vector<int> nodeSet) {
+    for (int i = 0; i < nodeSet.size(); i++)
+        if (nodeSet[i] == nodeNum) {
+            branches.push_back(nodeSet);
+            return true;
+        }
+
+    nodeSet.push_back(nodeNum);
+
+    if (nodeNum < inputs) {
+        branches.push_back(nodeSet);
+        return false;
+    }
+
+    bool conn1 = loopFinder(genes[nodeNum].connection1, nodeSet);
+    bool conn2 = genes[nodeNum].connection2 == -1 ? false : loopFinder(genes[nodeNum].connection2, nodeSet);
+
+    return conn1 || conn2;
+}
+
+void Individual::resolveLoops() {
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> connectionDis(0, genes.size() - 1);
+
+    vector<int> nodeSet;
+    while (findLoops(outputGene[0].connection, nodeSet)) {
+        for (int i = 0; i < branches.size(); i++) {
+            int el = *(--branches[i].end());
+            if (el >= inputs) {
+
+                genes[el].connection1 = connectionDis(gen);
+
+                genes[el].connection2 = (genes[el].operand >= 5) ? -1 : connectionDis(gen);
+
+                while (true) {
+                    if (genes[el].connection1 < inputs)
+                        break;
+                    if ((genes[el].connection1 % columns) == (el % columns))
+                        genes[el].connection1 = connectionDis(gen);
+                    else if (((genes[el].connection1 - inputs) % columns) > (((el - inputs) % columns) + levelsBack))
+                        genes[el].connection1 = connectionDis(gen);
+                    else
+                        break;
+                }
+
+                while (true) {
+                    if (genes[el].connection2 < inputs)
+                        break;
+                    if ((genes[el].connection2 % columns) == (el % columns))
+                        genes[el].connection2 = connectionDis(gen);
+                    else if (((genes[el].connection2 - inputs) % columns) > (((el - inputs) % columns) + levelsBack))
+                        genes[el].connection2 = connectionDis(gen);
+                    else
+                        break;
+                }
+            }
+        }
+
+        nodeSet.clear();
+    }
 }

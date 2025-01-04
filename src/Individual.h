@@ -8,9 +8,16 @@
 
 // klasa koja opsiuje pojedinca
 class Individual {
+private:
+    void isUsed(int nodeNum);
+    bool loopFinder(int nodeNum, std::vector<int> nodeSet);
+    TYPE evalNode(int nodeNum);
+    void clearInd();
+
 public:
     std::vector<Node> genes;
     std::vector<Output> outputGene;
+    std::vector<std::vector<int>> branches;
     int rows;
     int columns;
     int levelsBack;
@@ -24,10 +31,12 @@ public:
     Individual(std::vector<Node> genes, std::vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone, int fitness);
 
     void printNodes();
-    void evaluateUsed();
     void evaluateValue(std::vector<TYPE> input);
+    void evaluateUsed();
     TYPE calculateFitness(TYPE lenght);
     static Individual deserialize(std::istream& is);
+    bool findLoops(int nodeNum, std::vector<int> nodeSet);
+    void resolveLoops();
 
     friend std::ostream& operator<<(std::ostream& os, const Individual& ind) {
         os << ind.rows << " " << ind.columns << " " << ind.levelsBack << " "
