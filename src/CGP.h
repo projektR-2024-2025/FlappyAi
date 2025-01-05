@@ -21,22 +21,24 @@
 // broj generacija
 #define GENERATIONS 5000
 // broj redova nodova
-#define ROWS 10
+#define ROWS 16
 // broj stupaca nodova
-#define COLUMNS 10
-// koliko levela iza se moze spojiti node (ne radi!!!)
-#define LEVELS_BACK 7
+#define COLUMNS 8
+// koliko levela iza se moze spojiti node
+#define LEVELS_BACK 4
 // broj inputova
 #define INPUTS 3
 // broj outputova
 #define OUTPUTS 1
 // broj mutacije genoma po jedinki
 #define MUTATIONS 6
-// mijenja li se mapa tokom ucenja
-#define SWITCH_MAP false
+
+#define POPULATION 5
 
 class CGP {
 public:
+    int actualGens;
+
     CGP();
     CGP(std::string map, int mapNum);
 

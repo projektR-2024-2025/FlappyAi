@@ -4,9 +4,12 @@
 #include <vector>
 #include <string>
 #include "Agent.h"
+#include "CGP.h"
 
 class Simulator {
 public:
+    CGP cgp;
+
     Simulator();
     Simulator(std::string map);
     void initializeMap(std::string map);

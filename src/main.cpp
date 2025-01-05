@@ -13,25 +13,26 @@
 int main() {
 
     Individual ind;
+    CGP cgp(MAP, MAP_NUM);
     int choice = 0;
 
-    std::cout << "Generate/Load (0/1): ";
-    std::cin >> choice;
+    //std::cout << "Generate/Load (0/1): ";
+    //std::cin >> choice;
 
-    if (choice == 0) {
-        CGP cgp(MAP, MAP_NUM);
+    //if (choice == 0) {
         ind = cgp.runCGP(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
-    }
-    else if (choice == 1) {
-        std::ifstream inFile("CGP_best.txt");
-        if (inFile.is_open()) {
-            ind = Individual::deserialize(inFile);
-            inFile.close();
-            std::cout << "Object read from text file." << std::endl;
-        }
-    }
+    //}
+    //else if (choice == 1) {
+    //    std::ifstream inFile("CGP_best.txt");
+    //    if (inFile.is_open()) {
+    //        ind = Individual::deserialize(inFile);
+    //        inFile.close();
+    //        std::cout << "Object read from text file." << std::endl;
+    //    }
+    //}
 
     Simulator simulator(MAP);
+    simulator.cgp = cgp;
     Agent agent;
     //Controller* controller = new Controller;  // base controller: takes no action
     CGPController* controller = new CGPController;  // plug in your controller here

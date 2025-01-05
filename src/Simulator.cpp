@@ -112,6 +112,7 @@ void Simulator::render() {
     // Ground;
     for (int j = 0; j < viewWidth; j++) std::cout << "=";
     std::cout << "\n";
+    std::cout << cgp.actualGens << std::endl;
 }
 
 

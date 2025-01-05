@@ -9,6 +9,7 @@
 #include <random>
 #include <fstream>
 #include <string>
+#include <omp.h>
 
 using namespace std;
 
@@ -47,21 +48,23 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
     uniform_int_distribution<> connectionDis(0, rows * columns + inputs - 1);
     uniform_int_distribution<> outputDis(0, rows * columns + inputs - 1);
 
-    for (size_t i = 0; i < 5; i++) {
+    #pragma omp parallel for
+    for (int i = 0; i < POPULATION; i++) {
 
         vector<Node> genes;
         vector<Output> outputGene;
 
-        for (size_t i = 0; i < inputs; i++) {
+        for (size_t k = 0; k < inputs; k++) {
             Node node;
-            node.used = true;
+            node.used = false;
             node.connection1 = -1;
             node.connection2 = -1;
             node.operand = -1;
             genes.push_back(node);
         }
 
-        for (size_t j = inputs; j < rows * columns + inputs; j++) {
+        #pragma omp parallel for
+        for (int j = inputs; j < rows * columns + inputs; j++) {
             Node node;
             node.used = false;
             node.operand = operandDis(gen);
@@ -96,6 +99,7 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
                     break;
             }
 
+            #pragma omp critical
             genes.push_back(node);
         }
 
@@ -108,33 +112,14 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
         }
 
         Individual individual(genes, outputGene, rows, columns, levelsBack, inputs, outputs);
-
-        //vector<int> nodeSet;
-        //bool hasLoop = individual.findLoops(individual.outputGene[0].connection, nodeSet);
-        //for (int i = 0; i < individual.branches.size(); i++)
-        //{
-        //    for (int j = 0; j < individual.branches[i].size(); j++) {
-        //        cout << individual.branches[i][j] << " ";
-        //    }
-        //    cout << endl;
-        //}
-        //cout << (hasLoop ? "true" : "false") << endl;
-
         individual.resolveLoops();
 
-        //bool hasLoop2 = individual.findLoops(individual.outputGene[0].connection, nodeSet);
-        //for (int i = 0; i < individual.branches.size(); i++)
-        //{
-        //    for (int j = 0; j < individual.branches[i].size(); j++) {
-        //        cout << individual.branches[i][j] << " ";
-        //    }
-        //    cout << endl;
-        //}
-        //cout << (hasLoop2 ? "true" : "false") << endl;
-        //exit(0);
-
+        #pragma omp critical
         population.push_back(individual);
+
+        cout << "|";
     }
+    cout << endl;
 
     return population;
 }
@@ -142,7 +127,8 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
 // point mutacija
 vector<Individual> CGP::mutate(int numMut, Individual parent) {
     vector<Individual> population;
-    parent.evaluateUsed();
+    if (!parent.evalDone)
+        parent.evaluateUsed();
     population.push_back(parent);
 
     random_device rd;
@@ -154,7 +140,7 @@ vector<Individual> CGP::mutate(int numMut, Individual parent) {
     uniform_int_distribution<> operandDis(1, NUM_OPERANDS);
     uniform_int_distribution<> outputDis(0, parent.outputs - 1);
 
-    for (int n = 0; n < 4; n++) {
+    for (int n = 0; n < POPULATION - 1; n++) {
         vector<Node> genes = parent.genes;
         vector<Output> outputGene = parent.outputGene;
 
@@ -211,7 +197,8 @@ vector<Individual> CGP::mutate(int numMut, Individual parent) {
 // goldman mutacija
 vector<Individual> CGP::mutate(Individual parent) {
     vector<Individual> population;
-    parent.evaluateUsed();
+    if (!parent.evalDone)
+        parent.evaluateUsed();
     population.push_back(parent);
 
     random_device rd;
@@ -223,7 +210,8 @@ vector<Individual> CGP::mutate(Individual parent) {
     uniform_int_distribution<> operandDis(1, NUM_OPERANDS);
     uniform_int_distribution<> outputDis(0, parent.outputs - 1);
 
-    for (int n = 0; n < 4; n++) {
+    //#pragma omp parallel for
+    for (int n = 0; n < POPULATION - 1; n++) {
         vector<Node> genes = parent.genes;
         vector<Output> outputGene = parent.outputGene;
         bool isActive = false;
@@ -274,6 +262,8 @@ vector<Individual> CGP::mutate(Individual parent) {
 
         Individual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
         individual.resolveLoops();
+
+        //#pragma omp critical
         population.push_back(individual);
     }
 
@@ -283,13 +273,19 @@ vector<Individual> CGP::mutate(Individual parent) {
 
 Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations) {
     vector<Individual> population;
-    int bestInd = 0;
+    int bestInd = 0, gen = 0;
+
+    double time;
+    time = omp_get_wtime();
+
     population = generatePopulation(rows, columns, levelsBack, inputs, outputs);
 
-    for (int actualMut = 0; actualMut < generations; actualMut++) {
+    cout << "Vrijeme: " << (omp_get_wtime() - time) << endl;
+
+    for (gen = 0; gen < generations; gen++) {
         TYPE bestFit = 0;
         bestInd = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < POPULATION; i++) {
 
             int lenght = 0;
             Simulator simulator(map.map);
@@ -310,15 +306,16 @@ Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, i
                 bestInd = i;
             }
         }
-        std::cout << bestFit << endl;
+        std::cout << gen << ": " << bestFit << endl;
 
         if (bestFit == MAX_MAP_SIZE)
             break;
 
-        if (actualMut != generations - 1)
+        if (gen != generations - 1)
             population = mutate(population[bestInd]);
     }
 
+    actualGens = gen;
 
     population[bestInd].printNodes();
     std::ofstream outFile("CGP_best.txt");
