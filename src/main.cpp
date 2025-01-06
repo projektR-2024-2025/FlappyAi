@@ -20,7 +20,7 @@ int main() {
     //std::cin >> choice;
 
     //if (choice == 0) {
-        ind = cgp.runCGP(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+    ind = cgp.runCGP(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
     //}
     //else if (choice == 1) {
     //    std::ifstream inFile("CGP_best.txt");

@@ -4,7 +4,6 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <iostream>
 #include <cmath>
 #include <random>
 #include <fstream>
@@ -41,15 +40,15 @@ void CGP::switchMap() {
 vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs) {
     vector<Individual> population;
 
-    random_device rd;
-    mt19937 gen(rd());
-
-    uniform_int_distribution<> operandDis(1, NUM_OPERANDS);
-    uniform_int_distribution<> connectionDis(0, rows * columns + inputs - 1);
-    uniform_int_distribution<> outputDis(0, rows * columns + inputs - 1);
-
     #pragma omp parallel for
     for (int i = 0; i < POPULATION; i++) {
+
+        random_device rd;
+        mt19937 gen(rd());
+
+        uniform_int_distribution<> operandDis(1, NUM_OPERANDS);
+        uniform_int_distribution<> connectionDis(0, rows * columns + inputs - 1);
+        uniform_int_distribution<> outputDis(0, rows * columns + inputs - 1);
 
         vector<Node> genes;
         vector<Output> outputGene;
@@ -113,7 +112,6 @@ vector<Individual> CGP::generatePopulation(int rows, int columns, int levelsBack
 
         Individual individual(genes, outputGene, rows, columns, levelsBack, inputs, outputs);
         individual.resolveLoops();
-
         #pragma omp critical
         population.push_back(individual);
 
@@ -210,6 +208,7 @@ vector<Individual> CGP::mutate(Individual parent) {
     uniform_int_distribution<> operandDis(1, NUM_OPERANDS);
     uniform_int_distribution<> outputDis(0, parent.outputs - 1);
 
+    // upali ovo ako zelis cpu stress test
     //#pragma omp parallel for
     for (int n = 0; n < POPULATION - 1; n++) {
         vector<Node> genes = parent.genes;
@@ -223,14 +222,20 @@ vector<Individual> CGP::mutate(Individual parent) {
                 outputGene[outputDis(gen)].connection = connectionDis(gen);
                 break;
             }
-            if (mut == 0)
+            if (mut == 0) {
                 genes[cell].operand = operandDis(gen);
+                
+                if (genes[cell].operand >= 5 && genes[cell].connection2 != -1)
+                    genes[cell].connection2 = -1;
+                else if (genes[cell].operand < 5 && genes[cell].connection2 == -1)
+                    genes[cell].connection2 = connectionDis(gen);
+            }
             else if (mut == 1)
                 genes[cell].connection1 = connectionDis(gen);
+            else if (mut == 2 && genes[cell].operand >= 5)
+                continue;
             else if (mut == 2)
                 genes[cell].connection2 = connectionDis(gen);
-
-            genes[cell].connection2 = (genes[cell].operand >= 5) ? -1 : connectionDis(gen);
 
             while (true) {
                 if (genes[cell].connection1 < parent.inputs)
@@ -273,7 +278,7 @@ vector<Individual> CGP::mutate(Individual parent) {
 
 Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations) {
     vector<Individual> population;
-    int bestInd = 0, gen = 0;
+    int bestInd = 0, generacija = 0;
 
     double time;
     time = omp_get_wtime();
@@ -282,9 +287,12 @@ Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, i
 
     cout << "Vrijeme: " << (omp_get_wtime() - time) << endl;
 
-    for (gen = 0; gen < generations; gen++) {
+    for (generacija = 0; generacija < generations; generacija++) {
         TYPE bestFit = 0;
         bestInd = 0;
+        vector<int> bestInds;
+        random_device rd;
+        mt19937 gen(rd());
         for (int i = 0; i < POPULATION; i++) {
 
             int lenght = 0;
@@ -301,21 +309,35 @@ Individual CGP::runCGP(int generations, int rows, int columns, int levelsBack, i
             }
 
             TYPE fit = population[i].calculateFitness(lenght);
-            if (fit >= bestFit) {
+            if (fit > bestFit) {
                 bestFit = fit;
-                bestInd = i;
+                bestInds.clear();
+                bestInds.push_back(i);
             }
+            else if (fit == bestFit)
+                bestInds.push_back(i);
         }
-        std::cout << gen << ": " << bestFit << endl;
 
-        if (bestFit == MAX_MAP_SIZE)
-            break;
+        if (bestInds.size() > 1)
+            bestInds.erase(bestInds.begin());
 
-        if (gen != generations - 1)
+        uniform_int_distribution<> bestDis(0, bestInds.size() - 1);
+
+        bestInd = bestInds[bestDis(gen)];
+
+        cout << "Gen: " << generacija << "; Fitness: " << bestFit << "; Indeks: " << bestInd << "; Mapa: " << map.map << endl;
+
+        if ((generacija != 0 && generacija % MAP_CHANGE == 0))
+            switchMap();
+
+        //if (bestFit == MAX_MAP_SIZE)
+        //    break;
+
+        if (generacija != generations - 1)
             population = mutate(population[bestInd]);
     }
 
-    actualGens = gen;
+    actualGens = generacija;
 
     population[bestInd].printNodes();
     std::ofstream outFile("CGP_best.txt");

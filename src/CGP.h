@@ -10,30 +10,32 @@
 
 // max duljina mape
 // o ovom ovisi fitness
-#define MAX_MAP_SIZE 250
+const int MAX_MAP_SIZE = 250;
 // broj operanada za nodeove
-#define NUM_OPERANDS 7
+const int NUM_OPERANDS = 8;
 // neki nebitan broj i guess
-#define OUT_VALUE 1
+const int OUT_VALUE = 0;
 // koliko daleko ispred sebe pticica vidi
-#define VIEW_DISTANCE 13
+const int VIEW_DISTANCE = 13;
 
 // broj generacija
-#define GENERATIONS 5000
+const int GENERATIONS = 10000;
 // broj redova nodova
-#define ROWS 16
+const int ROWS = 20;
 // broj stupaca nodova
-#define COLUMNS 8
+const int COLUMNS = 20;
 // koliko levela iza se moze spojiti node
-#define LEVELS_BACK 4
+const int LEVELS_BACK = 2;
 // broj inputova
-#define INPUTS 3
+const int INPUTS = 3;
 // broj outputova
-#define OUTPUTS 1
+const int OUTPUTS = 1;
 // broj mutacije genoma po jedinki
-#define MUTATIONS 6
-
-#define POPULATION 5
+const int MUTATIONS = 6;
+// broj jedinki u generaciji
+const int POPULATION = 8;
+// koliko cesto se mijenja mapa tokom ucenja
+const int MAP_CHANGE = 200;
 
 class CGP {
 public:

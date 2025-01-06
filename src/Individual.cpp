@@ -5,6 +5,7 @@
 #include <chrono>
 #include <thread>
 #include <random>
+#include <omp.h>
 
 using namespace std;
 
@@ -23,7 +24,11 @@ TYPE computeNode(int operand, TYPE value1, TYPE value2) {
     case 6:
         return cos(value1);
     case 7:
-        return value1 * value1;
+        return sqrt(value1);
+    case 8:
+        return pow(value1, 2);
+    case 9:
+        return pow(2, value1);
     default:
         return 0;
     }
@@ -149,10 +154,11 @@ Individual Individual::deserialize(std::istream& is) {
 bool Individual::findLoops(int nodeNum, std::vector<int> nodeSet) {
     branches.clear();
 
-    return loopFinder(nodeNum, nodeSet);
+    return loopFinder(nodeNum, nodeSet);;
 }
 
 bool Individual::loopFinder(int nodeNum, std::vector<int> nodeSet) {
+
     for (int i = 0; i < nodeSet.size(); i++)
         if (nodeSet[i] == nodeNum) {
             nodeSet.push_back(nodeNum);
@@ -163,7 +169,6 @@ bool Individual::loopFinder(int nodeNum, std::vector<int> nodeSet) {
     nodeSet.push_back(nodeNum);
 
     if (nodeNum < inputs) {
-        branches.push_back(nodeSet);
         return false;
     }
 
@@ -180,39 +185,38 @@ void Individual::resolveLoops() {
     uniform_int_distribution<> connectionDis(0, genes.size() - 1);
 
     vector<int> nodeSet;
+
     while (findLoops(outputGene[0].connection, nodeSet)) {
         for (int i = 0; i < branches.size(); i++) {
             int cell1 = branches[i][branches[i].size() - 2];
             int cell2 = branches[i][branches[i].size() - 1];
-            if (cell2 >= inputs) {
 
-                if (genes[cell1].connection1 == cell2) {
-                    genes[cell1].connection1 = connectionDis(gen);
+            if (genes[cell1].connection1 == cell2) {
+                genes[cell1].connection1 = connectionDis(gen);
 
-                    while (true) {
-                        if (genes[cell1].connection1 < inputs)
-                            break;
-                        if ((genes[cell1].connection1 % columns) == (cell1 % columns))
-                            genes[cell1].connection1 = connectionDis(gen);
-                        else if (((genes[cell1].connection1 - inputs) % columns) > (((cell1 - inputs) % columns) + levelsBack))
-                            genes[cell1].connection1 = connectionDis(gen);
-                        else
-                            break;
-                    }
+                while (true) {
+                    if (genes[cell1].connection1 < inputs)
+                        break;
+                    if ((genes[cell1].connection1 % columns) == (cell1 % columns))
+                        genes[cell1].connection1 = connectionDis(gen);
+                    else if (((genes[cell1].connection1 - inputs) % columns) > (((cell1 - inputs) % columns) + levelsBack))
+                        genes[cell1].connection1 = connectionDis(gen);
+                    else
+                        break;
                 }
-                else if (genes[cell1].connection2 == cell2) {
-                    genes[cell1].connection2 = connectionDis(gen);
+            }
+            else if (genes[cell1].connection2 == cell2) {
+                genes[cell1].connection2 = connectionDis(gen);
 
-                    while (true) {
-                        if (genes[cell1].connection2 < inputs)
-                            break;
-                        if ((genes[cell1].connection2 % columns) == (cell1 % columns))
-                            genes[cell1].connection2 = connectionDis(gen);
-                        else if (((genes[cell1].connection2 - inputs) % columns) > (((cell1 - inputs) % columns) + levelsBack))
-                            genes[cell1].connection2 = connectionDis(gen);
-                        else
-                            break;
-                    }
+                while (true) {
+                    if (genes[cell1].connection2 < inputs)
+                        break;
+                    if ((genes[cell1].connection2 % columns) == (cell1 % columns))
+                        genes[cell1].connection2 = connectionDis(gen);
+                    else if (((genes[cell1].connection2 - inputs) % columns) > (((cell1 - inputs) % columns) + levelsBack))
+                        genes[cell1].connection2 = connectionDis(gen);
+                    else
+                        break;
                 }
             }
         }
