@@ -43,8 +43,6 @@ public:
     sf::RectangleShape ground;
 
 private:
-    bool running;
-
     std::vector<int> mapEmpty;
     std::vector<int> mapCeiling;
     std::vector<int> mapGround;

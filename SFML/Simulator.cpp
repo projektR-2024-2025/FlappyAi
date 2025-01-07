@@ -41,6 +41,8 @@ bool Simulator::initialize(Bird& bird)
     ground.setFillColor(sf::Color::Green);
     ground.setPosition(0, WINDOW_HEIGHT - 50);
 
+    clock.restart();
+
     return true;
 }
 

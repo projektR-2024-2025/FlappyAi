@@ -10,7 +10,8 @@
 #include "Agent.h"
 #include "Controller.h"
 #include "SelectionScreen.h"  // Include the selection screen header
-#include "./NNlogic.cpp"
+//#include "NNlogic.cpp"
+#include "CGP.h"
 
 int main() {
     ControllerType selectedController = showSelectionScreen();
@@ -31,7 +32,7 @@ int main() {
         controller = new MyController;  // Assuming GPController is defined
         break;
     case CGP:
-        controller = NNlogic();  // Assuming CGPController is defined
+        controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined
         break;
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
