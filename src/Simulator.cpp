@@ -1,6 +1,13 @@
 #include "Simulator.h"
 #include <iostream>
-#include <conio.h> // For _kbhit() and _getch()
+//#include <conio.h> // For _kbhit() and _getch()
+#include "linuxMac.h" // Za linux/mac (za windows koristiti conio.h)
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
+
 
 Simulator::Simulator() : running(true), scoreScreen(true) {
     for (int i = 0; i < groundLevel; i++) {
@@ -8,8 +15,8 @@ Simulator::Simulator() : running(true), scoreScreen(true) {
             obstacleMap[i][j] = false;
         }
     }
-
-    initializeMap();
+    
+    initializeMap(file);
 }
 
 bool Simulator::isRunning() const {
@@ -39,7 +46,7 @@ void Simulator::handleScoreEvents() {
     if (_kbhit()) {
         char ch = _getch();
         if (ch == 'q') {
-            std::cout << "The END!";
+            std::cout << "The END!\n";
             scoreScreen = false;
         }
     }
@@ -66,16 +73,19 @@ void Simulator::update(Agent& agent) {
     // Ground and ceiling collision.
     if (birdPosition >= groundLevel || birdPosition <= 0) {
         running = false; // Game over if bird hits the ground or the ceiling
+        //std::cout <<"\nHit ground\n" ;
     }
 
     //Pillar collision.
     if (obstacleMap[birdPosition][0] == true) {
         running = false;
+        //std::cout <<"\nHit pillar\n" ;
     }
 }
 
 void Simulator::render() {
-    system("cls"); // Clear the console
+    //system("cls"); // Clear the console windows
+    system("clear");  // Linux/Mac
 
     // Ceiling;
     for (int j = 0; j < viewWidth; j++) std::cout << "=";
@@ -104,23 +114,43 @@ void Simulator::render() {
 
 // Map initialization.
 // za sad je smao placeholder
-void Simulator::initializeMap() {
-            // placeholder pillar 1
-            mapEmpty.push_back(20);
-            mapCeiling.push_back(3);
-            mapGround.push_back(5);
+void Simulator::initializeMap(std::string file) {
+            // // placeholder pillar 1
+            // mapEmpty.push_back(20);
+            // mapCeiling.push_back(3);
+            // mapGround.push_back(5);
 
-            // placeholder pillar 2
-            mapEmpty.push_back(30);
-            mapCeiling.push_back(7);
-            mapGround.push_back(1);
+            // // placeholder pillar 2
+            // mapEmpty.push_back(30);
+            // mapCeiling.push_back(7);
+            // mapGround.push_back(1);
 
-            // placeholder pillar 3
-            mapEmpty.push_back(25);
-            mapCeiling.push_back(8);
-            mapGround.push_back(6);
+            // // placeholder pillar 3
+            // mapEmpty.push_back(25);
+            // mapCeiling.push_back(8);
+            // mapGround.push_back(6);
 
     // Load map from file.
+    std::ifstream inputFile(file);
+    if (!inputFile) {
+        std::cerr << "Error: Could not open map.txt" << std::endl;
+        return;
+    }
+    std::string line;
+    while (std::getline(inputFile, line)) {
+        std::istringstream stream(line);
+        int empty, ceiling, ground;
+        // Parse three integers per line: empty, ceiling, ground
+        if (stream >> empty >> ceiling >> ground) {
+            mapEmpty.push_back(empty);
+            mapCeiling.push_back(ceiling);
+            mapGround.push_back(ground);
+        } else {
+            std::cerr << "Error: Invalid map data format in line: " << line << std::endl;
+        }
+    }
+    inputFile.close();
+
 
     // Fill the initial view.
     for (int j = 0; j < viewWidth; j++) {
@@ -156,4 +186,12 @@ void Simulator::loadNextColumn(int pos) {
         }
         mapEmpty[mapReadIndex] -= 1;
     }
+}
+bool Simulator::finishedMap(){
+    return mapReadIndex >= mapEmpty.size() ;
+}
+
+int Simulator::getMapReadIndex(){
+    //std::cout <<mapReadIndex ;
+    return mapReadIndex ;
 }

@@ -5,7 +5,12 @@ class Agent {
 public:
     void handleInput(char input);
     double update(int& birdPosition);
-    // Add methods for AI control here
+    // Add methods for AI control here 
+    void changeGameSpeed(int acceleration){
+        jumpStrength *= acceleration ; 
+        gravity *= acceleration ;
+        maxVelocity *= acceleration ;
+    }
 
     double velocity;
     double position;    // domain: [0, 1] [top, bottom]
