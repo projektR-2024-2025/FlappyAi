@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include "TreeControll.h"
 #include "Simulator.h"
@@ -59,6 +60,26 @@ Node* Node::deepNodeCopy(){
     return coppied;
 }
 
+// Function to parse the node prefix and create a Node tree
+Node* Node::parseNodePrefix(std::istringstream& stream) {
+    std::string token;
+    if (!(stream >> token)) return nullptr;
+
+    if (token == "@") return nullptr; // Null node indicator
+
+    // Convert the token (character) back to its numerical value
+    int value = token[0] - 'A';
+
+    // Create a new Node with the value
+    Node* node = new Node(value);
+
+    // Recursively parse the left and right children
+    node->left = parseNodePrefix(stream);
+    node->right = parseNodePrefix(stream);
+
+    return node;
+}
+
 // Definition of Node class destructor
 Node::~Node() {
     delete left;
@@ -69,6 +90,7 @@ Node::~Node() {
 
 // Definition of Tree class constructor
 Tree::Tree(int x) : root(new Node(x)) {}
+Tree::Tree(Node* rootNode) : root(rootNode) {}
 
 // Definition of printTree method
 void Tree::printTree() {
@@ -78,6 +100,13 @@ void Tree::printTree() {
 
 std::string Tree::treePrefix() {
     return root->nodePrefix();
+}
+
+// Function to parse a tree prefix string and create a Tree object
+void Tree::parseTreePrefix(const std::string& prefix) {
+    std::istringstream stream(prefix); // Create a stream from the string
+    Node* root = root->parseNodePrefix(stream); // Parse the root node
+    this->root = root;
 }
 
 // Definition of Tree class destructor

@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include <fstream>
+#include <vector>
 #include "Simulator.h"
 #include "Agent.h"
 #include "Controller.h"
@@ -236,15 +237,67 @@ void simulatePopulation() {
     std::cout << "\n\n      >>> Kraj simulacije <<<\n\n\n";
 }
 
+void loadSaved() {
 
-int main() {
+        //example
+        /*
+        Tree tree;
+        tree.parseTreePrefix("G P @ @ T @ @");
+        tree.fitness = calculateFitness(tree);
+        tree.printTree();
+        std::cout << tree.fitness;
+        */
+
+        std::string filename = "saved.txt"; // Replace with your file name
+        std::ifstream file(filename); // Open the file
+        std::vector<std::string> lines; // Vector to store lines
+
+        if (!file.is_open()) {
+            std::cerr << "Error: Could not open the file " << filename << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (std::getline(file, line)) { // Read each line
+            lines.push_back(line); // Add the line to the vector
+        }
+
+        file.close(); // Close the file
+
+        // Output the lines to verify
+        Tree population[lines.size()];
+        std::cout << "Contents of the file:" << std::endl;
+        for (int i = 0; i < lines.size(); i++) {
+
+            std::cout << i << ":\n" << "    " << lines[i] << std::endl << "    ";
+            population[i].parseTreePrefix(lines[i]);
+            population[i].fitness = calculateFitness(population[i]);
+            population[i].printTree();
+            std::cout << "    fitness = " << population[i].fitness << "\n\n";
+        }
+
+        int p;
+        std::cout << "Indeks jedinke za prikaz: ";
+        std::cin >> p;
+        if (p >= lines.size()) {
+            std::cout << "Prevelik index!\n";
+            return;
+        }
+        std::cout << "  Fitness prikazane jedinke(" << p << "): " << calculateFitnessDisplay(population[p]) << "\n";
+        std::cout << "  Oblik: ";
+        population[p].printTree();
+}
+
+void GP_FC(){
     srand((time(0)));
-
     std::cout << "Load/Simulate? (0/1)";
     char option;
     std::cin >> option;
-    if (option == '0') int sjlajdks; // OVDJE CE IC LOAD POZIV
+    if (option == '0') loadSaved();
     else if (option == '1') simulatePopulation();
+}
 
+int main() {
+    GP_FC();
     return 0;
 }

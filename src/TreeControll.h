@@ -16,6 +16,7 @@ public:
 
     Node(int initialValue = 0);
     Node* deepNodeCopy();
+    Node* parseNodePrefix(std::istringstream& stream);
     void printNode();
     std::string nodePrefix();
     ~Node();
@@ -28,8 +29,10 @@ public:
     double fitness = 0;
 
     Tree(int x = 0);
+    Tree(Node* rootNode);
     void printTree();
     std::string treePrefix();
+    void parseTreePrefix(const std::string& prefix);
     ~Tree();
 };
 
