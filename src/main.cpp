@@ -10,9 +10,10 @@
 #include "Controller.h"
 #include "TreeControll.h"
 
-int populationSize = 500;
-int crossingNumber = 10000;
+int populationSize = 1000;
+int crossingNumber = 15000;
 int populationCullings = 50; // sort take half of the best;
+int displayMapNum = 0;
 
 void printPopulation(Tree population[]) {
     double best = -0.1;
@@ -49,9 +50,9 @@ Node* createOperatorNode(int a = -1, int b = -1, int c = -1){
     return returnNode;
 }
 
-double calculateFitness(Tree& calcTree) {
+double calculateFitness(Tree& calcTree, int mapNum) {
     // Racunanje fitnessa
-    Simulator simulator;
+    Simulator simulator(mapNum);
     Agent agent;
     GPContreoller* controller = new GPContreoller;  // plug in your controller here
     controller->passedRoot = calcTree.root;
@@ -70,11 +71,12 @@ double calculateFitness(Tree& calcTree) {
     //simulator.render();
     double fitness = controller->distFlown / simulator.mapLen;
     delete controller;
+    if (fitness > 1) return 1.01;
     return fitness;
 }
-double calculateFitnessDisplay(Tree& calcTree) {
+double calculateFitnessDisplay(Tree& calcTree, int mapNum) {
     // Racunanje fitnessa
-    Simulator simulator;
+    Simulator simulator(mapNum);
     Agent agent;
     GPContreoller* controller = new GPContreoller;  // plug in your controller here
     controller->passedRoot = calcTree.root;
@@ -89,12 +91,13 @@ double calculateFitnessDisplay(Tree& calcTree) {
             controller->action(agent, simulator);
         simulator.update(agent);
         controller->distFlown += 1; // counting for fitness
-        std::this_thread::sleep_for(std::chrono::milliseconds(150)); // Control game speed
+        std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Control game speed
     }
     //calcTree.printTree();
     simulator.render();
     double fitness = controller->distFlown / simulator.mapLen;
     delete controller;
+    if (fitness > 1) return 1.01;
     return fitness;
 }
 
@@ -134,7 +137,7 @@ void deleteCrossMutate(Tree population[], int delInd, int par1Ind, int par2Ind) 
 
     // Calculate new fitness.
     population[delInd].printTree();
-    population[delInd].fitness = calculateFitness(population[delInd]);
+    population[delInd].fitness = (calculateFitness(population[delInd], 1) + calculateFitness(population[delInd], 2)) / 2;
 }
 
 void saveToFile(std::string line) {
@@ -163,7 +166,7 @@ void simulatePopulation() {
         Node* tmp = createOperatorNode();
         population[i] = Tree();
         population[i].root = tmp;
-        population[i].fitness = calculateFitness(population[i]);
+        population[i].fitness = (calculateFitness(population[i], 1) + calculateFitness(population[i], 2)) / 2;
     }
 
     // Ispis populacije i fitnessa.
@@ -217,7 +220,7 @@ void simulatePopulation() {
             int p;
             std::cout << "Indeks jedinke za prikaz: ";
             std::cin >> p;
-            std::cout << "  Fitness prikazane jedinke(" << p << "): " << calculateFitnessDisplay(population[p]) << "\n";
+            std::cout << "  Fitness prikazane jedinke(" << p << "): " << calculateFitnessDisplay(population[p], displayMapNum) << "\n";
             std::cout << "  Oblik: ";
             population[p].printTree();
         }
@@ -261,7 +264,7 @@ void loadSaved() {
 
             std::cout << i << ":\n" << "    " << lines[i] << std::endl << "    ";
             population[i].parseTreePrefix(lines[i]);
-            population[i].fitness = calculateFitness(population[i]);
+            population[i].fitness = (calculateFitness(population[i], 1) + calculateFitness(population[i], 2)) / 2;
             population[i].printTree();
             std::cout << "    fitness = " << population[i].fitness << "\n\n";
         }
@@ -273,7 +276,7 @@ void loadSaved() {
             std::cout << "Prevelik index!\n";
             return;
         }
-        std::cout << "  Fitness prikazane jedinke(" << p << "): " << calculateFitnessDisplay(population[p]) << "\n";
+        std::cout << "  Fitness prikazane jedinke(" << p << "): " << calculateFitnessDisplay(population[p], displayMapNum) << "\n";
         std::cout << "  Oblik: ";
         population[p].printTree();
 }

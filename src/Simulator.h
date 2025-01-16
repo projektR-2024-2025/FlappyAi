@@ -7,7 +7,7 @@
 
 class Simulator {
 public:
-    Simulator();
+    Simulator(int mapNum = 0);
     void initializeMap(std::string map);
     void loadNextColumn(int pos = viewWidth - 1);
 

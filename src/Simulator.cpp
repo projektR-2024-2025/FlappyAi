@@ -5,14 +5,17 @@
 #include <string>
 #include <conio.h> // For _kbhit() and _getch()
 
-Simulator::Simulator() : running(true), scoreScreen(true) {
+Simulator::Simulator(int mapNum) : running(true), scoreScreen(true) {
     for (int i = 0; i < groundLevel; i++) {
         for (int j = 0; j < viewWidth; j++) {
             obstacleMap[i][j] = false;
         }
     }
-
-    initializeMap("map1.txt");
+    std::string mapFileName = "";
+    if (mapNum == 1) mapFileName = "map1.txt";
+    else if (mapNum == 2) mapFileName = "map2.txt";
+    else mapFileName = "map3.txt";
+    initializeMap(mapFileName);
 }
 
 bool Simulator::isRunning() const {

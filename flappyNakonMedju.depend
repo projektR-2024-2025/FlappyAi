@@ -55,7 +55,7 @@
 
 1734963271 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\agent.h
 
-1737063531 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\main.cpp
+1737066461 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\main.cpp
 	<iostream>
 	<ctime>
 	<cstdlib>
@@ -68,7 +68,7 @@
 	"Controller.h"
 	"TreeControll.h"
 
-1737063305 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.h
+1737064211 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.h
 	<vector>
 	"Agent.h"
 	<string>
@@ -90,7 +90,7 @@
 	"Agent.h"
 	"Controller.h"
 
-1737063601 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.cpp
+1737066837 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.cpp
 	"Simulator.h"
 	<iostream>
 	<sstream>
