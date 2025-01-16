@@ -1,7 +1,6 @@
 #include "CGP.h"
 #include "Simulator.h"
 #include "Controller.h"
-#include "SFML/Graphics.hpp"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -10,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <omp.h>
+#include <sstream>
 
 #ifdef _WIN32
 #define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
@@ -97,9 +97,9 @@ vector<CGPIndividual> CGP::generatePopulation(int rows, int columns, int levelsB
         #pragma omp critical
         population.push_back(individual);
 
-        cout << "|";
+        std::cout << "|";
     }
-    cout << endl;
+    std::cout << endl;
 
     return population;
 }
@@ -258,7 +258,7 @@ vector<CGPIndividual> CGP::mutate(CGPIndividual parent) {
 
 }
 
-CGPIndividual CGP::runCGP(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations) {
+void CGP::runCGP() {
     vector<CGPIndividual> population;
     int bestInd = 0, generacija = 0;
 
@@ -267,10 +267,10 @@ CGPIndividual CGP::runCGP(int generations, int rows, int columns, int levelsBack
 
     population = generatePopulation(rows, columns, levelsBack, inputs, outputs);
 
-    cout << "Vrijeme: " << (omp_get_wtime() - time) << "s" << endl;
+    std::cout << "Vrijeme: " << (omp_get_wtime() - time) << "s" << endl;
 
     for (generacija = 0; generacija < generations; generacija++) {
-        TYPE bestFit = -2;
+        TYPE bestFit = -1;
         bestInd = 0;
         vector<int> bestInds;
         random_device rd;
@@ -280,6 +280,8 @@ CGPIndividual CGP::runCGP(int generations, int rows, int columns, int levelsBack
             Simulator simulator;
             Bird bird;
             Controller* controller = new CGPController(population[i]);
+
+            simulator.initialize(bird);
 
             while (simulator.isRunning()) {
                 simulator.update(bird);
@@ -305,9 +307,9 @@ CGPIndividual CGP::runCGP(int generations, int rows, int columns, int levelsBack
 
         bestInd = bestInds[bestDis(gen)];
 
-        cout << "Gen: " << generacija << "; Fitness: " << bestFit << "; Indeks: " << bestInd << endl;
+        std::cout << "Gen: " << generacija << "; Fitness: " << bestFit << "; Indeks: " << bestInd << endl;
 
-        if (bestFit == MAX_MAP_SIZE)
+        if (bestFit >= MAX_MAP_SIZE)
             break;
 
         if (generacija != generations - 1)
@@ -316,23 +318,22 @@ CGPIndividual CGP::runCGP(int generations, int rows, int columns, int levelsBack
 
     actualGens = generacija;
 
-    //population[bestInd].printNodes();
+    population[bestInd].printNodes();
     ofstream outFile("CGP_best.txt");
     if (outFile.is_open()) {
         outFile << population[bestInd];
         outFile.close();
-        cout << "Object written to text file." << endl;
+        std::cout << "Object written to text file." << endl;
     }
 
-    return population[bestInd];
+    bestOne = population[bestInd];
 }
 
 CGPIndividual CGP::CGPMain() {
-    CGP cgp;
+    CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
     CGPIndividual ind;
 
-
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Select Mode");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "CGP");
 
     sf::Font font;
     if (!font.loadFromFile(ARIAL_FONT_PATH)) {
@@ -374,8 +375,8 @@ CGPIndividual CGP::CGPMain() {
 
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (genText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    ind = cgp.runCGP(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
-                    return ind;
+                    cgp.runCGP();
+                    return cgp.bestOne;
                 }
                 else if (runText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
                     std::ifstream inFile("CGP_best.txt");

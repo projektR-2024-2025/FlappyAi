@@ -142,9 +142,6 @@ public:
         // odredi vrijednost izlazne vrijednosti cgp mreze
         individual.evaluateValue(input);
 
-        if(!isnan(individual.outputGene[0].value))
-            std::cout << individual.outputGene[0].value << std::endl;
-
         if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > OUT_VALUE)
             bird.velocity = JUMP_SPEED;
         return true;
