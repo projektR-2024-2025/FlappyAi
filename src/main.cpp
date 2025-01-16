@@ -10,8 +10,8 @@
 #include "Controller.h"
 #include "TreeControll.h"
 
-int populationSize = 300;
-int crossingNumber = 1000;
+int populationSize = 500;
+int crossingNumber = 10000;
 int populationCullings = 50; // sort take half of the best;
 
 void printPopulation(Tree population[]) {

@@ -3,11 +3,12 @@
 
 #include <vector>
 #include "Agent.h"
+#include <string>
 
 class Simulator {
 public:
     Simulator();
-    void initializeMap();
+    void initializeMap(std::string map);
     void loadNextColumn(int pos = viewWidth - 1);
 
     bool isRunning() const;

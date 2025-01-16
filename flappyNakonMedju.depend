@@ -55,7 +55,7 @@
 
 1734963271 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\agent.h
 
-1737058248 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\main.cpp
+1737063531 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\main.cpp
 	<iostream>
 	<ctime>
 	<cstdlib>
@@ -68,33 +68,37 @@
 	"Controller.h"
 	"TreeControll.h"
 
-1734963280 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.h
+1737063305 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.h
 	<vector>
 	"Agent.h"
+	<string>
 
-1734963280 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\controller.h
+1737058552 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\controller.h
 	"Agent.h"
 	"Simulator.h"
 	"TreeControll.h"
 
-1737055427 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\treecontroll.h
+1737058552 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\treecontroll.h
 	<string>
 	"Simulator.h"
 	"Agent.h"
 
-1734963280 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\maincopy.cpp
+1737058552 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\maincopy.cpp
 	<thread>
 	<chrono>
 	"Simulator.h"
 	"Agent.h"
 	"Controller.h"
 
-1734963280 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.cpp
+1737063601 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.cpp
 	"Simulator.h"
 	<iostream>
+	<sstream>
+	<fstream>
+	<string>
 	<conio.h>
 
-1737055537 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\treecontroll.cpp
+1737058552 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\treecontroll.cpp
 	<iostream>
 	<sstream>
 	<string>
