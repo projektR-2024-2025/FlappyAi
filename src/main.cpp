@@ -238,16 +238,6 @@ void simulatePopulation() {
 }
 
 void loadSaved() {
-
-        //example
-        /*
-        Tree tree;
-        tree.parseTreePrefix("G P @ @ T @ @");
-        tree.fitness = calculateFitness(tree);
-        tree.printTree();
-        std::cout << tree.fitness;
-        */
-
         std::string filename = "saved.txt"; // Replace with your file name
         std::ifstream file(filename); // Open the file
         std::vector<std::string> lines; // Vector to store lines
