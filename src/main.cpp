@@ -3,13 +3,14 @@
 #include <cstdlib>
 #include <thread>
 #include <chrono>
+#include <fstream>
 #include "Simulator.h"
 #include "Agent.h"
 #include "Controller.h"
 #include "TreeControll.h"
 
-int populationSize = 500;
-int crossingNumber = 10000;
+int populationSize = 300;
+int crossingNumber = 2000;
 int populationCullings = 50; // sort take half of the best;
 
 void printPopulation(Tree population[]) {
@@ -121,6 +122,24 @@ void deleteCrossMutate(Tree population[], int delInd, int par1Ind, int par2Ind) 
     population[delInd].fitness = calculateFitness(population[delInd]);
 }
 
+void saveToFile(std::string line) {
+    // Open the file in append mode
+    std::ofstream outFile("saved.txt", std::ios::app);
+
+    // Check if the file was successfully opened
+    if (!outFile) {
+        std::cerr << "Error: Could not open file 'saved.txt'." << std::endl;
+        return;
+    }
+
+    // Write the string to the file followed by a newline
+    outFile << line << std::endl;
+
+    // Close the file
+    outFile.close();
+    std::cout << "Spremanje uspjesno!\n";
+}
+
 void simulatePopulation() {
     Tree population[populationSize];
 
@@ -154,20 +173,36 @@ void simulatePopulation() {
         else if (population[j3].fitness <= population[j1].fitness && population[j3].fitness <= population[j2].fitness)
             deleteCrossMutate(population, j3, j1, j2);
         std::cout << "\n";
-        // Mutacija.
+        // Mutacija. (nepotrebno?)
     }
     std::cout << "\n";
 
-    printPopulation(population);
 
-        // Sort
-        // Cull
+    // Sort
+    // Cull
     // Ponovi za populationCullings puta;
     // sortiraj jos jednom
-    std::cout << "Indeks jedinke za prikaz: ";
-    int p;
-    std::cin >> p;
-    std::cout << calculateFitnessDisplay(population[p]) << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
+
+    char option = '0';
+    while (option == '0') {
+        system("cls");
+        printPopulation(population);
+        std::cout << "Indeks jedinke za prikaz: ";
+        int p;
+        std::cin >> p;
+        std::cout << "  Fitness prikazane jedinke: " << calculateFitnessDisplay(population[p]) << "\n";
+
+        std::cout << "DisplayPopulation / Exit (0/1)";
+        std::cin >> option;
+    }
+
+    std::cout << "Spremi najbolju jedinku iz populacije? NE/DA (0/1))";
+    std::cin >> option;
+    if (option == '1'){
+        std::cout << "spremam... " << population[0].treePrefix() << "\n";
+        saveToFile(population[0].treePrefix());
+    }
+    std::cout << "Kraj simulacije";
 }
 
 

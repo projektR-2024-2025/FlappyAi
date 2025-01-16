@@ -49,3 +49,54 @@
 	"Simulator.h"
 	"Agent.h"
 
+1734963271 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\agent.cpp
+	"Agent.h"
+	<cmath>
+
+1734963271 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\agent.h
+
+1737041992 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\main.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<thread>
+	<chrono>
+	<fstream>
+	"Simulator.h"
+	"Agent.h"
+	"Controller.h"
+	"TreeControll.h"
+
+1734963280 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.h
+	<vector>
+	"Agent.h"
+
+1734963280 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\controller.h
+	"Agent.h"
+	"Simulator.h"
+	"TreeControll.h"
+
+1734963280 c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\treecontroll.h
+	<string>
+	"Simulator.h"
+	"Agent.h"
+
+1734963280 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\maincopy.cpp
+	<thread>
+	<chrono>
+	"Simulator.h"
+	"Agent.h"
+	"Controller.h"
+
+1734963280 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\simulator.cpp
+	"Simulator.h"
+	<iostream>
+	<conio.h>
+
+1734963280 source:c:\docs\01 - filip\02 - fer\050 - g3s5\00 - projekt\03 - simulator\radnakonmeju\flappyai\src\treecontroll.cpp
+	<iostream>
+	<string>
+	"TreeControll.h"
+	"Simulator.h"
+	"Agent.h"
+

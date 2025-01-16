@@ -7,14 +7,24 @@
 			<Cursor1 position="174" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\mainCopy.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="152" topLine="0" />
+			<Cursor1 position="4406" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\Agent.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="505" topLine="0" />
+			<Cursor1 position="720" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\TreeControll.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="624" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Controller.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="58" topLine="32" />
 		</Cursor>
 	</File>
 	<File name="src\Simulator.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -22,29 +32,19 @@
 			<Cursor1 position="439" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\TreeControll.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\TreeControll.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="522" topLine="0" />
+			<Cursor1 position="2689" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\Controller.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\mainCopy.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1268" topLine="105" />
-		</Cursor>
-	</File>
-	<File name="src\main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2746" topLine="52" />
+			<Cursor1 position="152" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\Simulator.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4526" topLine="134" />
-		</Cursor>
-	</File>
-	<File name="src\TreeControll.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="158" topLine="1" />
+			<Cursor1 position="3547" topLine="61" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
