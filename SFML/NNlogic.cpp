@@ -1,3 +1,4 @@
+#include "NNlogic.h"
 #include <iostream>
 #include <vector>
 #include <thread>

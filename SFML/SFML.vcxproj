@@ -169,6 +169,7 @@
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="NeuralNetwork.h" />
+    <ClInclude Include="NNlogic.h" />
     <ClInclude Include="parameters.h" />
     <ClInclude Include="SelectionScreen.h" />
     <ClInclude Include="Simulator.h" />

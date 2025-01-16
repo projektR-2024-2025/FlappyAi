@@ -9,7 +9,7 @@
 #include "Simulator.h"
 #include "Agent.h"
 #include "Controller.h"
-#include "SelectionScreen.h"  // Include the selection screen header
+#include "SelectionScreen.h"
 #include "./NNlogic.cpp"
 
 int main() {
@@ -25,13 +25,13 @@ int main() {
 
     switch (selectedController) {
     case NN:
-        controller = new MyController;  // Assuming NNController is defined
+        controller = NNlogic();
         break;
     case GP:
-        controller = new MyController;  // Assuming GPController is defined
+        controller = new MyController;
         break;
     case CGP:
-        controller = NNlogic();  // Assuming CGPController is defined
+        controller = NNlogic();
         break;
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
