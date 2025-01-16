@@ -37,11 +37,10 @@ std::string Node::nodePrefix() {
     //std::cout << "Printing for: " << this->value << " " << c << "\n";
 
     prefix += c;
-    prefix += " ";
-    if (this->left == nullptr) prefix += "@ ";
-    else prefix += this->left->nodePrefix() + " ";
-    if (this->right == nullptr) prefix += "@ ";
-    else prefix += this->right->nodePrefix() + " ";
+    if (this->left == nullptr) prefix += " @";
+    else prefix += " " + this->left->nodePrefix();
+    if (this->right == nullptr) prefix += " @";
+    else prefix += " " + this->right->nodePrefix();
 
     return prefix;
 }

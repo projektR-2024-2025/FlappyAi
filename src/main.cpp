@@ -10,15 +10,29 @@
 #include "TreeControll.h"
 
 int populationSize = 300;
-int crossingNumber = 2000;
+int crossingNumber = 1000;
 int populationCullings = 50; // sort take half of the best;
 
 void printPopulation(Tree population[]) {
+    double best = -0.1;
+    int bestIndex = -1;
+    // Ispisi sve jedinke.
     for (int i = 0; i < populationSize; i++) {
         std::cout << i << ":    ";
         population[i].printTree();
         std::cout << "                                              " << population[i].fitness << "\n";
+
+        // Trazi najbolju jedinku.
+        if (population[i].fitness > best) {
+            best = population[i].fitness;
+            bestIndex = i;
+        }
     }
+
+    // Ispisi najbolju jedinku:
+    std::cout << "\nNAJBOLJA JEDINKA: "<< bestIndex << "   (fitness = " << best << ")\n";
+    std::cout << "    oblik: ";
+    population[bestIndex].printTree();
 }
 
 Node* createOperatorNode(int a = -1, int b = -1, int c = -1){
@@ -86,7 +100,7 @@ double calculateFitnessDisplay(Tree& calcTree) {
 void mutate(Node*& n) {
     if (n == nullptr) return;
 
-    //change operator
+    // Call recursively.
     if (!(n->left == nullptr && n->right == nullptr)) {
         mutate(n->left);
         mutate(n->right);
@@ -108,11 +122,11 @@ void deleteCrossMutate(Tree population[], int delInd, int par1Ind, int par2Ind) 
     //KRIZAJ
     Node* tmp;
     tmp = population[par1Ind].root->left->deepNodeCopy();
-    population[delInd].root->left = tmp;   //KRIVO  treba napraviti nove instance i iskopirati ih u pop[delInd]
+    population[delInd].root->left = tmp;
 
 
     tmp = population[par2Ind].root->right->deepNodeCopy();
-    population[delInd].root->right = tmp; //KRIVO
+    population[delInd].root->right = tmp;
 
     //MUTATE
     mutate(population[delInd].root);
@@ -183,26 +197,43 @@ void simulatePopulation() {
     // Ponovi za populationCullings puta;
     // sortiraj jos jednom
 
+    printPopulation(population);
     char option = '0';
-    while (option == '0') {
-        system("cls");
-        printPopulation(population);
-        std::cout << "Indeks jedinke za prikaz: ";
-        int p;
-        std::cin >> p;
-        std::cout << "  Fitness prikazane jedinke: " << calculateFitnessDisplay(population[p]) << "\n";
-
-        std::cout << "DisplayPopulation / Exit (0/1)";
+    while (option != '5') {
+        // izbornik
+        std::cout << "\n\nOpcije:\n";
+        std::cout << "  1 - ispisi populaciju\n";
+        std::cout << "  2 - prikazi jedinku\n";
+        std::cout << "  3 - cls\n";
+        std::cout << "  4 - spremi jedinku i prekini\n";
+        std::cout << "  5 - prekini program\n\n";
         std::cin >> option;
+
+        if (option == '1') {
+            printPopulation(population);
+        }
+        else if (option == '2') {
+            int p;
+            std::cout << "Indeks jedinke za prikaz: ";
+            std::cin >> p;
+            std::cout << "  Fitness prikazane jedinke(" << p << "): " << calculateFitnessDisplay(population[p]) << "\n";
+            std::cout << "  Oblik: ";
+            population[p].printTree();
+        }
+        else if (option == '3') system("cls");
+        else if (option == '4') {
+            int p;
+            std::cout << "Indeks jedinke za spremanje: ";
+            std::cin >> p;
+            std::cout << "spremam... " << population[p].treePrefix() << "\n";
+            saveToFile(population[p].treePrefix());
+            option = '5';
+        }
+
     }
 
-    std::cout << "Spremi najbolju jedinku iz populacije? NE/DA (0/1))";
-    std::cin >> option;
-    if (option == '1'){
-        std::cout << "spremam... " << population[0].treePrefix() << "\n";
-        saveToFile(population[0].treePrefix());
-    }
-    std::cout << "Kraj simulacije";
+
+    std::cout << "\n\n      >>> Kraj simulacije <<<\n\n\n";
 }
 
 
