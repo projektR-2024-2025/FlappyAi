@@ -3,6 +3,7 @@
 #include "Simulator.h"
 #include "parameters.h"
 #include "./NeuralNetwork.h"
+#include "CGP.h"
 
 class Controller
 {
@@ -33,30 +34,30 @@ public:
     }
 };
 
-class MyController : public Controller
-{
-public:
-    // dodaj model
-    bool action(Bird& agent, Simulator& simulator)
-    {
-        // get current position
-        int yPos = agent.position * simulator.groundLevel;
-        // is obstacle ahead
-        bool obstacleAhead = false;
-        simulator.obstacleMap;
-        for (int i = 0; i < simulator.viewWidth; i++)
-            if (simulator.obstacleMap[yPos][i] == true) {
-                obstacleAhead = true;
-                break;
-            }
-        // jump if obstacle ahead or too low, but not if too high
-        if ((yPos > simulator.groundLevel * 0.35) && (obstacleAhead || yPos > simulator.groundLevel * 0.85)) {
-            agent.isJumping = true;
-            return true;
-        }
-        return false;
-    }
-};
+//class MyController : public Controller
+//{
+//public:
+//    // dodaj model
+//    bool action(Bird& agent, Simulator& simulator)
+//    {
+//        // get current position
+//        int yPos = agent.position * simulator.groundLevel;
+//        // is obstacle ahead
+//        bool obstacleAhead = false;
+//        simulator.obstacleMap;
+//        for (int i = 0; i < simulator.viewWidth; i++)
+//            if (simulator.obstacleMap[yPos][i] == true) {
+//                obstacleAhead = true;
+//                break;
+//            }
+//        // jump if obstacle ahead or too low, but not if too high
+//        if ((yPos > simulator.groundLevel * 0.35) && (obstacleAhead || yPos > simulator.groundLevel * 0.85)) {
+//            agent.isJumping = true;
+//            return true;
+//        }
+//        return false;
+//    }
+//};
 
 class NeuralController : public Controller
 {
@@ -108,5 +109,44 @@ public:
             agent.isJumping = false;
         }
         return agent.isJumping;*/
+    }
+};
+
+class CGPController : public Controller
+{
+private:
+    CGPIndividual individual;
+public:
+    CGPController(const CGPIndividual& individual) : individual(individual) {}
+
+    bool action(Bird& bird, Simulator& simulator)
+    {
+        // input vector za cgp mrezu
+        std::vector<double> input;
+
+        // get current position
+        // is obstacle ahead
+        double obstacleAhead = 0;
+        for (const auto& pipe : simulator.pipes)
+            if (pipe.x > 30 && pipe.x < 250) {
+                if (bird.position + BIRD_SIZE > pipe.bottomY) {
+                    obstacleAhead = 1;
+                }
+                break;
+            }
+        // stavi informacije u vektor
+        input.push_back(obstacleAhead);
+        input.push_back(bird.position);
+        input.push_back(bird.velocity);
+
+        // odredi vrijednost izlazne vrijednosti cgp mreze
+        individual.evaluateValue(input);
+
+        if(!isnan(individual.outputGene[0].value))
+            std::cout << individual.outputGene[0].value << std::endl;
+
+        if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > OUT_VALUE)
+            bird.velocity = JUMP_SPEED;
+        return true;
     }
 };
