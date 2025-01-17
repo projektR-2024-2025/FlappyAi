@@ -4,6 +4,6 @@
 
 #include "Controller.h"
 
-NeuralController* NNlogic();
+NeuralController NNlogic();
 
 #endif

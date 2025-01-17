@@ -7,9 +7,9 @@
 #include "./Simulator.h"
 #include "./Controller.h"
 
-#define GENERATION_SIZE 10
-#define GENERATION_COUNT 500
-#define MUTATION_RATE 0.70
+#define GENERATION_SIZE 100
+#define GENERATION_COUNT 5000
+#define MUTATION_RATE 0.90
 
 struct Individual {
     NeuralNetwork nn;
@@ -19,18 +19,14 @@ struct Individual {
 };
 
 double evaluateFitness(NeuralNetwork& nn, Simulator& simulator, Bird& agent) {
-    NeuralController controller(nn);
-    int length = 0;
+    Controller* controller = new NeuralController(nn);
 
     while (simulator.isRunning()) {
-        if (!simulator.handleEvents(agent)) {
-            controller.action(agent, simulator);
-        }
         simulator.update(agent);
-        ++length;
-        if (length >= 300) break;
+        controller->action(agent, simulator);
+        if (agent.distance >= 10000) break;
     }
-    return length;
+    return agent.distance;
 }
 
 void mutate(NeuralNetwork& nn, double mutationRate) {
@@ -110,7 +106,7 @@ Individual tournamentSelection(const std::vector<Individual>& population, int to
 
 NeuralController NNlogic() {
     // definiranje strukture neuronske mreze
-    std::vector<int> layers = { 4, 5, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
+    std::vector<int> layers = { 4, 8, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
 
     // inicijalizacija populacije
     std::vector<Individual> population;
@@ -123,6 +119,7 @@ NeuralController NNlogic() {
     for (auto& individual : population) {
         Simulator simulator;
         Bird agent;
+        simulator.initialize(agent);
         individual.fitness = evaluateFitness(individual.nn, simulator, agent);
     }
 
@@ -137,15 +134,16 @@ NeuralController NNlogic() {
         std::vector<Individual> newPopulation;
 
         // elitizam
-        newPopulation.push_back(population[0]);
-        newPopulation.push_back(population[1]);
+        for (int i = 0; i < GENERATION_SIZE / 10; ++i) {
+            newPopulation.push_back(population[0]);
+        }
 
         // crossover + mutacija
         while (newPopulation.size() < GENERATION_SIZE) {
             //Individual parent1 = selectFromTopHalf(population);
             //Individual parent2 = selectFromTopHalf(population);
-            Individual parent1 = tournamentSelection(population, 10);
-            Individual parent2 = tournamentSelection(population, 10);
+            Individual parent1 = tournamentSelection(population, 20);
+            Individual parent2 = tournamentSelection(population, 20);
             NeuralNetwork childNN = crossover(parent1.nn, parent2.nn);
             mutate(childNN, mutationRate);
             newPopulation.emplace_back(childNN);
@@ -155,6 +153,7 @@ NeuralController NNlogic() {
         for (auto& individual : newPopulation) {
             Simulator simulator;
             Bird agent;
+            simulator.initialize(agent);
             individual.fitness = evaluateFitness(individual.nn, simulator, agent);
         }
 
@@ -170,5 +169,5 @@ NeuralController NNlogic() {
     }
 
     return NeuralController(population[0].nn);
-    
+
 }

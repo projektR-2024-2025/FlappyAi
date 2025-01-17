@@ -3,8 +3,8 @@
 // TODO: premjestiti u razrede i omoguciti da se zastavice i parametri citaju iz conf datoteke
 
 // zastavice
-const bool simulationOnly = false;    // samo racuna predjenu udaljenost
-const bool randomPipes = true;        // neprestano stvara nove random cijevi
+const bool simulationOnly = true;    // samo racuna predjenu udaljenost
+const bool randomPipes = false;        // neprestano stvara nove random cijevi
 
 // parametri prikaza (SFML koristi float)
 const int WINDOW_WIDTH = 800;

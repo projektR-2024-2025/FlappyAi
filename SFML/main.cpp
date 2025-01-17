@@ -26,10 +26,10 @@ int main() {
 
     switch (selectedController) {
     case NN:
-        controller = NNlogic();
+        *controller = NNlogic();
         break;
     case GP:
-        controller = new MyController;
+        controller = new Controller;
         break;
     case CGP:
         controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined
