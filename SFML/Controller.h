@@ -82,7 +82,6 @@ public:
 		input.push_back(hole_start);
 		input.push_back(hole_end);
         //input.push_back(simulator.groundLevel);
-        
         // dobi outpute iz nn
         std::vector<double> output = nn.predict(input);
 
@@ -99,6 +98,42 @@ public:
             agent.isJumping = false;
         }
         return agent.isJumping;*/
+    }
+};
+
+class CGPController2 : public Controller {
+private:
+    Entity entity;
+
+public:
+
+    CGPController2(const Entity& entity) : entity(entity) {}
+
+    bool action(Bird& agent, Simulator& simulator)
+    {
+        vector<double> input(Constants::AMOUNT_OF_CGP_INPUTS);
+
+        bool obstacleAhead = false;
+        for (const auto& pipe : simulator.pipes)
+            if (pipe.x > 30 && pipe.x < 250) {
+                if (agent.position + BIRD_SIZE > pipe.bottomY) {
+                    obstacleAhead = 1;
+                }
+                break;
+            }
+
+        input[0] = obstacleAhead ? 1.0 : 0.0;
+        input[1] = agent.position;
+        input[2] = agent.velocity;
+        input[3] = simulator.groundLevel;
+
+        double output = entity.entityFunction(input);
+
+        if(output > Constants::DO_I_JUMP) {
+            agent.isJumping = true;
+            return true;
+        }
+        return false;
     }
 };
 
