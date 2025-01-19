@@ -10,7 +10,7 @@
 #include "Agent.h"
 #include "Controller.h"
 #include "SelectionScreen.h"  // Include the selection screen header
-//#include "NNlogic.cpp"
+#include "NNlogic.h"
 #include "CGP.h"
 
 int main() {
@@ -29,10 +29,10 @@ int main() {
 
     switch (selectedController) {
     case NN:
-        controller = new MyController;  // Assuming NNController is defined
+        *controller = NNlogic();
         break;
     case GP:
-        controller = new MyController;  // Assuming GPController is defined
+        controller = new Controller;
         break;
     case CGP:
         //controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined

@@ -1,5 +1,7 @@
 #include "Simulator.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "parameters.h"
 
 
@@ -142,7 +144,7 @@ void Simulator::update(Bird& bird)
             window->draw(birdShape);
 
             // crtaj cijevi - samo prve 4
-            for (int i = 0; i < 4 && i < pipes.size(); i++) {
+            for (int i = 0; i < pipes.size(); i++) {
                 topPipe.setPosition(pipes[i].x, 0);
                 topPipe.setSize(sf::Vector2f(PIPE_WIDTH, pipes[i].topY));
                 bottomPipe.setPosition(pipes[i].x, pipes[i].bottomY);
@@ -180,8 +182,32 @@ void Simulator::initializeMap(Bird& bird)
     // b) hard coded ili ucitane cijevi
     else {
         // cijevi su dimenzionirane relativno na velicinu prozora, [0, 1]
-        pipes = std::vector<Pipe>{ { 0.5, 0.3, 0.55 }, { 0.8, 0.3, 0.55 }, { 1.1, 0.25, 0.5 }, { 1.4, 0.25, 0.5 } };
+        //pipes = std::vector<Pipe>{ { 0.5, 0.3, 0.55 }, { 0.8, 0.3, 0.55 }, { 1.1, 0.25, 0.5 }, { 1.4, 0.25, 0.5 } };
         // TODO: ovdje ucitaj cijevi iz datoteke
+
+        std::ifstream file("Map.txt");
+
+        // Check if the file opened successfully
+        if (!file.is_open()) {
+            std::cerr << "Error opening file!" << std::endl;
+            return;
+        }
+
+        // Read the file line by line
+        std::string line;
+        while (std::getline(file, line)) {
+            std::vector<std::string> tokens;
+            std::stringstream ss(line);
+            std::string token;
+            while (std::getline(ss, token, ' ')) {
+                tokens.push_back(token);
+            }
+
+            pipes.push_back({ std::stof(tokens[0]), std::stof(tokens[1]), std::stof(tokens[2]) });
+        }
+
+        // Close the file
+        file.close();
 
         // pretvori u piksele, ovisno o dimenzijama prozora
         for (Pipe& pipe : pipes) {

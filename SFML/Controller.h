@@ -67,41 +67,35 @@ private:
 public:
     NeuralController(const NeuralNetwork& nn) : nn(nn) {}
 
-    bool action(Bird& agent, Simulator& simulator)
+    bool action(Bird& bird, Simulator& simulator)
     {
         // input vector za nn
         std::vector<double> input;
-
-        // get current position
-        double yPos = agent.position * simulator.groundLevel;
         // is obstacle ahead
         double obstacleAhead = 0;
-        simulator.obstacleMap;
-        for (int i = 0; i < 12; i++) {
-            if (simulator.obstacleMap[(int)yPos][i] == true) {
-                obstacleAhead = 1;
+        for (const auto& pipe : simulator.pipes)
+            if (pipe.x > 30 && pipe.x < 250) {
+                if (bird.position + BIRD_SIZE > pipe.bottomY) {
+                    obstacleAhead = 1;
+                }
                 break;
             }
-        }
 
         // priprema input data
         input.push_back(obstacleAhead);
-        input.push_back(agent.position);
-        input.push_back(agent.velocity);
-        input.push_back(Simulator::groundLevel);
+        input.push_back(bird.position);
+        input.push_back(bird.velocity);
+        input.push_back(simulator.groundLevel);
 
         // dobi outpute iz nn
         std::vector<double> output = nn.predict(input);
 
         // koristi nn outpute za odredjivanje actiona
         //std::cout << output[0] << " " << output[1] << std::endl;
-        if ((output[0] + output[1]) / 2.f > 0.33) {
-            agent.isJumping = true;
+        if ((output[0] + output[1]) / 2.f > 0.60) {
+            bird.velocity = JUMP_SPEED;
         }
-        else {
-            agent.isJumping = false;
-        }
-        return agent.isJumping;
+        return true;
         /*if (output[0] < output[1]) {
             agent.isJumping = true;
         }
@@ -111,58 +105,6 @@ public:
         return agent.isJumping;*/
     }
 };
-
-
-
-
-class CGPController2 : public Controller {
-private:
-    Entity entity;
-
-public:
-
-    CGPController2(const Entity& entity) : entity(entity) {}
-
-    bool action(Bird& agent, Simulator& simulator)
-    {
-        vector<double> input(Constants::AMOUNT_OF_CGP_INPUTS);
-
-        bool obstacleAhead = false;
-        for (const auto& pipe : simulator.pipes)
-            if (pipe.x > 30 && pipe.x < 250) {
-                if (agent.position + BIRD_SIZE > pipe.bottomY) {
-                    obstacleAhead = 1;
-                }
-                break;
-            }
-
-        input[0] = obstacleAhead ? 1.0 : 0.0;
-        input[1] = agent.position;
-        input[2] = agent.velocity;
-        input[3] = simulator.groundLevel;
-
-        double output = entity.entityFunction(input);
-
-        if(output > Constants::DO_I_JUMP) {
-            agent.isJumping = true;
-            return true;
-        }
-        return false;
-    }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class CGPController : public Controller
 {
@@ -193,9 +135,6 @@ public:
 
         // odredi vrijednost izlazne vrijednosti cgp mreze
         individual.evaluateValue(input);
-
-        if(!isnan(individual.outputGene[0].value))
-            std::cout << individual.outputGene[0].value << std::endl;
 
         if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > OUT_VALUE)
             bird.velocity = JUMP_SPEED;

@@ -59,5 +59,8 @@
     <ClInclude Include="NeuralNetwork.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="NNlogic.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
