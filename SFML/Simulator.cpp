@@ -2,16 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "parameters.h"
+#include "Parameters.h"
 
 
 Simulator::Simulator() : running(true)
 {}
 
-Simulator::Simulator(std::string map) : running(true)
-{
-	this->map = map;
-}
+Simulator::Simulator(sf::RenderWindow* window) : running(true), window(window)
+{}
+
+Simulator::Simulator(std::string map) : running(true), map(map)
+{}
 
 bool Simulator::initialize(Bird& bird) 
 {
@@ -23,12 +24,6 @@ bool Simulator::initialize(Bird& bird)
     // ptica, cijevi
     std::vector<Pipe> pipes;
     initializeMap(bird);
-
-    // stvori GUI prozor samo ako treba
-    sf::RenderWindow* pw = NULL;
-    if (!simulationOnly)
-        pw = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Flappy AI");
-    window = pw;
 
     // izgled ptice
     // TODO: stavite neki sprite
@@ -55,7 +50,7 @@ bool Simulator::initialize(Bird& bird)
 
 bool Simulator::isRunning() const 
 {
-    if (simulationOnly)
+    if (Parameters::simulationOnly)
         return running;
     return true;
 }
@@ -78,7 +73,7 @@ bool Simulator::simulateFrame(Bird& bird, float deltaTime)
             }
         }
 
-        if (randomPipes)
+        if (Parameters::randomPipes)
             // stvori slucajnu novu cijev kad ovu predjemo
             if (pipe.x + PIPE_WIDTH < 0) {
                 float pipeHeight = (float) (rand() % 200 + 100);
@@ -102,8 +97,8 @@ bool Simulator::simulateFrame(Bird& bird, float deltaTime)
 
 void Simulator::update(Bird& bird) 
 {
-    if (simulationOnly || window->isOpen()) {
-        if (!simulationOnly) {
+    if (Parameters::simulationOnly || window->isOpen()) {
+        if (!Parameters::simulationOnly) {
             sf::Event event;
             while (window->pollEvent(event)) {
                 if (event.type == sf::Event::Closed) {
@@ -123,23 +118,25 @@ void Simulator::update(Bird& bird)
 
         // najvaznija varijabla: period simulacije
         float deltaTime;
-        if (simulationOnly)
-            deltaTime = 0.03f;  // uzmimo kao da su prosle 3 stotinke (simulirano vrijeme)
+        if (Parameters::simulationOnly)
+            deltaTime = 0.003f;  // uzmimo kao da su prosle 3 stotinke (simulirano vrijeme)
         else
             deltaTime = clock.restart().asSeconds();    // koliko je proslo ako koristimo prikaz (real time)
 
+        //std::cout << deltaTime << std::endl;
+
         // korak simulacije
         if (running && !simulateFrame(bird, deltaTime)) {
-            //std::cout << "Prijedjena udaljenost: " << bird.distance << "\n";
+            std::cout << "Prijedjena udaljenost: " << bird.distance << "\n";
             running = false;
             //resetGame(bird, pipes, distance);
-            if (simulationOnly) {
+            if (Parameters::simulationOnly) {
                 return; // nema reseta ako nema prikaza
             }
         }
 
         // ako nije simulacija, ovdje se sve crta
-        if (!simulationOnly) {
+        if (!Parameters::simulationOnly) {
             window->clear(sf::Color(135, 206, 250)); // nebo
             window->draw(ground);
 
@@ -178,7 +175,7 @@ void Simulator::initializeMap(Bird& bird)
     pipes.clear();
 
     // a) slucajne cijevi
-    if (randomPipes)
+    if (Parameters::randomPipes)
         for (float x = WINDOW_WIDTH / 2; x < 1.5 * WINDOW_WIDTH; x += 300) {
             float pipeHeight = (float) (rand() % 200 + 100);
             pipes.push_back({ x, pipeHeight, pipeHeight + PIPE_GAP });

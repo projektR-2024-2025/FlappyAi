@@ -3,7 +3,7 @@
 #include "Simulator.h"
 #include "parameters.h"
 #include "./NeuralNetwork.h"
-#include "CGP.h"
+#include "CGPIndividual.h"
 
 class Controller
 {
@@ -136,7 +136,7 @@ public:
         // odredi vrijednost izlazne vrijednosti cgp mreze
         individual.evaluateValue(input);
 
-        if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > OUT_VALUE)
+        if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > 0)
             bird.velocity = JUMP_SPEED;
         return true;
     }

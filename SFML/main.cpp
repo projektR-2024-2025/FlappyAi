@@ -14,31 +14,42 @@
 #include "CGP.h"
 
 int main() {
-    ControllerType selectedController = showSelectionScreen();
+
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Flappy AI");
+
+    ControllerType selectedController = showSelectionScreen(window);
     if (selectedController == NONE) {
         std::cerr << "No controller selected, exiting.\n";
         return -1;
     }
+    ActionType selectedAction = showActionScreen(window);
 
-    Simulator simulator;
-    Bird agent;
+    Parameters::simulationOnly = selectedAction == BEST ? false : true;
+    Parameters::randomPipes = false;
+
     Controller* controller = nullptr;
+    CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
 
     switch (selectedController) {
     case NN:
-        *controller = NNlogic();
+        controller = NNlogic();
         break;
     case GP:
         controller = new Controller;
         break;
-    case CGP:
-        controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined
+    case CGP1:
+        controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
         break;
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
         return -1;
     }
 
+    Parameters::simulationOnly = false;
+    Parameters::randomPipes = false;
+
+    Simulator simulator(&window);
+    Bird agent;
     simulator.initialize(agent);
 
     // Main game loop

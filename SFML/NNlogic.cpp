@@ -106,7 +106,7 @@ Individual tournamentSelection(const std::vector<Individual>& population, int to
     return tournament[0];
 }
 
-NeuralController NNlogic() {
+NeuralController* NNlogic() {
     // definiranje strukture neuronske mreze
     std::vector<int> layers = { 4, 5, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
 
@@ -178,6 +178,6 @@ NeuralController NNlogic() {
         std::cout << "Generation " << generation << " - Best Fitness: " << population[0].fitness << std::endl;
     }
 
-    return NeuralController(population[0].nn);
-
+    return new NeuralController(population[0].nn);
+    
 }
