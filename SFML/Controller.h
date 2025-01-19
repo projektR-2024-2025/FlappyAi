@@ -109,6 +109,44 @@ public:
 
     CGPController2(const Entity& entity) : entity(entity) {}
 
+    CGPController2(const Entity& learnedEntity, string answer) {
+        if(answer == "L") {
+            this->entity = learnedEntity;
+
+        }else if(answer == "R") {
+            string lineFromFile;
+            stringstream lineStream;
+            vector<string> splicedString;
+            string segment;
+            fstream myFile;
+
+            myFile.open ("/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile");
+
+            if (myFile.is_open())
+            {
+                getline(myFile, lineFromFile);
+                myFile.close();
+            }
+
+            lineStream = (stringstream)lineFromFile;
+
+            while(std::getline(lineStream, segment, ' '))
+            {
+                splicedString.push_back(segment);
+            }
+            this->entity = this->entity.stringToEntity(splicedString);
+
+            cout << this->entity.toString()<<"\n";
+
+
+        }else {
+            cout << "Answer unvalid";
+        }
+
+
+
+    }
+
     bool action(Bird& agent, Simulator& simulator)
     {
         vector<double> input(Constants::AMOUNT_OF_CGP_INPUTS);
@@ -143,6 +181,7 @@ private:
     cgp_andrija::CGP1Individual individual;
 public:
     CGP1Controller(const cgp_andrija::CGP1Individual& individual) : individual(individual) {}
+
 
     bool action(Bird& bird, Simulator& simulator)
     {

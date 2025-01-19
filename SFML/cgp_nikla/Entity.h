@@ -27,6 +27,7 @@ public:
     double entityFunction(vector<double> &cgpInputs);
 
     string toString();
+    Entity stringToEntity(vector<string> splicedString);
 
 
 

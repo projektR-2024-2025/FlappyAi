@@ -19,7 +19,7 @@ namespace Constants {
     static const int VISIBILTY_DISTANCE = 12;
     static const int DO_I_JUMP = 0;
     static const int MAX_MAP_SIZE = 150;
-    static const int NUMBER_OF_GENERATIONS = 5000;
+    static const int NUMBER_OF_GENERATIONS = 30;
     //static final int NUMBER_OF_POPULATIONS_BEFORE_EVAL = 5;
 }
 
