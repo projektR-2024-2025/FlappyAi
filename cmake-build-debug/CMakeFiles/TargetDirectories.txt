@@ -1,0 +1,3 @@
+/Users/nikson/Documents/GitHub/FlappyAi/cmake-build-debug/CMakeFiles/FlappyAi.dir
+/Users/nikson/Documents/GitHub/FlappyAi/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/nikson/Documents/GitHub/FlappyAi/cmake-build-debug/CMakeFiles/rebuild_cache.dir

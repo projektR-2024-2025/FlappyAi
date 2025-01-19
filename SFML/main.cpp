@@ -20,8 +20,11 @@ int main() {
         return -1;
     }
 
-    Simulator simulator;
-    Bird agent;
+
+    Entity bestEntityFromLastPop = runCgp().getBestEntity();
+
+    Simulator simulator = Simulator();
+    Bird agent = Bird();
     Controller* controller = nullptr;
 
     switch (selectedController) {
@@ -32,7 +35,8 @@ int main() {
         controller = new MyController;  // Assuming GPController is defined
         break;
     case CGP:
-        controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined
+        //controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined
+        controller = new CGPController2(bestEntityFromLastPop);
         break;
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
