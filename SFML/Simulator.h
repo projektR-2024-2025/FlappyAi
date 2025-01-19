@@ -48,6 +48,7 @@ private:
     std::vector<int> mapGround;
     int mapReadIndex = 0;
     bool pillarFlag = 0;
+    std::string map = "Map1.txt";
 
     bool running;
     bool scoreScreen;

@@ -8,6 +8,10 @@
 Simulator::Simulator() : running(true)
 {}
 
+Simulator::Simulator(std::string map) : running(true)
+{
+	this->map = map;
+}
 
 bool Simulator::initialize(Bird& bird) 
 {
@@ -126,7 +130,7 @@ void Simulator::update(Bird& bird)
 
         // korak simulacije
         if (running && !simulateFrame(bird, deltaTime)) {
-            std::cout << "Prijedjena udaljenost: " << bird.distance << "\n";
+            //std::cout << "Prijedjena udaljenost: " << bird.distance << "\n";
             running = false;
             //resetGame(bird, pipes, distance);
             if (simulationOnly) {
@@ -185,7 +189,7 @@ void Simulator::initializeMap(Bird& bird)
         //pipes = std::vector<Pipe>{ { 0.5, 0.3, 0.55 }, { 0.8, 0.3, 0.55 }, { 1.1, 0.25, 0.5 }, { 1.4, 0.25, 0.5 } };
         // TODO: ovdje ucitaj cijevi iz datoteke
 
-        std::ifstream file("Map.txt");
+        std::ifstream file(this->map);
 
         // Check if the file opened successfully
         if (!file.is_open()) {

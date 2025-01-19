@@ -8,8 +8,10 @@
 #include "./Controller.h"
 
 #define GENERATION_SIZE 100
-#define GENERATION_COUNT 5000
-#define MUTATION_RATE 0.90
+#define GENERATION_COUNT 50000
+#define MUTATION_RATE 0.30
+
+std::vector<std::string> maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };
 
 struct Individual {
     NeuralNetwork nn;
@@ -106,7 +108,7 @@ Individual tournamentSelection(const std::vector<Individual>& population, int to
 
 NeuralController NNlogic() {
     // definiranje strukture neuronske mreze
-    std::vector<int> layers = { 4, 8, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
+    std::vector<int> layers = { 4, 5, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
 
     // inicijalizacija populacije
     std::vector<Individual> population;
@@ -117,10 +119,14 @@ NeuralController NNlogic() {
 
     // evaluacija fitnessa
     for (auto& individual : population) {
-        Simulator simulator;
-        Bird agent;
-        simulator.initialize(agent);
-        individual.fitness = evaluateFitness(individual.nn, simulator, agent);
+        float totalDistance = 0.f;
+		for (auto& map : maps) {
+			Simulator simulator(map);
+			Bird agent;
+			simulator.initialize(agent);
+			totalDistance += evaluateFitness(individual.nn, simulator, agent);
+		}
+        individual.fitness = totalDistance / maps.size();
     }
 
     // sortiraj populaciju po fitnessu
@@ -142,8 +148,8 @@ NeuralController NNlogic() {
         while (newPopulation.size() < GENERATION_SIZE) {
             //Individual parent1 = selectFromTopHalf(population);
             //Individual parent2 = selectFromTopHalf(population);
-            Individual parent1 = tournamentSelection(population, 20);
-            Individual parent2 = tournamentSelection(population, 20);
+            Individual parent1 = tournamentSelection(population, GENERATION_SIZE * 0.3);
+            Individual parent2 = tournamentSelection(population, GENERATION_SIZE * 0.3);
             NeuralNetwork childNN = crossover(parent1.nn, parent2.nn);
             mutate(childNN, mutationRate);
             newPopulation.emplace_back(childNN);
@@ -151,10 +157,14 @@ NeuralController NNlogic() {
 
         // evaluacija fitnessa
         for (auto& individual : newPopulation) {
-            Simulator simulator;
-            Bird agent;
-            simulator.initialize(agent);
-            individual.fitness = evaluateFitness(individual.nn, simulator, agent);
+            float totalDistance = 0.f;
+            for (auto& map : maps) {
+                Simulator simulator(map);
+                Bird agent;
+                simulator.initialize(agent);
+                totalDistance += evaluateFitness(individual.nn, simulator, agent);
+            }
+            individual.fitness = totalDistance / maps.size();
         }
 
         // sortiraj populaciju po fitnessu
