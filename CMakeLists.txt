@@ -4,15 +4,7 @@ project(FlappyAi)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Set SFML and LLVM directories
-set(SFML_DIR "/opt/homebrew/opt/sfml@2/lib/cmake/SFML")
-set(CMAKE_C_COMPILER "/opt/homebrew/opt/llvm/bin/clang")
-set(CMAKE_CXX_COMPILER "/opt/homebrew/opt/llvm/bin/clang++")
 
-# Find SFML package
-find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
-
-# Define the executable target
 add_executable(FlappyAi
         SFML/main.cpp
         SFML/Agent.h
@@ -36,16 +28,22 @@ add_executable(FlappyAi
         #SFML/Population.cpp
         #SFML/conioMac.h
 )
-
-# Apply OpenMP settings
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+
     target_include_directories(FlappyAi PRIVATE "/opt/homebrew/opt/libomp/include")
-    target_compile_options(FlappyAi PRIVATE -Xpreprocessor -fopenmp)
-    target_compile_options(FlappyAi PRIVATE -Wno-unused-command-line-argument)
-    target_link_libraries(FlappyAi PRIVATE "/opt/homebrew/opt/libomp/lib/libomp.dylib")
+    target_compile_options(FlappyAi PRIVATE
+            -Xpreprocessor -fopenmp
+            -Wno-unused-command-line-argument
+    )
+    target_link_libraries(FlappyAi PRIVATE
+            /opt/homebrew/opt/libomp/lib/libomp.dylib
+    )
 endif()
 
-# Link SFML libraries
+set(SFML_DIR "/opt/homebrew/opt/sfml@2/lib/cmake/SFML")
+
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
 target_link_libraries(FlappyAi PRIVATE
         sfml-graphics
         sfml-window

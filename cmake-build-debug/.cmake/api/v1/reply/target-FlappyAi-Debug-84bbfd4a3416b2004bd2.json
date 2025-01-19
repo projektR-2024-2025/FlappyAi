@@ -11,7 +11,9 @@
 		"commands" : 
 		[
 			"add_executable",
-			"target_link_libraries"
+			"target_link_libraries",
+			"target_compile_options",
+			"target_include_directories"
 		],
 		"files" : 
 		[
@@ -25,13 +27,31 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 16,
+				"line" : 8,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 49,
+				"line" : 38,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 34,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 33,
 				"parent" : 0
 			}
 		]
@@ -42,13 +62,29 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics"
+					"fragment" : "-g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Xpreprocessor"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-fopenmp"
+				},
+				{
+					"backtrace" : 4,
+					"fragment" : "-Wno-unused-command-line-argument"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 2,
+					"backtrace" : 5,
+					"path" : "/opt/homebrew/opt/libomp/include"
+				},
+				{
+					"backtrace" : 3,
 					"isSystem" : true,
 					"path" : "/opt/homebrew/opt/sfml@2/include"
 				}
@@ -96,16 +132,21 @@
 			},
 			{
 				"backtrace" : 2,
+				"fragment" : "/opt/homebrew/opt/libomp/lib/libomp.dylib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 3,
 				"fragment" : "/opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 2,
+				"backtrace" : 3,
 				"fragment" : "/opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 2,
+				"backtrace" : 3,
 				"fragment" : "/opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib",
 				"role" : "libraries"
 			}

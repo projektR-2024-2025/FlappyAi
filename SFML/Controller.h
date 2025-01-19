@@ -4,6 +4,9 @@
 #include "parameters.h"
 #include "./NeuralNetwork.h"
 #include "CGP.h"
+#include "Entity.h"
+
+using namespace std;
 
 class Controller
 {
@@ -106,12 +109,88 @@ public:
     }
 };
 
+class CGPController2 : public Controller {
+private:
+    Entity entity;
+
+public:
+
+    CGPController2(const Entity& entity) : entity(entity) {}
+
+    CGPController2(const Entity& learnedEntity, string answer) {
+        if(answer == "L") {
+            this->entity = learnedEntity;
+
+        }else if(answer == "R") {
+            string lineFromFile;
+            stringstream lineStream;
+            vector<string> splicedString;
+            string segment;
+            fstream myFile;
+
+            myFile.open ("/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile");
+
+            if (myFile.is_open())
+            {
+                getline(myFile, lineFromFile);
+                myFile.close();
+            }
+
+            lineStream = (stringstream)lineFromFile;
+
+            while(std::getline(lineStream, segment, ' '))
+            {
+                splicedString.push_back(segment);
+            }
+            this->entity = this->entity.stringToEntity(splicedString);
+
+            cout << this->entity.toString()<<"\n";
+
+
+        }else {
+            cout << "Answer unvalid";
+        }
+
+
+
+    }
+
+    bool action(Bird& agent, Simulator& simulator)
+    {
+        vector<double> input(Constants::AMOUNT_OF_CGP_INPUTS);
+
+        bool obstacleAhead = false;
+        for (const auto& pipe : simulator.pipes)
+            if (pipe.x > 30 && pipe.x < 250) {
+                if (agent.position + BIRD_SIZE > pipe.bottomY) {
+                    obstacleAhead = 1;
+                }
+                break;
+            }
+
+        input[0] = obstacleAhead ? 1.0 : 0.0;
+        input[1] = agent.position;
+        input[2] = agent.velocity;
+        input[3] = simulator.groundLevel;
+
+        double output = entity.entityFunction(input);
+
+        if(output > Constants::DO_I_JUMP) {
+            agent.isJumping = true;
+            return true;
+        }
+        return false;
+    }
+};
+
+
 class CGPController : public Controller
 {
 private:
     CGPIndividual individual;
 public:
     CGPController(const CGPIndividual& individual) : individual(individual) {}
+
 
     bool action(Bird& bird, Simulator& simulator)
     {

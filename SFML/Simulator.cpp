@@ -185,7 +185,8 @@ void Simulator::initializeMap(Bird& bird)
         //pipes = std::vector<Pipe>{ { 0.5, 0.3, 0.55 }, { 0.8, 0.3, 0.55 }, { 1.1, 0.25, 0.5 }, { 1.4, 0.25, 0.5 } };
         // TODO: ovdje ucitaj cijevi iz datoteke
 
-        std::ifstream file("Map.txt");
+        //std::ifstream file("Map.txt");
+        std::ifstream file("/Users/nikson/Documents/GitHub/FlappyAi/SFML/Map.txt");
 
         // Check if the file opened successfully
         if (!file.is_open()) {

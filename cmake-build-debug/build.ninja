@@ -51,71 +51,71 @@ build cmake_object_order_depends_target_FlappyAi: phony || CMakeFiles/FlappyAi.d
 
 build CMakeFiles/FlappyAi.dir/SFML/main.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/main.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/main.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/CGP.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/CGP.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/CGP.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/CGPIndividual.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/CGPIndividual.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/CGPIndividual.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/NeuralNetwork.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/NeuralNetwork.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/NeuralNetwork.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/NNlogic.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/NNlogic.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/NNlogic.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/SelectionScreen.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/SelectionScreen.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/SelectionScreen.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/Simulator.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Simulator.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/Simulator.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/Entity.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Entity.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/Entity.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/Gene.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Gene.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/Gene.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
 build CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Population.cpp || cmake_object_order_depends_target_FlappyAi
   DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o.d
-  FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  INCLUDES = -isystem /opt/homebrew/opt/sfml@2/include
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
@@ -127,9 +127,9 @@ build CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o: CXX_COMPILER__FlappyAi_unsc
 #############################################
 # Link the executable FlappyAi
 
-build FlappyAi: CXX_EXECUTABLE_LINKER__FlappyAi_Debug CMakeFiles/FlappyAi.dir/SFML/main.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGP.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGPIndividual.cpp.o CMakeFiles/FlappyAi.dir/SFML/NeuralNetwork.cpp.o CMakeFiles/FlappyAi.dir/SFML/NNlogic.cpp.o CMakeFiles/FlappyAi.dir/SFML/SelectionScreen.cpp.o CMakeFiles/FlappyAi.dir/SFML/Simulator.cpp.o CMakeFiles/FlappyAi.dir/SFML/Entity.cpp.o CMakeFiles/FlappyAi.dir/SFML/Gene.cpp.o CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o | /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
+build FlappyAi: CXX_EXECUTABLE_LINKER__FlappyAi_Debug CMakeFiles/FlappyAi.dir/SFML/main.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGP.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGPIndividual.cpp.o CMakeFiles/FlappyAi.dir/SFML/NeuralNetwork.cpp.o CMakeFiles/FlappyAi.dir/SFML/NNlogic.cpp.o CMakeFiles/FlappyAi.dir/SFML/SelectionScreen.cpp.o CMakeFiles/FlappyAi.dir/SFML/Simulator.cpp.o CMakeFiles/FlappyAi.dir/SFML/Entity.cpp.o CMakeFiles/FlappyAi.dir/SFML/Gene.cpp.o CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o | /opt/homebrew/opt/libomp/lib/libomp.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
-  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/sfml@2/lib  /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
+  LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/sfml@2/lib  /opt/homebrew/opt/libomp/lib/libomp.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -179,14 +179,14 @@ build all: phony FlappyAi
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /Users/nikson/Documents/GitHub/FlappyAi/CMakeLists.txt /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfig.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigDependencies.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigVersion.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets-release.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /Users/nikson/Documents/GitHub/FlappyAi/CMakeLists.txt /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfig.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigDependencies.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigVersion.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets-release.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /Users/nikson/Documents/GitHub/FlappyAi/CMakeLists.txt /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfig.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigDependencies.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigVersion.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets-release.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake: phony
+build /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /Users/nikson/Documents/GitHub/FlappyAi/CMakeLists.txt /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfig.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigDependencies.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLConfigVersion.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets-release.cmake /opt/homebrew/opt/sfml@2/lib/cmake/SFML/SFMLSharedTargets.cmake CMakeCache.txt CMakeFiles/3.28.1/CMakeCCompiler.cmake CMakeFiles/3.28.1/CMakeCXXCompiler.cmake CMakeFiles/3.28.1/CMakeSystem.cmake: phony
 
 
 #############################################

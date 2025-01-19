@@ -11,6 +11,8 @@
 #include <cmath>
 #include <random>
 #include <sstream>
+#include <iostream>
+#include <fstream>
 #include "Constants.h"
 #include "Gene.h"
 #include "Entity.h"
@@ -120,41 +122,108 @@ double Entity::entityFunction(vector<double> &cgpInputs) {
 
 string Entity::toString() {
 
-    string output = "[";
+    string output;
 
     for(auto &gene : genome) {
         output = output + to_string(gene.in1) + to_string(gene.in2);
 
         switch (gene.function) {
             case Functions::PLUS:
-                output = output + "PLUS ";
+                //output = output + "PLUS ";
+                output = output + "1 ";
                 break;
             case Functions::MINUS:
-                output = output + "MINUS ";
+                //output = output + "MINUS ";
+                output = output + "2 ";
                 break;
             case Functions::MUL:
-                output = output + "MUL ";
+                //output = output + "MUL ";
+                output = output + "3 ";
                 break;
             case Functions::DIV:
-                output = output + "DIV ";
+                //output = output + "DIV ";
+                output = output + "4 ";
                 break;
             case Functions::MOD:
-                output = output + "MOD ";
+                //output = output + "MOD ";
+                output = output + "5 ";
                 break;
             case Functions::COS:
-                output = output + "COS ";
+                //output = output + "COS ";
+                output = output + "6 ";
                 break;
             case Functions::SIN:
-                output = output + "SIN ";
+                //output = output + "SIN ";
+                output = output + "7 ";
                 break;
             case Functions::POW:
-                output = output + "POW ";
+                //output = output + "POW ";
+                output = output + "8 ";
                 break;
         }
     }
 
-    output = output + "] " + to_string(this->fitness);
+    output = output + to_string(this->fitness);
 
 return output;
 }
+
+Entity Entity::stringToEntity(vector<string> splicedString) {
+
+    Entity entity = Entity();
+
+
+    for(int i = 0; i < Constants::ENTITY_SIZE + 1; i++) {
+
+        if(i != Constants::ENTITY_SIZE) {
+            entity.genome[i].in1 = (int)(splicedString[i][0]) - 48;
+            entity.genome[i].in2 = (int)splicedString[i][1] - 48;
+
+            switch(splicedString[i][2]) {
+
+                case '1':
+                    entity.genome[i].function = Functions::PLUS;
+                break;
+
+                case '2':
+                    entity.genome[i].function = Functions::MINUS;
+                break;
+
+                case '3':
+                    entity.genome[i].function = Functions::MUL;
+                break;
+
+                case '4':
+                    entity.genome[i].function = Functions::DIV;
+                break;
+
+                case '5':
+                    entity.genome[i].function = Functions::MOD;
+                break;
+
+                case '6':
+                    entity.genome[i].function = Functions::COS;
+                break;
+
+                case '7':
+                    entity.genome[i].function = Functions::SIN;
+                break;
+
+                case '8':
+                    entity.genome[i].function = Functions::POW;
+                break;
+
+                //dodat uvijet zadnjeg elementa
+            }
+        }else if(i == Constants::ENTITY_SIZE) {
+            entity.fitness = stof(splicedString[i]);
+        }
+
+
+    }
+
+
+return entity;
+}
+
 

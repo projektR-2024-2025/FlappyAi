@@ -5,13 +5,14 @@
 		{
 			"compiler" : 
 			{
-				"id" : "Clang",
+				"id" : "AppleClang",
 				"implicit" : 
 				{
 					"includeDirectories" : 
 					[
-						"/opt/homebrew/Cellar/llvm/19.1.7/lib/clang/19/include",
-						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include"
+						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include",
+						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include",
+						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
 					],
 					"linkDirectories" : 
 					[
@@ -24,8 +25,8 @@
 					],
 					"linkLibraries" : []
 				},
-				"path" : "/opt/homebrew/opt/llvm/bin/clang",
-				"version" : "19.1.7"
+				"path" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc",
+				"version" : "16.0.0.16000026"
 			},
 			"language" : "C",
 			"sourceFileExtensions" : 
@@ -37,14 +38,15 @@
 		{
 			"compiler" : 
 			{
-				"id" : "Clang",
+				"id" : "AppleClang",
 				"implicit" : 
 				{
 					"includeDirectories" : 
 					[
-						"/opt/homebrew/Cellar/llvm/19.1.7/include/c++/v1",
-						"/opt/homebrew/Cellar/llvm/19.1.7/lib/clang/19/include",
-						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include"
+						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1",
+						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include",
+						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include",
+						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
 					],
 					"linkDirectories" : 
 					[
@@ -60,8 +62,8 @@
 						"c++"
 					]
 				},
-				"path" : "/opt/homebrew/opt/llvm/bin/clang++",
-				"version" : "19.1.7"
+				"path" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++",
+				"version" : "16.0.0.16000026"
 			},
 			"language" : "CXX",
 			"sourceFileExtensions" : 

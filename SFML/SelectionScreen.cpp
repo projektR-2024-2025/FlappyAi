@@ -5,7 +5,8 @@
 #ifdef _WIN32
 #define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
 #else
-#define ARIAL_FONT_PATH "arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
+//#define ARIAL_FONT_PATH "arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
+#define ARIAL_FONT_PATH "/System/Library/Fonts/Supplemental/Arial.ttf"
 #endif
 
 ControllerType showSelectionScreen() {
