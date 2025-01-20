@@ -8,7 +8,7 @@
 #include "./Controller.h"
 
 #define GENERATION_SIZE 100
-#define GENERATION_COUNT 50000
+#define GENERATION_COUNT 1500
 #define MUTATION_RATE 0.30
 
 std::vector<std::string> maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };

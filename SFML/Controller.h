@@ -23,9 +23,9 @@ public:
         // heuristika: skoci ako je cijev ispred
         for (const auto& pipe : simulator.pipes) {
             if (pipe.x > 30 && pipe.x < 250) { // je li cijev blizu
-                //if (bird.position + 40 > pipe.bottomY - PIPE_GAP / 2) { 
-                if (bird.position + BIRD_SIZE > pipe.bottomY) { // je li ispred
-                    bird.velocity = JUMP_SPEED;
+                //if (bird.position + 40 > pipe.bottomY - Parameters::PIPE_GAP / 2) { 
+                if (bird.position + Parameters::BIRD_SIZE > pipe.bottomY) { // je li ispred
+                    bird.velocity = Parameters::JUMP_SPEED;
                 }
                 break;
             }
@@ -71,11 +71,13 @@ public:
     {
         // input vector za nn
         std::vector<double> input;
+
+        // get current position
         // is obstacle ahead
         double obstacleAhead = 0;
         for (const auto& pipe : simulator.pipes)
             if (pipe.x > 30 && pipe.x < 250) {
-                if (bird.position + BIRD_SIZE > pipe.bottomY) {
+                if (bird.position + Parameters::BIRD_SIZE > pipe.bottomY) {
                     obstacleAhead = 1;
                 }
                 break;
@@ -93,7 +95,7 @@ public:
         // koristi nn outpute za odredjivanje actiona
         //std::cout << output[0] << " " << output[1] << std::endl;
         if ((output[0] + output[1]) / 2.f > 0.60) {
-            bird.velocity = JUMP_SPEED;
+            bird.velocity = Parameters::JUMP_SPEED;
         }
         return true;
         /*if (output[0] < output[1]) {
@@ -118,12 +120,19 @@ public:
         // input vector za cgp mrezu
         std::vector<double> input;
 
+        input.push_back(-1);
+        input.push_back(-1);
+        input.push_back(-1);
+
         // get current position
         // is obstacle ahead
         double obstacleAhead = 0;
         for (const auto& pipe : simulator.pipes)
-            if (pipe.x > 30 && pipe.x < 250) {
-                if (bird.position + BIRD_SIZE > pipe.bottomY) {
+            if (pipe.x > 0 && pipe.x < 250) {
+                input[0] = (pipe.x);
+                input[1] = (pipe.bottomY);
+                input[2] = (pipe.topY);
+                if (bird.position + Parameters::BIRD_SIZE > pipe.bottomY) {
                     obstacleAhead = 1;
                 }
                 break;
@@ -137,7 +146,7 @@ public:
         individual.evaluateValue(input);
 
         if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > 0)
-            bird.velocity = JUMP_SPEED;
+            bird.velocity = Parameters::JUMP_SPEED;
         return true;
     }
 };

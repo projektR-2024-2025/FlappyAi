@@ -277,20 +277,22 @@ CGPIndividual CGP::runCGP() {
         mt19937 gen(rd());
         for (int i = 0; i < POPULATION; i++) {
 
-            Simulator simulator;
-            Bird bird;
-            Controller* controller = new CGPController(population[i]);
-
-            simulator.initialize(bird);
-
-            while (simulator.isRunning()) {
-                simulator.update(bird);
-                controller->action(bird, simulator);
-                if (bird.distance >= MAX_MAP_SIZE)
-                    break;
+            float totalDistance = 0.f;
+            for (auto& map : Parameters::maps) {
+                Simulator simulator(map);
+                Bird bird;
+                Controller* controller = new CGPController(population[i]);
+                simulator.initialize(bird);
+                while (simulator.isRunning()) {
+                    simulator.update(bird);
+                    controller->action(bird, simulator);
+                    if (bird.distance >= MAX_MAP_SIZE)
+                        break;
+                }
+                totalDistance += population[i].calculateFitness((TYPE) bird.distance);
             }
 
-            TYPE fit = population[i].calculateFitness((TYPE) bird.distance);
+            TYPE fit = totalDistance / Parameters::maps.size();
             if (fit > bestFit) {
                 bestFit = fit;
                 bestInds.clear();
