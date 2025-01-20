@@ -5,6 +5,7 @@
 #include "./NeuralNetwork.h"
 #include "CGP.h"
 #include "Entity.h"
+#include "CGPIndividual.h"
 
 using namespace std;
 
