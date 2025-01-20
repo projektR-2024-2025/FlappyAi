@@ -168,7 +168,7 @@ public:
         double output = entity.entityFunction(input);
 
         if(output > Constants::DO_I_JUMP) {
-            agent.isJumping = true;
+            agent.velocity = JUMP_SPEED;
             return true;
         }
         return false;
