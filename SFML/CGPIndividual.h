@@ -3,12 +3,14 @@
 #define TYPE double
 
 #include <vector>
+#include <sstream>
 #include "Node.h"
 #include "Output.h"
 
 // klasa koja opsiuje pojedinca
 class CGPIndividual {
 private:
+    std::string evalFunction(int nodeNum);
     void isUsed(int nodeNum);
     bool loopFinder(int nodeNum, std::vector<int> nodeSet);
     TYPE evalNode(int nodeNum);
@@ -30,6 +32,7 @@ public:
     CGPIndividual(std::vector<Node> genes, std::vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone);
 
     void printNodes();
+    void printFuction();
     void evaluateValue(std::vector<TYPE> input);
     void evaluateUsed();
     TYPE calculateFitness(TYPE lenght);

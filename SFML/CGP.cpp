@@ -320,7 +320,6 @@ CGPIndividual CGP::runCGP() {
 
     actualGens = generacija;
 
-    population[bestInd].printNodes();
     ofstream outFile("CGP_best.txt");
     if (outFile.is_open()) {
         outFile << population[bestInd];
@@ -340,11 +339,12 @@ CGPController* CGP::CGPMain(ActionType action) {
             ind = CGPIndividual::deserialize(inFile);
             inFile.close();
             std::cout << "Object read from text file." << std::endl;
-            //ind.printNodes();
+            ind.printFuction();
         }
     }
     else if (action == TRAIN) {
         ind = runCGP();
+        ind.printFuction();
     }
 
     return new CGPController(ind);
