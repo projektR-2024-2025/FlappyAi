@@ -1,9 +1,11 @@
 #pragma once
 #include "Agent.h"
 #include "Simulator.h"
-#include "parameters.h"
+#include "Parameters.h"
 #include "./NeuralNetwork.h"
 #include "CGPIndividual.h"
+#include <cmath>
+#include "./gp_tonka/FunctionBinaryTree.h"
 
 class Controller
 {
@@ -148,5 +150,45 @@ public:
         if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > 0)
             bird.velocity = Parameters::JUMP_SPEED;
         return true;
+    }
+};
+
+class GPcontroller : public Controller{
+
+public:
+    GPcontroller(FunctionBinaryTree f2): f(f2) {};
+
+    FunctionBinaryTree f ;
+
+    bool action(Bird& bird, Simulator& simulator){
+
+        float obstacle_distance = simulator.pipes[0].x;
+        float hole_start=simulator.pipes[0].bottomY; 
+        float hole_end=simulator.pipes[0].topY; 
+        
+        //trazimo najblizu prepreku
+        for (const auto& pipe : simulator.pipes) {
+            if (pipe.x < obstacle_distance) { 
+               obstacle_distance = pipe.x ;
+               hole_start=pipe.bottomY ;
+               hole_end=pipe.topY ;
+            }
+        }
+        
+        float yPos = bird.position ;
+        
+        vector<float> ulaz ;
+        ulaz.push_back(yPos) ;
+        ulaz.push_back(obstacle_distance) ;
+        ulaz.push_back(hole_start) ;
+        ulaz.push_back(hole_end) ;
+
+        float x = f.izracunaj(ulaz) ;
+        if(abs(x) < 0.5){
+            bird.velocity = Parameters::JUMP_SPEED;
+            return true ;
+        }
+        
+        return false ;
     }
 };

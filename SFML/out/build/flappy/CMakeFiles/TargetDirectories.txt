@@ -1,0 +1,3 @@
+/home/tonka/flappygit/FlappyAi/SFML/out/build/flappy/CMakeFiles/Flappy.dir
+/home/tonka/flappygit/FlappyAi/SFML/out/build/flappy/CMakeFiles/edit_cache.dir
+/home/tonka/flappygit/FlappyAi/SFML/out/build/flappy/CMakeFiles/rebuild_cache.dir

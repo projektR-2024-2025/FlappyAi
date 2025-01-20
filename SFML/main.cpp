@@ -12,6 +12,7 @@
 #include "SelectionScreen.h"  // Include the selection screen header
 #include "NNlogic.h"
 #include "CGP.h"
+#include "gp_tonka/GA.h"
 #include "ConfigParser.h"
 
 int main(int argc, char** argv) {
@@ -41,7 +42,7 @@ int main(int argc, char** argv) {
         controller = NNlogic();
         break;
     case GP:
-        controller = new Controller;
+        controller = GPMain(selectedAction);
         break;
     case CGP1:
         controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
