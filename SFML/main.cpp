@@ -11,54 +11,53 @@
 #include "Controller.h"
 #include "SelectionScreen.h"  // Include the selection screen header
 #include "NNlogic.h"
-#include "mainFunctionsHeader.h"
 #include "CGP.h"
 
 int main() {
 
-    ControllerType selectedController = showSelectionScreen();
-    string answer;
-    cout << "learning or running?(L/R)\n";
-    cin >> answer;
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Flappy AI");
+
+    ControllerType selectedController = showSelectionScreen(window);
     if (selectedController == NONE) {
         std::cerr << "No controller selected, exiting.\n";
         return -1;
     }
+    ActionType selectedAction = showActionScreen(window);
 
+    Parameters::simulationOnly = selectedAction == BEST ? false : true;
+    Parameters::randomPipes = false;
 
-    //Entity bestEntityFromLastPop = runCgp().getBestEntity();
-
-    Simulator simulator = Simulator();
-    Bird agent = Bird();
     Controller* controller = nullptr;
+    CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
 
     switch (selectedController) {
     case NN:
-        *controller = NNlogic();
+        controller = NNlogic();
         break;
     case GP:
         controller = new Controller;
         break;
-    case CGP:
-        //controller = new CGPController(CGP::CGPMain());  // Assuming CGPController is defined
-        controller = new CGPController2(runCgp(answer),answer);
+    case CGP1:
+        controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
         break;
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
         return -1;
     }
 
-    //cout << "simulator.initialize(agent);\n";
+    Parameters::simulationOnly = false;
+    Parameters::randomPipes = false;
+
+    Simulator simulator(&window);
+    Bird agent;
     simulator.initialize(agent);
 
     // Main game loop
     while (simulator.isRunning()) {
-        //cout << "while (simulator.isRunning())\n";
         simulator.update(agent);
         controller->action(agent, simulator);
     }
 
-    cout << "delete controller\n";
     delete controller;
     return 0;
 }

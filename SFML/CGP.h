@@ -6,6 +6,8 @@
 #include <string>
 #include "CGPIndividual.h"
 #include "Node.h"
+#include "SelectionScreen.h"
+#include "Controller.h"
 
 // max duljina mape
 // o ovom ovisi fitness
@@ -18,13 +20,13 @@ const int OUT_VALUE = 0;
 const int VIEW_DISTANCE = 13;
 
 // broj generacija
-const int GENERATIONS = 1000;
+const int GENERATIONS = 50;
 // broj redova nodova
 const int ROWS = 20;
 // broj stupaca nodova
 const int COLUMNS = 20;
 // koliko levela iza se moze spojiti node
-const int LEVELS_BACK = 3;
+const int LEVELS_BACK = 2;
 // broj inputova
 const int INPUTS = 3;
 // broj outputova
@@ -32,7 +34,7 @@ const int OUTPUTS = 1;
 // broj mutacije genoma po jedinki
 const int MUTATIONS = 6;
 // broj jedinki u generaciji
-const int POPULATION = 5;
+const int POPULATION = 50;
 
 class CGP {
 private:
@@ -50,9 +52,9 @@ public:
 
     std::vector<CGPIndividual> mutate(CGPIndividual parent);
 
-    void runCGP();
+    CGPIndividual runCGP();
 
-    static CGPIndividual CGPMain();
+    CGPController* CGPMain(ActionType action);
 };
 
 #endif

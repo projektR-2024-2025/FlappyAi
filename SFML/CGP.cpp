@@ -258,7 +258,7 @@ vector<CGPIndividual> CGP::mutate(CGPIndividual parent) {
 
 }
 
-void CGP::runCGP() {
+CGPIndividual CGP::runCGP() {
     vector<CGPIndividual> population;
     int bestInd = 0, generacija = 0;
 
@@ -326,76 +326,24 @@ void CGP::runCGP() {
         std::cout << "Object written to text file." << endl;
     }
 
-    bestOne = population[bestInd];
+    return population[bestInd];
 }
 
-CGPIndividual CGP::CGPMain() {
-    CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+CGPController* CGP::CGPMain(ActionType action) {
     CGPIndividual ind;
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "CGP");
-
-    sf::Font font;
-    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
-        std::cerr << "Error loading font\n";
-        return ind;
-    }
-
-    sf::Text genText("Generate New", font, 50);
-    sf::FloatRect textRect1 = genText.getLocalBounds();
-    genText.setOrigin(textRect1.left + textRect1.width / 2.0f,
-        textRect1.top + textRect1.height / 2.0f);
-    genText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 2.4f));
-    sf::Text runText("Run Best", font, 50);
-    sf::FloatRect textRect2 = runText.getLocalBounds();
-    runText.setOrigin(textRect2.left + textRect2.width / 2.0f,
-        textRect2.top + textRect2.height / 2.0f);
-    runText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 1.6f));
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-
-            if (event.type == sf::Event::MouseMoved) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-
-                if (genText.getGlobalBounds().contains(mousePosF))
-                    genText.setFillColor(sf::Color(250, 20, 20));
-                else
-                    genText.setFillColor(sf::Color(255, 255, 255));
-
-                if (runText.getGlobalBounds().contains(mousePosF))
-                    runText.setFillColor(sf::Color(250, 20, 20));
-                else
-                    runText.setFillColor(sf::Color(255, 255, 255));
-            }
-
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (genText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    cgp.runCGP();
-                    return cgp.bestOne;
-                }
-                else if (runText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    std::ifstream inFile("CGP_best.txt");
-                    if (inFile.is_open()) {
-                        ind = CGPIndividual::deserialize(inFile);
-                        inFile.close();
-                        std::cout << "Object read from text file." << std::endl;
-                        //ind.printNodes();
-                        return ind;
-                    }
-                }
-            }
+    if (action == BEST) {
+        std::ifstream inFile("CGP_best.txt");
+        if (inFile.is_open()) {
+            ind = CGPIndividual::deserialize(inFile);
+            inFile.close();
+            std::cout << "Object read from text file." << std::endl;
+            //ind.printNodes();
         }
-
-        window.clear();
-        window.draw(genText);
-        window.draw(runText);
-        window.display();
+    }
+    else if (action == TRAIN) {
+        ind = runCGP();
     }
 
-    return ind;
+    return new CGPController(ind);
 }
