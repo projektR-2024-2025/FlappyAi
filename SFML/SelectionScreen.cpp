@@ -20,8 +20,11 @@ ControllerType showSelectionScreen(sf::RenderWindow& window) {
     nnText.setPosition(100, 250);
     sf::Text gpText("GP", font, 50);
     gpText.setPosition(350, 250);
-    sf::Text cgpText("CGP", font, 50);
-    cgpText.setPosition(600, 250);
+    sf::Text cgp1Text("CGP1", font, 50);
+    cgp1Text.setPosition(600, 250);
+    sf::Text cgp2Text("CGP2", font, 50);
+    cgp2Text.setPosition(850, 250);
+
 
     while (window.isOpen()) {
         sf::Event event;
@@ -43,10 +46,16 @@ ControllerType showSelectionScreen(sf::RenderWindow& window) {
                 else
                     gpText.setFillColor(sf::Color(255, 255, 255));
 
-                if (cgpText.getGlobalBounds().contains(mousePosF))
-                    cgpText.setFillColor(sf::Color(250, 20, 20));
+                if (cgp1Text.getGlobalBounds().contains(mousePosF))
+                    cgp1Text.setFillColor(sf::Color(250, 20, 20));
                 else
-                    cgpText.setFillColor(sf::Color(255, 255, 255));
+                    cgp1Text.setFillColor(sf::Color(255, 255, 255));
+
+                if (cgp2Text.getGlobalBounds().contains(mousePosF))
+                    cgp2Text.setFillColor(sf::Color(250, 20, 20));
+                else
+                    cgp2Text.setFillColor(sf::Color(255, 255, 255));
+
             }
 
             if (event.type == sf::Event::MouseButtonPressed) {
@@ -56,8 +65,10 @@ ControllerType showSelectionScreen(sf::RenderWindow& window) {
                 else if (gpText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
                     return GP;
                 }
-                else if (cgpText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
+                else if (cgp1Text.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
                     return CGP1;
+                }else if(cgp2Text.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
+                    return CGP2;
                 }
             }
         }
@@ -65,7 +76,8 @@ ControllerType showSelectionScreen(sf::RenderWindow& window) {
         window.clear();
         window.draw(nnText);
         window.draw(gpText);
-        window.draw(cgpText);
+        window.draw(cgp1Text);
+        window.draw(cgp2Text);
         window.display();
     }
 

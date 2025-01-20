@@ -2,7 +2,7 @@
 #define SELECTIONSCREEN_H
 #include "SFML/Graphics.hpp"
 
-enum ControllerType { NN, GP, CGP1, NONE };
+enum ControllerType { NN, GP, CGP1, CGP2, NONE };
 enum ActionType { BEST, TRAIN };
 
 ControllerType showSelectionScreen(sf::RenderWindow& window);

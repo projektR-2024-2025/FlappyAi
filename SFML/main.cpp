@@ -11,6 +11,7 @@
 #include "Controller.h"
 #include "SelectionScreen.h"  // Include the selection screen header
 #include "NNlogic.h"
+#include "mainFunctionsHeader.h"
 #include "CGP.h"
 
 int main() {
@@ -22,6 +23,9 @@ int main() {
         std::cerr << "No controller selected, exiting.\n";
         return -1;
     }
+
+
+
     ActionType selectedAction = showActionScreen(window);
 
     Parameters::simulationOnly = selectedAction == BEST ? false : true;
@@ -29,6 +33,7 @@ int main() {
 
     Controller* controller = nullptr;
     CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+
 
     switch (selectedController) {
     case NN:
@@ -40,6 +45,10 @@ int main() {
     case CGP1:
         controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
         break;
+    case CGP2:
+        controller = new CGPController2(runCgp(Parameters::simulationOnly), Parameters::simulationOnly);
+        break;
+
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
         return -1;
