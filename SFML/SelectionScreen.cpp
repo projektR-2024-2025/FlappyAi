@@ -17,13 +17,25 @@ ControllerType showSelectionScreen(sf::RenderWindow& window) {
     }
 
     sf::Text nnText("NN", font, 50);
-    nnText.setPosition(100, 250);
+    sf::FloatRect textRect1 = nnText.getLocalBounds();
+    nnText.setOrigin(textRect1.left + textRect1.width / 2.0f,
+        textRect1.top + textRect1.height / 2.0f);
+    nnText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 3.5f));
     sf::Text gpText("GP", font, 50);
-    gpText.setPosition(350, 250);
+    textRect1 = gpText.getLocalBounds();
+    gpText.setOrigin(textRect1.left + textRect1.width / 2.0f,
+        textRect1.top + textRect1.height / 2.0f);
+    gpText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 2.6f));
     sf::Text cgp1Text("CGP1", font, 50);
-    cgp1Text.setPosition(600, 250);
+    textRect1 = cgp1Text.getLocalBounds();
+    cgp1Text.setOrigin(textRect1.left + textRect1.width / 2.0f,
+        textRect1.top + textRect1.height / 2.0f);
+    cgp1Text.setPosition(sf::Vector2f(800 / 2.0f, 600 / 2.0f));
     sf::Text cgp2Text("CGP2", font, 50);
-    cgp2Text.setPosition(850, 250);
+    textRect1 = cgp2Text.getLocalBounds();
+    cgp2Text.setOrigin(textRect1.left + textRect1.width / 2.0f,
+        textRect1.top + textRect1.height / 2.0f);
+    cgp2Text.setPosition(sf::Vector2f(800 / 2.0f, 600 / 1.6f));
 
 
     while (window.isOpen()) {

@@ -3,7 +3,6 @@
 #include "Simulator.h"
 #include "parameters.h"
 #include "./NeuralNetwork.h"
-#include "CGP.h"
 #include "Entity.h"
 #include "CGPIndividual.h"
 
@@ -177,7 +176,7 @@ public:
         double output = entity.entityFunction(input);
 
         if(output > Constants::DO_I_JUMP) {
-            agent.isJumping = true;
+            agent.velocity = JUMP_SPEED;
             return true;
         }
         return false;
@@ -216,7 +215,7 @@ public:
         // odredi vrijednost izlazne vrijednosti cgp mreze
         individual.evaluateValue(input);
 
-        if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > OUT_VALUE)
+        if (!isnan(individual.outputGene[0].value) && individual.outputGene[0].value > 0)
             bird.velocity = JUMP_SPEED;
         return true;
     }
