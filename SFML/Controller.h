@@ -109,11 +109,11 @@ public:
 
     CGPController2(const Entity& entity) : entity(entity) {}
 
-    CGPController2(const Entity& learnedEntity, string answer) {
-        if(answer == "L") {
+    CGPController2(const Entity& learnedEntity, bool simOnly) {
+        if(simOnly == false) {
             this->entity = learnedEntity;
 
-        }else if(answer == "R") {
+        }else if(simOnly == true) {
             string lineFromFile;
             stringstream lineStream;
             vector<string> splicedString;

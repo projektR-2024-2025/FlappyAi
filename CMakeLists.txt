@@ -22,6 +22,7 @@ add_executable(FlappyAi
         SFML/Constants.h
         SFML/Population.h
         SFML/Population.cpp
+        SFML/Parameters.cpp
         #SFML/Node.h
         #SFML/Entity.cpp
         #SFML/Gene.cpp

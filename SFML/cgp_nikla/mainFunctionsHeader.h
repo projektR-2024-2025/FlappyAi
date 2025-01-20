@@ -15,7 +15,7 @@
 #include <fstream>
 
 
-Entity runCgp(string answer) {
+Entity runCgp(bool simOnly) {
 
     srand(time(NULL));
     //cout << "runs starting\n";
@@ -101,7 +101,7 @@ Entity runCgp(string answer) {
     Entity bestEntity = population1.getBestEntity();
 
 
-    if (answer == "L") {
+    if (simOnly == false) {
         fstream myfile;
         myfile.open ("/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile");
 
