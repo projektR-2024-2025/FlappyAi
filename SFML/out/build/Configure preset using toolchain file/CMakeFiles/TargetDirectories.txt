@@ -1,3 +1,0 @@
-/home/tonka/flappygit/FlappyAi/SFML/out/build/Configure preset using toolchain file/CMakeFiles/Flappy.dir
-/home/tonka/flappygit/FlappyAi/SFML/out/build/Configure preset using toolchain file/CMakeFiles/edit_cache.dir
-/home/tonka/flappygit/FlappyAi/SFML/out/build/Configure preset using toolchain file/CMakeFiles/rebuild_cache.dir

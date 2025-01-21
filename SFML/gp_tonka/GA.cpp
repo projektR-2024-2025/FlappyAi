@@ -229,8 +229,8 @@ void saveBestToFile(FunctionBinaryTree best) {
     if (!file.is_open()) {
         throw std::runtime_error("Could not open best_gp.txt for writing");
     }
-    
-    file << best.toString();
+    string s = best.toString() ;
+    file << s;
     file.close();
 }
 
@@ -247,7 +247,7 @@ Controller* GPMain(ActionType action) {
     
     if (action == TRAIN) {
         const int POPULATION_SIZE = 5000;
-        const int MAX_EVALUATIONS = 10000;
+        const int MAX_EVALUATIONS = 1000;
         const int MAX_DEPTH = 7;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         
