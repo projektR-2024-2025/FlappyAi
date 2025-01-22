@@ -5,6 +5,7 @@
 #include <string>
 #include "../Parameters.h"
 
+
 using namespace std;
 
 namespace tonka{
@@ -19,6 +20,8 @@ public:
     Node* copy() ; 
 };
 }
+
+
 class FunctionBinaryTree {
 public:
     // Deklaracije funkcija i članova
@@ -29,7 +32,6 @@ public:
 
     FunctionBinaryTree();
     FunctionBinaryTree(int max_dubina, int dimenzija);
-    FunctionBinaryTree(const string& expression, int dimenzija);
     
     void printTree();
     void printTree(tonka::Node* node) ;
@@ -43,11 +45,6 @@ public:
     bool operator==(const FunctionBinaryTree other) ;
     bool areNodesEqual(tonka::Node* node, tonka::Node* other) ;
     void fitness() ;
-    tonka::Node* parseFromString(const string& expression, size_t& pos);
-    bool isOperator(const string& token);
-    bool isFunction(const string& token);
-    string getNextToken(const string& expression, size_t& pos);
-    tonka::Node* createNodeFromToken(const string& token);
     
 };
 

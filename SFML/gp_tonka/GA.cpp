@@ -1,5 +1,6 @@
 #include "../Controller.h"
 #include "GA.h"
+#include "TreeParser.h"
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
@@ -218,9 +219,7 @@ FunctionBinaryTree loadBestFromFile() {
     std::string expression;
     std::getline(file, expression);
     file.close();
-    
-    // Create a minimal tree from the expression
-    FunctionBinaryTree tree(expression, 4); // max_depth=7, dim=4 for our inputs
+    FunctionBinaryTree tree = TreeParser::fromString(expression, 4) ;
     return tree;
 }
 
@@ -246,8 +245,8 @@ Controller* GPMain(ActionType action) {
     }
     
     if (action == TRAIN) {
-        const int POPULATION_SIZE = 5000;
-        const int MAX_EVALUATIONS = 1000;
+        const int POPULATION_SIZE = 7000;
+        const int MAX_EVALUATIONS = 7000;
         const int MAX_DEPTH = 7;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         

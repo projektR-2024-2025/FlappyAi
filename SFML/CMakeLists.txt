@@ -6,7 +6,7 @@ find_package(OpenMP REQUIRED)
 add_executable(Flappy 
     CGP.cpp CGPIndividual.cpp NNlogic.cpp NeuralNetwork.cpp 
     Parameters.cpp SelectionScreen.cpp Simulator.cpp main.cpp
-    gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp)
+    gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp gp_tonka/TreeParser.cpp)
 
 # Copy the config.txt file to the build directory
 configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)
