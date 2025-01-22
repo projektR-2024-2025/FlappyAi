@@ -73,6 +73,68 @@ void CGPIndividual::printNodes() {
     cout << endl << endl;
 }
 
+void CGPIndividual::printFuction() {
+    cout << "Funkcija: " << evalFunction(outputGene[0].connection) << endl;
+}
+
+std::string CGPIndividual::evalFunction(int nodeNum) {
+    std::ostringstream oss;
+
+    if (nodeNum < inputs) {
+        switch (nodeNum) {
+        case 0:
+            oss << "pipe.x";
+            return oss.str();
+        case 1:
+            oss << "pipe.bottomY";
+            return oss.str();
+        case 2:
+            oss << "pipe.topY";
+            return oss.str();
+        case 3:
+            oss << "obstacleAhead";
+            return oss.str();
+        case 4:
+            oss << "bird.position";
+            return oss.str();
+        case 5:
+            oss << "bird.velocity";
+            return oss.str();
+        }
+    }
+
+    switch (genes[nodeNum].operand) {
+    case 1:
+        oss << "(" << evalFunction(genes[nodeNum].connection1) << " + " << evalFunction(genes[nodeNum].connection2) << ")";
+        return oss.str();
+    case 2:
+        oss << "(" << evalFunction(genes[nodeNum].connection1) << " - " << evalFunction(genes[nodeNum].connection2) << ")";
+        return oss.str();
+    case 3:
+        oss << "(" << evalFunction(genes[nodeNum].connection1) << " * " << evalFunction(genes[nodeNum].connection2) << ")";
+        return oss.str();
+    case 4:
+        oss << "(" << evalFunction(genes[nodeNum].connection1) << " / " << evalFunction(genes[nodeNum].connection2) << ")";
+        return oss.str();
+    case 5:
+        oss << "sin(" << evalFunction(genes[nodeNum].connection1) << ")";
+        return oss.str();
+    case 6:
+        oss << "cos(" << evalFunction(genes[nodeNum].connection1) << ")";
+        return oss.str();
+    case 7:
+        oss << "sqrt(" << evalFunction(genes[nodeNum].connection1) << ")";
+        return oss.str();
+    case 8:
+        oss << evalFunction(genes[nodeNum].connection1) << "^2";
+        return oss.str();
+    case 9:
+        oss << "2^" << evalFunction(genes[nodeNum].connection1);
+        return oss.str();
+    }
+
+}
+
 void CGPIndividual::evaluateUsed() {
     isUsed(outputGene[0].connection);
 

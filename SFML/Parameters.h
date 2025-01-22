@@ -1,8 +1,7 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
-
-
-// TODO: premjestiti u razrede i omoguciti da se zastavice i parametri citaju iz conf datoteke
+#include <vector>
+#include <string>
 
 class Parameters
 {
@@ -10,19 +9,24 @@ public:
 	// zastavice
 	static bool simulationOnly;    // samo racuna predjenu udaljenost
 	static bool randomPipes;        // neprestano stvara nove random cijevi
+	static bool variableFPS;
+
+	// parametri prikaza (SFML koristi float)
+	static int WINDOW_WIDTH;
+	static int WINDOW_HEIGHT;
+	static int PIPE_WIDTH;
+	static int BIRD_OFFSET;   // polozaj ptice u odnosu na lijevi rub prozora
+	static int BIRD_SIZE;     // velicina ptice
+
+	// parametri simulatora
+	static float SPEED; // pikseli u sekundi
+	static float GRAVITY;
+	static float JUMP_SPEED;
+	static float PIPE_GAP;
+
+	static float FRAME_RATE;
+
+	static std::vector<std::string> maps;
 };
-
-// parametri prikaza (SFML koristi float)
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
-const int PIPE_WIDTH = 80;
-const int BIRD_OFFSET = 80;   // polozaj ptice u odnosu na lijevi rub prozora
-const int BIRD_SIZE = 40;     // velicina ptice
-
-// parametri simulatora
-const float SPEED = 0.25 * WINDOW_WIDTH; // pikseli u sekundi
-const float GRAVITY = 0.85 * WINDOW_HEIGHT;
-const float JUMP_SPEED = -0.5 * WINDOW_HEIGHT;
-const float PIPE_GAP = 0.30 * WINDOW_HEIGHT;
 
 #endif

@@ -4,7 +4,7 @@
 #include <chrono>
 #include <vector>
 #include <cstdlib> 
-#include <ctime>   
+#include <ctime>
 
 #include "Simulator.h"
 #include "Agent.h"
@@ -13,10 +13,18 @@
 #include "NNlogic.h"
 #include "mainFunctionsHeader.h"
 #include "CGP.h"
+#include "gp_tonka/GA.h"
+#include "ConfigParser.h"
 
-int main() {
+int main(int argc, char** argv) {
 
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Flappy AI");
+    if(argc >= 2)
+        parseConfig(argv[1]);
+    else
+        parseConfig("config.conf");
+
+    sf::RenderWindow window(sf::VideoMode(Parameters::WINDOW_WIDTH, Parameters::WINDOW_HEIGHT), "Flappy AI");
+    window.setFramerateLimit(Parameters::FRAME_RATE);
 
     ControllerType selectedController = showSelectionScreen(window);
     if (selectedController == NONE) {
@@ -28,8 +36,7 @@ int main() {
 
     ActionType selectedAction = showActionScreen(window);
 
-    Parameters::simulationOnly = selectedAction == BEST ? false : true;
-    Parameters::randomPipes = false;
+    Parameters::simulationOnly = (selectedAction == BEST) ? false : true;
 
     Controller* controller = nullptr;
     CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
@@ -40,7 +47,7 @@ int main() {
         controller = NNlogic();
         break;
     case GP:
-        controller = new Controller;
+        controller = GPMain(selectedAction);
         break;
     case CGP1:
         controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
@@ -55,7 +62,6 @@ int main() {
     }
 
     Parameters::simulationOnly = false;
-    Parameters::randomPipes = false;
 
     Simulator simulator(&window);
     Bird agent;
