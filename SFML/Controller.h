@@ -3,7 +3,7 @@
 #include "Simulator.h"
 #include "Parameters.h"
 #include "./NeuralNetwork.h"
-#include "CGPIndividual.h"
+#include "cgp_andrija/CGP1Individual.h"
 #include <cmath>
 #include "./gp_tonka/FunctionBinaryTree.h"
 
@@ -110,12 +110,12 @@ public:
     }
 };
 
-class CGPController : public Controller
+class CGP1Controller : public Controller
 {
 private:
-    CGPIndividual individual;
+    CGP1Individual individual;
 public:
-    CGPController(const CGPIndividual& individual) : individual(individual) {}
+    CGP1Controller(const CGP1Individual& individual) : individual(individual) {}
 
     bool action(Bird& bird, Simulator& simulator)
     {

@@ -11,6 +11,7 @@
 using namespace std;
 using namespace tonka;
 
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 202002L) || __cplusplus >= 202002L)
 GAParameters gaParams = {
     .mutation_rate = 0.9,
     .k = 4,
@@ -20,6 +21,9 @@ GAParameters gaParams = {
     .tooBad = 0.1,
     .max_depth = 7
 };
+#else
+GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 7 };
+#endif
 
 void GAParameters::adapt(float diversity, float best_fitness) {
     if(diversity < 0.3) {

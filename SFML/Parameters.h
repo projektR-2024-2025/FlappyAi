@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 
+enum ControllerType { NN, GP1, GP2, CGP1, CGP2, NONE };
+enum ActionType { BEST, TRAIN };
+
 class Parameters
 {
 public:
@@ -27,6 +30,9 @@ public:
 	static float FRAME_RATE;
 
 	static std::vector<std::string> maps;
+
+	static ControllerType ctrl;
+	static ActionType action;
 };
 
 #endif

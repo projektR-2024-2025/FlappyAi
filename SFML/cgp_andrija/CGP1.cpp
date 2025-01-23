@@ -1,6 +1,6 @@
-#include "CGP.h"
-#include "Simulator.h"
-#include "Controller.h"
+#include "CGP1.h"
+#include "../Simulator.h"
+#include "../Controller.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -11,16 +11,10 @@
 #include <omp.h>
 #include <sstream>
 
-#ifdef _WIN32
-#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
-#else
-#define ARIAL_FONT_PATH "arial.ttf"
-#endif
-
 using namespace std;
 
-vector<CGPIndividual> CGP::generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs) {
-    vector<CGPIndividual> population;
+vector<CGP1Individual> CGP1::generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs) {
+    vector<CGP1Individual> population;
 
     #pragma omp parallel for
     for (int i = 0; i < POPULATION; i++) {
@@ -32,11 +26,11 @@ vector<CGPIndividual> CGP::generatePopulation(int rows, int columns, int levelsB
         uniform_int_distribution<> connectionDis(0, rows * columns + inputs - 1);
         uniform_int_distribution<> outputDis(0, rows * columns + inputs - 1);
 
-        vector<Node> genes;
-        vector<Output> outputGene;
+        vector<CGP1Node> genes;
+        vector<CGP1Output> outputGene;
 
         for (size_t k = 0; k < inputs; k++) {
-            Node node;
+            CGP1Node node;
             node.used = false;
             node.connection1 = -1;
             node.connection2 = -1;
@@ -46,7 +40,7 @@ vector<CGPIndividual> CGP::generatePopulation(int rows, int columns, int levelsB
 
         #pragma omp parallel for
         for (int j = inputs; j < rows * columns + inputs; j++) {
-            Node node;
+            CGP1Node node;
             node.used = false;
             node.operand = operandDis(gen);
             node.connection1 = connectionDis(gen);
@@ -85,14 +79,14 @@ vector<CGPIndividual> CGP::generatePopulation(int rows, int columns, int levelsB
         }
 
         for (size_t k = 0; k < outputs; k++) {
-            Output output;
+            CGP1Output output;
 
             output.connection = outputDis(gen);
 
             outputGene.push_back(output);
         }
 
-        CGPIndividual individual(genes, outputGene, rows, columns, levelsBack, inputs, outputs);
+        CGP1Individual individual(genes, outputGene, rows, columns, levelsBack, inputs, outputs);
         individual.resolveLoops();
         #pragma omp critical
         population.push_back(individual);
@@ -105,8 +99,8 @@ vector<CGPIndividual> CGP::generatePopulation(int rows, int columns, int levelsB
 }
 
 // point mutacija
-vector<CGPIndividual> CGP::mutate(int numMut, CGPIndividual parent) {
-    vector<CGPIndividual> population;
+vector<CGP1Individual> CGP1::mutate(int numMut, CGP1Individual parent) {
+    vector<CGP1Individual> population;
     if (!parent.evalDone)
         parent.evaluateUsed();
     population.push_back(parent);
@@ -121,8 +115,8 @@ vector<CGPIndividual> CGP::mutate(int numMut, CGPIndividual parent) {
     uniform_int_distribution<> outputDis(0, parent.outputs - 1);
 
     for (int n = 0; n < POPULATION - 1; n++) {
-        vector<Node> genes = parent.genes;
-        vector<Output> outputGene = parent.outputGene;
+        vector<CGP1Node> genes = parent.genes;
+        vector<CGP1Output> outputGene = parent.outputGene;
 
         for (int z = parent.inputs; z < genes.size(); z++)
             genes[z].used = false;
@@ -166,7 +160,7 @@ vector<CGPIndividual> CGP::mutate(int numMut, CGPIndividual parent) {
             }
         }
 
-        CGPIndividual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
+        CGP1Individual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
         individual.resolveLoops();
         population.push_back(individual);
     }
@@ -175,8 +169,8 @@ vector<CGPIndividual> CGP::mutate(int numMut, CGPIndividual parent) {
 }
 
 // goldman mutacija
-vector<CGPIndividual> CGP::mutate(CGPIndividual parent) {
-    vector<CGPIndividual> population;
+vector<CGP1Individual> CGP1::mutate(CGP1Individual parent) {
+    vector<CGP1Individual> population;
     if (!parent.evalDone)
         parent.evaluateUsed();
     population.push_back(parent);
@@ -193,8 +187,8 @@ vector<CGPIndividual> CGP::mutate(CGPIndividual parent) {
     // upali ovo ako zelis cpu stress test
     //#pragma omp parallel for
     for (int n = 0; n < POPULATION - 1; n++) {
-        vector<Node> genes = parent.genes;
-        vector<Output> outputGene = parent.outputGene;
+        vector<CGP1Node> genes = parent.genes;
+        vector<CGP1Output> outputGene = parent.outputGene;
         bool isActive = false;
 
         while (!isActive) {
@@ -247,7 +241,7 @@ vector<CGPIndividual> CGP::mutate(CGPIndividual parent) {
         for (int z = parent.inputs; z < genes.size(); z++)
             genes[z].used = false;
 
-        CGPIndividual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
+        CGP1Individual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
         individual.resolveLoops();
 
         //#pragma omp critical
@@ -258,8 +252,8 @@ vector<CGPIndividual> CGP::mutate(CGPIndividual parent) {
 
 }
 
-CGPIndividual CGP::runCGP() {
-    vector<CGPIndividual> population;
+CGP1Individual CGP1::runCGP() {
+    vector<CGP1Individual> population;
     int bestInd = 0, generacija = 0;
 
     double time;
@@ -281,7 +275,7 @@ CGPIndividual CGP::runCGP() {
             for (auto& map : Parameters::maps) {
                 Simulator simulator(map);
                 Bird bird;
-                Controller* controller = new CGPController(population[i]);
+                Controller* controller = new CGP1Controller(population[i]);
                 simulator.initialize(bird);
                 while (simulator.isRunning()) {
                     simulator.update(bird);
@@ -320,32 +314,43 @@ CGPIndividual CGP::runCGP() {
 
     actualGens = generacija;
 
-    ofstream outFile("CGP_best.txt");
-    if (outFile.is_open()) {
-        outFile << population[bestInd];
-        outFile.close();
-        std::cout << "Object written to text file." << endl;
+    try {
+        ofstream outFile(bestFile);
+        if (outFile.is_open()) {
+            outFile << population[bestInd];
+            outFile.close();
+            std::cout << "CGP written to text file." << endl;
+        }
+    }
+    catch (const exception& e) {
+        cerr << "Error writing CGP: " << e.what() << endl;
     }
 
     return population[bestInd];
 }
 
-CGPController* CGP::CGPMain(ActionType action) {
-    CGPIndividual ind;
+CGP1Controller* CGP1::CGPMain(ActionType action) {
+    CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+    CGP1Individual ind;
 
     if (action == BEST) {
-        std::ifstream inFile("CGP_best.txt");
-        if (inFile.is_open()) {
-            ind = CGPIndividual::deserialize(inFile);
-            inFile.close();
-            std::cout << "Object read from text file." << std::endl;
-            ind.printFuction();
+        try {
+            std::ifstream inFile(bestFile);
+            if (inFile.is_open()) {
+                ind = CGP1Individual::deserialize(inFile);
+                inFile.close();
+                std::cout << "CGP read from text file." << std::endl;
+                ind.printFuction();
+            }
+        }
+        catch (const exception& e) {
+            cerr << "Error loading CGP: " << e.what() << endl;
         }
     }
     else if (action == TRAIN) {
-        ind = runCGP();
+        ind = cgp.runCGP();
         ind.printFuction();
     }
 
-    return new CGPController(ind);
+    return new CGP1Controller(ind);
 }

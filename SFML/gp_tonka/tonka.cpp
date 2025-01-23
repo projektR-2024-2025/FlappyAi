@@ -17,7 +17,7 @@
 
 using namespace std ;
 
-int main(){
-  FunctionBinaryTree f = TreeParser::fromString("(x1 + (2 * 3))", 4) ;
-  cout <<f.toString() ;
-}
+//int main(){
+//  FunctionBinaryTree f = TreeParser::fromString("(x1 + (2 * 3))", 4) ;
+//  cout <<f.toString() ;
+//}

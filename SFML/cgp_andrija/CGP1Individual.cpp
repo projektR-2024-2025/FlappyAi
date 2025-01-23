@@ -1,6 +1,6 @@
-#include "CGPIndividual.h"
-#include "Simulator.h"
-#include "Controller.h"
+#include "CGP1Individual.h"
+#include "../Simulator.h"
+#include "../Controller.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -34,10 +34,10 @@ TYPE computeNode(int operand, TYPE value1, TYPE value2) {
     }
 }
 
-CGPIndividual::CGPIndividual() {
+CGP1Individual::CGP1Individual() {
 }
 
-CGPIndividual::CGPIndividual(vector<Node> genes, vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs) {
+CGP1Individual::CGP1Individual(vector<CGP1Node> genes, vector<CGP1Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs) {
     vector<vector<int>> branches;
     this->branches = branches;
     this->genes = genes;
@@ -50,7 +50,7 @@ CGPIndividual::CGPIndividual(vector<Node> genes, vector<Output> outputGene, int 
     this->evalDone = false;
 }
 
-CGPIndividual::CGPIndividual(vector<Node> genes, vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone) {
+CGP1Individual::CGP1Individual(vector<CGP1Node> genes, vector<CGP1Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone) {
     vector<vector<int>> branches;
     this->branches = branches;
     this->genes = genes;
@@ -63,7 +63,7 @@ CGPIndividual::CGPIndividual(vector<Node> genes, vector<Output> outputGene, int 
     this->evalDone = evalDone;
 }
 
-void CGPIndividual::printNodes() {
+void CGP1Individual::printNodes() {
     for (size_t i = 0; i < rows * columns + inputs; i++)
         cout << i << " " << genes[i].operand << " " << genes[i].connection1 << " " << genes[i].connection2 << endl;
 
@@ -73,15 +73,15 @@ void CGPIndividual::printNodes() {
     cout << endl << endl;
 }
 
-void CGPIndividual::printFuction() {
+void CGP1Individual::printFuction() {
     cout << "Funkcija: " << evalFunction(outputGene[0].connection) << endl;
 }
 
-std::string CGPIndividual::evalFunction(int nodeNum) {
+std::string CGP1Individual::evalFunction(int CGP1NodeNum) {
     std::ostringstream oss;
 
-    if (nodeNum < inputs) {
-        switch (nodeNum) {
+    if (CGP1NodeNum < inputs) {
+        switch (CGP1NodeNum) {
         case 0:
             oss << "pipe.x";
             return oss.str();
@@ -103,55 +103,55 @@ std::string CGPIndividual::evalFunction(int nodeNum) {
         }
     }
 
-    switch (genes[nodeNum].operand) {
+    switch (genes[CGP1NodeNum].operand) {
     case 1:
-        oss << "(" << evalFunction(genes[nodeNum].connection1) << " + " << evalFunction(genes[nodeNum].connection2) << ")";
+        oss << "(" << evalFunction(genes[CGP1NodeNum].connection1) << " + " << evalFunction(genes[CGP1NodeNum].connection2) << ")";
         return oss.str();
     case 2:
-        oss << "(" << evalFunction(genes[nodeNum].connection1) << " - " << evalFunction(genes[nodeNum].connection2) << ")";
+        oss << "(" << evalFunction(genes[CGP1NodeNum].connection1) << " - " << evalFunction(genes[CGP1NodeNum].connection2) << ")";
         return oss.str();
     case 3:
-        oss << "(" << evalFunction(genes[nodeNum].connection1) << " * " << evalFunction(genes[nodeNum].connection2) << ")";
+        oss << "(" << evalFunction(genes[CGP1NodeNum].connection1) << " * " << evalFunction(genes[CGP1NodeNum].connection2) << ")";
         return oss.str();
     case 4:
-        oss << "(" << evalFunction(genes[nodeNum].connection1) << " / " << evalFunction(genes[nodeNum].connection2) << ")";
+        oss << "(" << evalFunction(genes[CGP1NodeNum].connection1) << " / " << evalFunction(genes[CGP1NodeNum].connection2) << ")";
         return oss.str();
     case 5:
-        oss << "sin(" << evalFunction(genes[nodeNum].connection1) << ")";
+        oss << "sin(" << evalFunction(genes[CGP1NodeNum].connection1) << ")";
         return oss.str();
     case 6:
-        oss << "cos(" << evalFunction(genes[nodeNum].connection1) << ")";
+        oss << "cos(" << evalFunction(genes[CGP1NodeNum].connection1) << ")";
         return oss.str();
     case 7:
-        oss << "sqrt(" << evalFunction(genes[nodeNum].connection1) << ")";
+        oss << "sqrt(" << evalFunction(genes[CGP1NodeNum].connection1) << ")";
         return oss.str();
     case 8:
-        oss << evalFunction(genes[nodeNum].connection1) << "^2";
+        oss << evalFunction(genes[CGP1NodeNum].connection1) << "^2";
         return oss.str();
     case 9:
-        oss << "2^" << evalFunction(genes[nodeNum].connection1);
+        oss << "2^" << evalFunction(genes[CGP1NodeNum].connection1);
         return oss.str();
     }
 
 }
 
-void CGPIndividual::evaluateUsed() {
+void CGP1Individual::evaluateUsed() {
     isUsed(outputGene[0].connection);
 
     evalDone = true;
 }
 
-void CGPIndividual::isUsed(int nodeNum) {
-    genes[nodeNum].used = true;
+void CGP1Individual::isUsed(int CGP1NodeNum) {
+    genes[CGP1NodeNum].used = true;
 
-    if (genes[nodeNum].connection1 >= 0)
-        isUsed(genes[nodeNum].connection1);
+    if (genes[CGP1NodeNum].connection1 >= 0)
+        isUsed(genes[CGP1NodeNum].connection1);
 
-    if (genes[nodeNum].connection2 >= 0)
-        isUsed(genes[nodeNum].connection2);
+    if (genes[CGP1NodeNum].connection2 >= 0)
+        isUsed(genes[CGP1NodeNum].connection2);
 }
 
-void CGPIndividual::evaluateValue(vector<TYPE> input) {
+void CGP1Individual::evaluateValue(vector<TYPE> input) {
     clearInd();
 
     for (int l = 0; l < inputs; l++)
@@ -161,91 +161,91 @@ void CGPIndividual::evaluateValue(vector<TYPE> input) {
         outputGene[m].value = evalNode(outputGene[m].connection);
 }
 
-TYPE CGPIndividual::evalNode(int nodeNum) {
+TYPE CGP1Individual::evalNode(int CGP1NodeNum) {
 
-    if (isnan(genes[nodeNum].outValue)) {
-        TYPE value1 = evalNode(genes[nodeNum].connection1);
-        TYPE value2 = genes[nodeNum].connection2 < 0 ? 0 : evalNode(genes[nodeNum].connection2);
+    if (isnan(genes[CGP1NodeNum].outValue)) {
+        TYPE value1 = evalNode(genes[CGP1NodeNum].connection1);
+        TYPE value2 = genes[CGP1NodeNum].connection2 < 0 ? 0 : evalNode(genes[CGP1NodeNum].connection2);
 
-        genes[nodeNum].outValue = computeNode(genes[nodeNum].operand, value1, value2);
+        genes[CGP1NodeNum].outValue = computeNode(genes[CGP1NodeNum].operand, value1, value2);
     }
     
-    return genes[nodeNum].outValue;
+    return genes[CGP1NodeNum].outValue;
 }
 
-void CGPIndividual::clearInd() {
+void CGP1Individual::clearInd() {
     for (int i = inputs; i < genes.size(); i++)
         genes[i].outValue = NAN;
 }
 
-TYPE CGPIndividual::calculateFitness(TYPE lenght) {
+TYPE CGP1Individual::calculateFitness(TYPE lenght) {
     return lenght;
 }
 
-CGPIndividual CGPIndividual::deserialize(std::istream& is) {
+CGP1Individual CGP1Individual::deserialize(std::istream& is) {
     int rows, columns, levelsBack, inputs, outputs, evalDone;
 
     is >> rows >> columns >> levelsBack >> inputs >> outputs >> evalDone;
 
     size_t genesSize;
     is >> genesSize;
-    std::vector<Node> genes;
+    std::vector<CGP1Node> genes;
     genes.reserve(genesSize);
     for (size_t i = 0; i < genesSize; ++i) {
-        Node gene;
+        CGP1Node gene;
         is >> gene;
         genes.emplace_back(gene);
         }
 
     size_t outputGeneSize;
     is >> outputGeneSize;
-    std::vector<Output> outputGene;
+    std::vector<CGP1Output> outputGene;
     outputGene.reserve(outputGeneSize);
     for (size_t i = 0; i < outputGeneSize; ++i) {
-        Output outGene;
+        CGP1Output outGene;
         is >> outGene;
         outputGene.emplace_back(outGene);
     }
 
-    return CGPIndividual(std::move(genes), std::move(outputGene), rows, columns, levelsBack, inputs, outputs, evalDone);
+    return CGP1Individual(std::move(genes), std::move(outputGene), rows, columns, levelsBack, inputs, outputs, evalDone);
 }
 
-bool CGPIndividual::findLoops(int nodeNum, std::vector<int> nodeSet) {
+bool CGP1Individual::findLoops(int CGP1NodeNum, std::vector<int> CGP1NodeSet) {
     branches.clear();
 
-    return loopFinder(nodeNum, nodeSet);;
+    return loopFinder(CGP1NodeNum, CGP1NodeSet);;
 }
 
-bool CGPIndividual::loopFinder(int nodeNum, std::vector<int> nodeSet) {
+bool CGP1Individual::loopFinder(int CGP1NodeNum, std::vector<int> CGP1NodeSet) {
 
-    for (int i = 0; i < nodeSet.size(); i++)
-        if (nodeSet[i] == nodeNum) {
-            nodeSet.push_back(nodeNum);
-            branches.push_back(nodeSet);
+    for (int i = 0; i < CGP1NodeSet.size(); i++)
+        if (CGP1NodeSet[i] == CGP1NodeNum) {
+            CGP1NodeSet.push_back(CGP1NodeNum);
+            branches.push_back(CGP1NodeSet);
             return true;
         }
 
-    nodeSet.push_back(nodeNum);
+    CGP1NodeSet.push_back(CGP1NodeNum);
 
-    if (nodeNum < inputs) {
+    if (CGP1NodeNum < inputs) {
         return false;
     }
 
-    bool conn1 = loopFinder(genes[nodeNum].connection1, nodeSet);
-    bool conn2 = genes[nodeNum].connection2 == -1 ? false : loopFinder(genes[nodeNum].connection2, nodeSet);
+    bool conn1 = loopFinder(genes[CGP1NodeNum].connection1, CGP1NodeSet);
+    bool conn2 = genes[CGP1NodeNum].connection2 == -1 ? false : loopFinder(genes[CGP1NodeNum].connection2, CGP1NodeSet);
 
     return conn1 || conn2;
 }
 
-void CGPIndividual::resolveLoops() {
+void CGP1Individual::resolveLoops() {
 
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> connectionDis(0, genes.size() - 1);
 
-    vector<int> nodeSet;
+    vector<int> CGP1NodeSet;
 
-    while (findLoops(outputGene[0].connection, nodeSet)) {
+    while (findLoops(outputGene[0].connection, CGP1NodeSet)) {
         for (int i = 0; i < branches.size(); i++) {
             int cell1 = branches[i][branches[i].size() - 2];
             int cell2 = branches[i][branches[i].size() - 1];
@@ -280,6 +280,6 @@ void CGPIndividual::resolveLoops() {
             }
         }
 
-        nodeSet.clear();
+        CGP1NodeSet.clear();
     }
 }
