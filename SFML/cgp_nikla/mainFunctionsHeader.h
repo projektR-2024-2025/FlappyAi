@@ -15,11 +15,11 @@
 #include <fstream>
 
 
-Entity runCgp(bool simOnly) {
+Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
 
     srand(time(NULL));
     //cout << "runs starting\n";
-    int x = 0;
+    //int x = 0;
     //string map1 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map1.txt";//jer je out folder pokrenut
     //string map2 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map2.txt";//jer je out folder pokrenut
 
@@ -30,7 +30,7 @@ Entity runCgp(bool simOnly) {
      for (int i = 0; i < Constants::NUMBER_OF_GENERATIONS; i++) {
          int newPopulationFullness;
 
-         //cout << "NUMBER_OF_GENERATIONS loop i;" << i << "\n";
+         cout << i << "\n";
          if(i == 0){
              //punjenje populacije
              //filling and evaluating initial population ==============================
@@ -56,7 +56,7 @@ Entity runCgp(bool simOnly) {
              while (simulator.isRunning() && population1.entityList.size() == Constants::POPULATION_SIZE) {
 
                  //cout << "simulator running x:" << x << "\n";
-                 x++;
+                 //x++;
                  controller.action(agent, simulator);
                  simulator.update(agent);
                  lengthTraversed++;
@@ -74,10 +74,10 @@ Entity runCgp(bool simOnly) {
          //cout << "Best fitness so far is " << population1.getBestEntity().fitness << "\n";
          //izrada i punjenje nove populacije
          newPopulationFullness = 0;
-         x = 0;
+         //x = 0;
          while (newPopulationFullness < Constants::POPULATION_SIZE && population1.entityList.size() == Constants::POPULATION_SIZE){
              //cout << "crossing over and mutation loop x:" << x << "\n";
-             x++;
+             //x++;
              //cout << "a\n";
              population1.chooseParents();
              //cout << "b\n";
@@ -86,22 +86,17 @@ Entity runCgp(bool simOnly) {
              newPopulationFullness++;
              //cout << "d\n";
          }
-
-
          population1.entityList.clear();
          //cout << "population 1 cleared\n";
-
          copy(population2.entityList.begin(), population2.entityList.end(), back_inserter(population1.entityList));
         // cout << "new population 1\n";
-
-
      }
     //cout << "done\n";
 
     Entity bestEntity = population1.getBestEntity();
 
 
-    if (simOnly == false) {
+    if (selectedAction == TRAIN) {
         fstream myfile;
         myfile.open ("/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile");
 
@@ -111,7 +106,7 @@ Entity runCgp(bool simOnly) {
             myfile.close();
 
         }else {
-            cout << "Unable to open file";
+            cout << "Unable to open file(mainFunctionHeader)";
         }
 
     }
