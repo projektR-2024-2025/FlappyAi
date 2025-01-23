@@ -23,6 +23,9 @@ add_executable(FlappyAi
         SFML/Population.h
         SFML/Population.cpp
         SFML/Parameters.cpp
+        SFML/Controller.h
+        SFML/gp_tonka/tonka.cpp
+        SFML/gp_tonka/GA.cpp
         #SFML/Node.h
         #SFML/Entity.cpp
         #SFML/Gene.cpp

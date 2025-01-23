@@ -126,6 +126,27 @@ build CMakeFiles/FlappyAi.dir/SFML/Parameters.cpp.o: CXX_COMPILER__FlappyAi_unsc
   OBJECT_DIR = CMakeFiles/FlappyAi.dir
   OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML
 
+build CMakeFiles/FlappyAi.dir/SFML/gp_tonka/tonka.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/tonka.cpp || cmake_object_order_depends_target_FlappyAi
+  DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/gp_tonka/tonka.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
+  OBJECT_DIR = CMakeFiles/FlappyAi.dir
+  OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML/gp_tonka
+
+build CMakeFiles/FlappyAi.dir/SFML/gp_tonka/GA.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/GA.cpp || cmake_object_order_depends_target_FlappyAi
+  DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/gp_tonka/GA.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
+  OBJECT_DIR = CMakeFiles/FlappyAi.dir
+  OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML/gp_tonka
+
+build CMakeFiles/FlappyAi.dir/SFML/gp_tonka/FunctionBinaryTree.cpp.o: CXX_COMPILER__FlappyAi_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/FunctionBinaryTree.cpp || cmake_object_order_depends_target_FlappyAi
+  DEP_FILE = CMakeFiles/FlappyAi.dir/SFML/gp_tonka/FunctionBinaryTree.cpp.o.d
+  FLAGS = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
+  INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
+  OBJECT_DIR = CMakeFiles/FlappyAi.dir
+  OBJECT_FILE_DIR = CMakeFiles/FlappyAi.dir/SFML/gp_tonka
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target FlappyAi
@@ -134,7 +155,7 @@ build CMakeFiles/FlappyAi.dir/SFML/Parameters.cpp.o: CXX_COMPILER__FlappyAi_unsc
 #############################################
 # Link the executable FlappyAi
 
-build FlappyAi: CXX_EXECUTABLE_LINKER__FlappyAi_Debug CMakeFiles/FlappyAi.dir/SFML/main.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGP.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGPIndividual.cpp.o CMakeFiles/FlappyAi.dir/SFML/NeuralNetwork.cpp.o CMakeFiles/FlappyAi.dir/SFML/NNlogic.cpp.o CMakeFiles/FlappyAi.dir/SFML/SelectionScreen.cpp.o CMakeFiles/FlappyAi.dir/SFML/Simulator.cpp.o CMakeFiles/FlappyAi.dir/SFML/Entity.cpp.o CMakeFiles/FlappyAi.dir/SFML/Gene.cpp.o CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o CMakeFiles/FlappyAi.dir/SFML/Parameters.cpp.o | /opt/homebrew/opt/libomp/lib/libomp.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
+build FlappyAi: CXX_EXECUTABLE_LINKER__FlappyAi_Debug CMakeFiles/FlappyAi.dir/SFML/main.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGP.cpp.o CMakeFiles/FlappyAi.dir/SFML/CGPIndividual.cpp.o CMakeFiles/FlappyAi.dir/SFML/NeuralNetwork.cpp.o CMakeFiles/FlappyAi.dir/SFML/NNlogic.cpp.o CMakeFiles/FlappyAi.dir/SFML/SelectionScreen.cpp.o CMakeFiles/FlappyAi.dir/SFML/Simulator.cpp.o CMakeFiles/FlappyAi.dir/SFML/Entity.cpp.o CMakeFiles/FlappyAi.dir/SFML/Gene.cpp.o CMakeFiles/FlappyAi.dir/SFML/Population.cpp.o CMakeFiles/FlappyAi.dir/SFML/Parameters.cpp.o CMakeFiles/FlappyAi.dir/SFML/gp_tonka/tonka.cpp.o CMakeFiles/FlappyAi.dir/SFML/gp_tonka/GA.cpp.o CMakeFiles/FlappyAi.dir/SFML/gp_tonka/FunctionBinaryTree.cpp.o | /opt/homebrew/opt/libomp/lib/libomp.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/sfml@2/lib  /opt/homebrew/opt/libomp/lib/libomp.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
   OBJECT_DIR = CMakeFiles/FlappyAi.dir

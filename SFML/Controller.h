@@ -6,6 +6,8 @@
 #include "Entity.h"
 #include "CGPIndividual.h"
 #include <cmath>
+
+#include "SelectionScreen.h"
 #include "./gp_tonka/FunctionBinaryTree.h"
 
 using namespace std;
@@ -121,11 +123,11 @@ public:
 
     CGPController2(const Entity& entity) : entity(entity) {}
 
-    CGPController2(const Entity& learnedEntity, bool simOnly) {
-        if(simOnly == false) {
+    CGPController2(const Entity& learnedEntity, ActionType selectedAction) {
+        if(selectedAction == TRAIN) {
             this->entity = learnedEntity;
 
-        }else if(simOnly == true) {
+        }else if(selectedAction == BEST) {
             string lineFromFile;
             stringstream lineStream;
             vector<string> splicedString;
@@ -138,6 +140,8 @@ public:
             {
                 getline(myFile, lineFromFile);
                 myFile.close();
+            }else {
+                cout << "error opening file(Controller.h)\n";
             }
 
             lineStream = (stringstream)lineFromFile;
@@ -166,7 +170,7 @@ public:
         bool obstacleAhead = false;
         for (const auto& pipe : simulator.pipes)
             if (pipe.x > 30 && pipe.x < 250) {
-                if (agent.position + BIRD_SIZE > pipe.bottomY) {
+                if (agent.position + Parameters::BIRD_SIZE > pipe.bottomY) {
                     obstacleAhead = 1;
                 }
                 break;
@@ -180,7 +184,7 @@ public:
         double output = entity.entityFunction(input);
 
         if(output > Constants::DO_I_JUMP) {
-            agent.velocity = JUMP_SPEED;
+            agent.velocity = Parameters::JUMP_SPEED;
             return true;
         }
         return false;

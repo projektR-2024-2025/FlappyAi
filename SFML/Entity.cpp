@@ -46,7 +46,7 @@ void Entity::createGenome() {
             //genome.push_back(geneSet);
             genome[i] = geneSet;
         }else if(i == 6) {
-            int output = randomInt(Constants::AMOUNT_OF_CGP_INPUTS + 2, Constants::AMOUNT_OF_CGP_INPUTS + 6);
+            int output = randomInt(Constants::AMOUNT_OF_CGP_INPUTS + 2, Constants::AMOUNT_OF_CGP_INPUTS + 5);//bilo je 6 prije
             Gene geneSet(output, output);
             //genome.push_back(geneSet);
             genome[i] = geneSet;

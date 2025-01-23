@@ -31,11 +31,11 @@ void GAParameters::adapt(float diversity, float best_fitness) {
 
 void resetMutation(FunctionBinaryTree& jedinka) {
     if(rand() % 2 == 0 && jedinka.root->left) {
-        tonka::Node* n = jedinka.root->left;
+        tonka::NodeT* n = jedinka.root->left;
         jedinka.root->left = jedinka.createRandomNode(gaParams.max_depth, 1);
         delete n;
     } else if(jedinka.root->right) {
-        tonka::Node* n = jedinka.root->right;
+        tonka::NodeT* n = jedinka.root->right;
         jedinka.root->right = jedinka.createRandomNode(gaParams.max_depth, 1);
         delete n;
     }
@@ -147,7 +147,7 @@ FunctionBinaryTree krizanje(FunctionBinaryTree r1, FunctionBinaryTree r2) {
     return dijete;
 }
 
-tonka::Node* changeRandomNode(tonka::Node* node, FunctionBinaryTree jed, int depth) {
+tonka::NodeT* changeRandomNode(tonka::NodeT* node, FunctionBinaryTree jed, int depth) {
     if (node == nullptr) return nullptr;    
 
     double mutationChance = gaParams.mutation_rate + (depth * 0.1);

@@ -15,8 +15,9 @@
 
 
 using namespace std ;
-using tonka::Node ;
+using tonka::NodeT ;
 
-Node::Node(string val, int typ) : 
-  value(val), type(typ), left(nullptr), right(nullptr) 
-{}
+// NodeT::Node(string val, int typ)
+//   value(val), type(typ), left(nullptr), right(nullptr)
+// {}
+

@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
         controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
         break;
     case CGP2:
-        controller = new CGPController2(runCgp(Parameters::simulationOnly), Parameters::simulationOnly);
+        controller = new CGPController2(runCgp(selectedAction), selectedAction);
         break;
 
     default:
@@ -63,16 +63,19 @@ int main(int argc, char** argv) {
 
     Parameters::simulationOnly = false;
 
-    Simulator simulator(&window);
-    Bird agent;
-    simulator.initialize(agent);
 
-    // Main game loop
-    while (simulator.isRunning()) {
-        simulator.update(agent);
-        controller->action(agent, simulator);
-    }
+        Simulator simulator(&window);
+        Bird agent;
+        simulator.initialize(agent);
 
+        // Main game loop
+        while (simulator.isRunning()) {
+            simulator.update(agent);
+            controller->action(agent, simulator);
+        }
+    
+
+    cout << "main done\n";
     delete controller;
     return 0;
 }
