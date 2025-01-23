@@ -10,8 +10,9 @@
 #elif __linux__
 #define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf" 
 #else
-#define ARIAL_FONT_PATH "arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
+#define ARIAL_FONT_PATH "/System/Library/Fonts/Supplemental/Arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
 #endif
+
 
 struct MenuOption {
     sf::Text text;

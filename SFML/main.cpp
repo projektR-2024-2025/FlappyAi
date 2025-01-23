@@ -12,7 +12,7 @@
 #include "SelectionScreen.h"  // Include the selection screen header
 #include "NNlogic.h"
 #include "mainFunctionsHeader.h"
-#include "CGP.h"
+#include "cgp_andrija/CGP1.h"
 #include "gp_tonka/GA.h"
 #include "ConfigParser.h"
 
@@ -26,34 +26,26 @@ int main(int argc, char** argv) {
     sf::RenderWindow window(sf::VideoMode(Parameters::WINDOW_WIDTH, Parameters::WINDOW_HEIGHT), "Flappy AI");
     window.setFramerateLimit(Parameters::FRAME_RATE);
 
-    ControllerType selectedController = showSelectionScreen(window);
-    if (selectedController == NONE) {
-        std::cerr << "No controller selected, exiting.\n";
-        return -1;
-    }
+    menu(window);
 
-
-
-    ActionType selectedAction = showActionScreen(window);
-
-    Parameters::simulationOnly = (selectedAction == BEST) ? false : true;
+    Parameters::simulationOnly = (Parameters::action == BEST) ? false : true;
 
     Controller* controller = nullptr;
-    CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+    //CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
 
 
-    switch (selectedController) {
+    switch (Parameters::ctrl) {
     case NN:
         controller = NNlogic();
         break;
-    case GP:
-        controller = GPMain(selectedAction);
+    case GP1:
+        controller = GPMain(Parameters::action);
         break;
     case CGP1:
-        controller = cgp.CGPMain(selectedAction);  // Assuming CGPController is defined
+        controller = CGP1::CGPMain(Parameters::action);   // Assuming CGPController is defined
         break;
     case CGP2:
-        controller = new CGPController2(runCgp(selectedAction), selectedAction);
+        controller = new CGPController2(runCgp(Parameters::action), Parameters::action);
         break;
 
     default:
@@ -69,9 +61,12 @@ int main(int argc, char** argv) {
         simulator.initialize(agent);
 
         // Main game loop
+    int i = 0;
         while (simulator.isRunning()) {
+            i++;
             simulator.update(agent);
             controller->action(agent, simulator);
+            cout << i << "\n";
         }
     
 

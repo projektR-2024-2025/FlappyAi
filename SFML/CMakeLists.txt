@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(SMFL
         main.cpp
         Agent.h
-        CGP.cpp
-        CGPIndividual.cpp
         NeuralNetwork.cpp
         NNlogic.cpp
         SelectionScreen.cpp
@@ -26,6 +24,9 @@ add_executable(SMFL
         gp_tonka/tonka.cpp
         gp_tonka/GA.cpp
         gp_tonka/FunctionBinaryTree.cpp
+        cgp_andrija/CGP1.cpp
+        cgp_andrija/CGP1Individual.cpp
+        gp_tonka/TreeParser.cpp
         #SFML/Node.h
         #SFML/Entity.cpp
         #SFML/Gene.cpp
