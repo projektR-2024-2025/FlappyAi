@@ -54,7 +54,7 @@ public:
 
     CGP1Individual runCGP();
 
-    static CGP1Controller* CGPMain(ActionType action);
+    static CGP1Controller* CGPMain();
 };
 
 #endif

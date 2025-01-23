@@ -98,6 +98,7 @@ int showMenu(sf::RenderWindow& window, std::vector<std::string> optionNames) {
         updateMenu(menu, selectedIndex);
 
         window.clear(sf::Color(50, 50, 50));
+
         for (const auto& option : menu) {
             window.draw(option.text);
         }
@@ -107,23 +108,48 @@ int showMenu(sf::RenderWindow& window, std::vector<std::string> optionNames) {
     return -1;
 }
 
-void menu(sf::RenderWindow& window) {
+int startMenu(sf::RenderWindow& window) {
     std::vector<std::string> optionNames = { "Start Game", "Exit" };
     int option;
     option = showMenu(window, optionNames);
 
     if (option == 1) {
         window.close();
-        return;
+        return -1;
     }
 
-    optionNames = { "GP1", "GP2", "CGP1", "CGP2", "NN" };
-    std::vector<ControllerType> controllers = { GP1, GP2, CGP1, CGP2, NN };
-    option = showMenu(window, optionNames);
-    Parameters::ctrl = controllers[option];
+    return 0;
+}
 
-    optionNames = { "Train new individual", "Run best individual"};
-    std::vector<ActionType> actions = { TRAIN, BEST };
-    option = showMenu(window, optionNames);
+int selectionMenu(sf::RenderWindow& window) {
+    std::vector<std::string> optionNames = { "Play By Yourself", "Train New Individual", "Run Best Individual" };
+    std::vector<ActionType> actions = { BEST, TRAIN, BEST };
+    int option = showMenu(window, optionNames);
     Parameters::action = actions[option];
+
+    if (option == 0) {
+        Parameters::ctrl = MANUAL;
+        return 1;
+    }
+    return 0;
+}
+
+int actionMenu(sf::RenderWindow& window) {
+    std::vector<std::string> optionNames = { "GP1", "GP2", "CGP1", "CGP2", "NN" };
+    std::vector<ControllerType> controllers = { GP1, GP2, CGP1, CGP2, NN };
+    int option = showMenu(window, optionNames);
+    Parameters::ctrl = controllers[option];
+    
+    return 0;
+}
+
+int menu(sf::RenderWindow& window) {
+    
+    if (startMenu(window) == -1)
+        return -1;
+
+    if (selectionMenu(window) == 0)
+        actionMenu(window);
+
+    return 0;
 }

@@ -329,11 +329,11 @@ CGP1Individual CGP1::runCGP() {
     return population[bestInd];
 }
 
-CGP1Controller* CGP1::CGPMain(ActionType action) {
+CGP1Controller* CGP1::CGPMain() {
     CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
     CGP1Individual ind;
 
-    if (action == BEST) {
+    if (Parameters::action == BEST) {
         try {
             std::ifstream inFile(bestFile);
             if (inFile.is_open()) {
@@ -347,7 +347,7 @@ CGP1Controller* CGP1::CGPMain(ActionType action) {
             cerr << "Error loading CGP: " << e.what() << endl;
         }
     }
-    else if (action == TRAIN) {
+    else if (Parameters::action == TRAIN) {
         ind = cgp.runCGP();
         ind.printFuction();
     }

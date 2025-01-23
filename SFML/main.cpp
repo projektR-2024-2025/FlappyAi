@@ -25,7 +25,8 @@ int main(int argc, char** argv) {
     sf::RenderWindow window(sf::VideoMode(Parameters::WINDOW_WIDTH, Parameters::WINDOW_HEIGHT), "Flappy AI");
     window.setFramerateLimit(Parameters::FRAME_RATE);
 
-    menu(window);
+    if (menu(window) == -1)
+        return 0;
 
     Parameters::simulationOnly = (Parameters::action == BEST) ? false : true;
 
@@ -39,7 +40,10 @@ int main(int argc, char** argv) {
         controller = GPMain(Parameters::action);
         break;
     case CGP1:
-        controller = CGP1::CGPMain(Parameters::action);  // Assuming CGPController is defined
+        controller = CGP1::CGPMain();
+        break;
+    case MANUAL:
+        controller = new Controller;
         break;
     default:
         std::cerr << "Invalid controller selected, exiting.\n";
