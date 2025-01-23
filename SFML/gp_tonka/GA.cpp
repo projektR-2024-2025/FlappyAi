@@ -1,5 +1,6 @@
 #include "../Controller.h"
 #include "GA.h"
+#include "TreeParser.h"
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
@@ -10,6 +11,7 @@
 using namespace std;
 using namespace tonka;
 
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 202002L) || __cplusplus >= 202002L)
 GAParameters gaParams = {
     .mutation_rate = 0.9,
     .k = 4,
@@ -19,6 +21,9 @@ GAParameters gaParams = {
     .tooBad = 0.1,
     .max_depth = 7
 };
+#else
+GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 7 };
+#endif
 
 void GAParameters::adapt(float diversity, float best_fitness) {
     if(diversity < 0.3) {
@@ -218,9 +223,7 @@ FunctionBinaryTree loadBestFromFile() {
     std::string expression;
     std::getline(file, expression);
     file.close();
-    
-    // Create a minimal tree from the expression
-    FunctionBinaryTree tree(expression, 4); // max_depth=7, dim=4 for our inputs
+    FunctionBinaryTree tree = TreeParser::fromString(expression, 4) ;
     return tree;
 }
 
@@ -246,8 +249,8 @@ Controller* GPMain(ActionType action) {
     }
     
     if (action == TRAIN) {
-        const int POPULATION_SIZE = 5000;
-        const int MAX_EVALUATIONS = 1000;
+        const int POPULATION_SIZE = 7000;
+        const int MAX_EVALUATIONS = 7000;
         const int MAX_DEPTH = 7;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         

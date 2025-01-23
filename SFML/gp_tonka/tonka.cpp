@@ -2,6 +2,7 @@
 #include "../Simulator.h"
 #include "../Agent.h"
 #include "../Controller.h"
+#include "TreeParser.h"
 //#include "GPcontroller.h"
 
 
@@ -15,9 +16,8 @@
 
 
 using namespace std ;
-using tonka::NodeT ;
 
-// NodeT::Node(string val, int typ)
-//   value(val), type(typ), left(nullptr), right(nullptr)
-// {}
-
+//int main(){
+//  FunctionBinaryTree f = TreeParser::fromString("(x1 + (2 * 3))", 4) ;
+//  cout <<f.toString() ;
+//}

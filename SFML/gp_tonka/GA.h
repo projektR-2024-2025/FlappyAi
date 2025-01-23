@@ -4,7 +4,7 @@
 #include <vector>
 #include "FunctionBinaryTree.h"
 #include "../SelectionScreen.h"
-
+#include "../Controller.h"
 
 using namespace std;
 using namespace tonka;

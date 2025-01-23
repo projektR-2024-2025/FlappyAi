@@ -1,157 +1,129 @@
 #include "SelectionScreen.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
+#include <string>
+#include "Parameters.h"
 
 #ifdef _WIN32
 #define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
 #elif __linux__
 #define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf" 
 #else
-//#define ARIAL_FONT_PATH "arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
-#define ARIAL_FONT_PATH "/System/Library/Fonts/Supplemental/Arial.ttf"
+#define ARIAL_FONT_PATH "arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
 #endif
 
-ControllerType showSelectionScreen(sf::RenderWindow& window) {
-    sf::Font font;
-    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
-        std::cerr << "Error loading font\n";
-        return NONE;
+struct MenuOption {
+    sf::Text text;
+    bool selected;
+};
+
+void setupMenu(std::vector<MenuOption>& menu, sf::Font& font, const std::vector<std::string>& options) {
+    float spacing = 70.f;
+    float totalHeight = options.size() * spacing;
+    float yOffset = (Parameters::WINDOW_HEIGHT - totalHeight) / 2.f;
+
+    for (size_t i = 0; i < options.size(); ++i) {
+        MenuOption option;
+        option.text.setFont(font);
+        option.text.setString(options[i]);
+        option.text.setCharacterSize(36);
+        option.text.setFillColor(sf::Color::White);
+        option.text.setPosition(Parameters::WINDOW_WIDTH / 2.f - option.text.getLocalBounds().width / 2.f, yOffset + i * spacing);
+        option.selected = false;
+        menu.push_back(option);
     }
-
-    sf::Text nnText("NN", font, 50);
-    sf::FloatRect textRect1 = nnText.getLocalBounds();
-    nnText.setOrigin(textRect1.left + textRect1.width / 2.0f,
-        textRect1.top + textRect1.height / 2.0f);
-    nnText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 3.5f));
-    sf::Text gpText("GP", font, 50);
-    textRect1 = gpText.getLocalBounds();
-    gpText.setOrigin(textRect1.left + textRect1.width / 2.0f,
-        textRect1.top + textRect1.height / 2.0f);
-    gpText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 2.6f));
-    sf::Text cgp1Text("CGP1", font, 50);
-    textRect1 = cgp1Text.getLocalBounds();
-    cgp1Text.setOrigin(textRect1.left + textRect1.width / 2.0f,
-        textRect1.top + textRect1.height / 2.0f);
-    cgp1Text.setPosition(sf::Vector2f(800 / 2.0f, 600 / 2.0f));
-    sf::Text cgp2Text("CGP2", font, 50);
-    textRect1 = cgp2Text.getLocalBounds();
-    cgp2Text.setOrigin(textRect1.left + textRect1.width / 2.0f,
-        textRect1.top + textRect1.height / 2.0f);
-    cgp2Text.setPosition(sf::Vector2f(800 / 2.0f, 600 / 1.6f));
-
-
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-
-            if (event.type == sf::Event::MouseMoved) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-
-                if (nnText.getGlobalBounds().contains(mousePosF))
-                    nnText.setFillColor(sf::Color(250, 20, 20));
-                else
-                    nnText.setFillColor(sf::Color(255, 255, 255));
-
-                if (gpText.getGlobalBounds().contains(mousePosF))
-                    gpText.setFillColor(sf::Color(250, 20, 20));
-                else
-                    gpText.setFillColor(sf::Color(255, 255, 255));
-
-                if (cgp1Text.getGlobalBounds().contains(mousePosF))
-                    cgp1Text.setFillColor(sf::Color(250, 20, 20));
-                else
-                    cgp1Text.setFillColor(sf::Color(255, 255, 255));
-
-                if (cgp2Text.getGlobalBounds().contains(mousePosF))
-                    cgp2Text.setFillColor(sf::Color(250, 20, 20));
-                else
-                    cgp2Text.setFillColor(sf::Color(255, 255, 255));
-
-            }
-
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (nnText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    return NN;
-                }
-                else if (gpText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    return GP;
-                }
-                else if (cgp1Text.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    return CGP1;
-                }else if(cgp2Text.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    return CGP2;
-                }
-            }
-        }
-
-        window.clear();
-        window.draw(nnText);
-        window.draw(gpText);
-        window.draw(cgp1Text);
-        window.draw(cgp2Text);
-        window.display();
-    }
-
-    return NONE;
+    menu[0].selected = true;
 }
 
-ActionType showActionScreen(sf::RenderWindow& window) {
+void updateMenu(std::vector<MenuOption>& menu, int selectedIndex) {
+    for (size_t i = 0; i < menu.size(); ++i) {
+        if (i == selectedIndex) {
+            menu[i].text.setFillColor(sf::Color(0, 184, 255));
+        }
+        else {
+            menu[i].text.setFillColor(sf::Color::White);
+        }
+    }
+}
+
+int showMenu(sf::RenderWindow& window, std::vector<std::string> optionNames) {
     sf::Font font;
     if (!font.loadFromFile(ARIAL_FONT_PATH)) {
         std::cerr << "Error loading font\n";
-        return BEST;
+        return -1;
     }
 
-    sf::Text genText("Train New", font, 50);
-    sf::FloatRect textRect1 = genText.getLocalBounds();
-    genText.setOrigin(textRect1.left + textRect1.width / 2.0f,
-        textRect1.top + textRect1.height / 2.0f);
-    genText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 2.4f));
-    sf::Text runText("Run Best", font, 50);
-    sf::FloatRect textRect2 = runText.getLocalBounds();
-    runText.setOrigin(textRect2.left + textRect2.width / 2.0f,
-        textRect2.top + textRect2.height / 2.0f);
-    runText.setPosition(sf::Vector2f(800 / 2.0f, 600 / 1.6f));
+    std::vector<MenuOption> menu;
+    setupMenu(menu, font, optionNames);
+
+    int selectedIndex = 0;
 
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
-
-            if (event.type == sf::Event::MouseMoved) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                sf::Vector2f mousePosF(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-
-                if (genText.getGlobalBounds().contains(mousePosF))
-                    genText.setFillColor(sf::Color(250, 20, 20));
-                else
-                    genText.setFillColor(sf::Color(255, 255, 255));
-
-                if (runText.getGlobalBounds().contains(mousePosF))
-                    runText.setFillColor(sf::Color(250, 20, 20));
-                else
-                    runText.setFillColor(sf::Color(255, 255, 255));
             }
 
-            if (event.type == sf::Event::MouseButtonPressed) {
-                if (genText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    return TRAIN;
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Up) {
+                    selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : menu.size() - 1;
                 }
-                else if (runText.getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))) {
-                    return BEST;
+                else if (event.key.code == sf::Keyboard::Down) {
+                    selectedIndex = (selectedIndex + 1) % menu.size();
+                }
+                else if (event.key.code == sf::Keyboard::Enter) {
+                    return selectedIndex;
+                }
+            }
+
+            if (event.type == sf::Event::MouseMoved) {
+                for (size_t i = 0; i < menu.size(); ++i) {
+                    if (menu[i].text.getGlobalBounds().contains(event.mouseMove.x, event.mouseMove.y)) {
+                        selectedIndex = i;
+                    }
+                }
+            }
+
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                for (size_t i = 0; i < menu.size(); ++i) {
+                    if (menu[i].text.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y)) {
+                        return i;
+                    }
                 }
             }
         }
 
-        window.clear();
-        window.draw(genText);
-        window.draw(runText);
+        updateMenu(menu, selectedIndex);
+
+        window.clear(sf::Color(50, 50, 50));
+        for (const auto& option : menu) {
+            window.draw(option.text);
+        }
         window.display();
     }
 
-    return BEST;
+    return -1;
+}
+
+void menu(sf::RenderWindow& window) {
+    std::vector<std::string> optionNames = { "Start Game", "Exit" };
+    int option;
+    option = showMenu(window, optionNames);
+
+    if (option == 1) {
+        window.close();
+        return;
+    }
+
+    optionNames = { "GP1", "GP2", "CGP1", "CGP2", "NN" };
+    std::vector<ControllerType> controllers = { GP1, GP2, CGP1, CGP2, NN };
+    option = showMenu(window, optionNames);
+    Parameters::ctrl = controllers[option];
+
+    optionNames = { "Train new individual", "Run best individual"};
+    std::vector<ActionType> actions = { TRAIN, BEST };
+    option = showMenu(window, optionNames);
+    Parameters::action = actions[option];
 }

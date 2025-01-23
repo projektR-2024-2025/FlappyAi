@@ -1,24 +1,23 @@
-#ifndef CGPINDIVIDUAL_H
-#define CGPINDIVIDUAL_H
+#ifndef CGP1INDIVIDUAL_H
+#define CGP1INDIVIDUAL_H
 #define TYPE double
 
 #include <vector>
 #include <sstream>
-#include "Node.h"
-#include "Output.h"
+#include "CGP1Node.h"
+#include "CGP1Output.h"
 
 // klasa koja opsiuje pojedinca
-class CGPIndividual {
+class CGP1Individual {
 private:
     std::string evalFunction(int nodeNum);
     void isUsed(int nodeNum);
     bool loopFinder(int nodeNum, std::vector<int> nodeSet);
     TYPE evalNode(int nodeNum);
     void clearInd();
-
 public:
-    std::vector<Node> genes;
-    std::vector<Output> outputGene;
+    std::vector<CGP1Node> genes;
+    std::vector<CGP1Output> outputGene;
     std::vector<std::vector<int>> branches;
     int rows;
     int columns;
@@ -27,20 +26,20 @@ public:
     int outputs;
     int evalDone;
 
-    CGPIndividual();
-    CGPIndividual(std::vector<Node> genes, std::vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs);
-    CGPIndividual(std::vector<Node> genes, std::vector<Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone);
+    CGP1Individual();
+    CGP1Individual(std::vector<CGP1Node> genes, std::vector<CGP1Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs);
+    CGP1Individual(std::vector<CGP1Node> genes, std::vector<CGP1Output> outputGene, int rows, int columns, int levelsBack, int inputs, int outputs, bool evalDone);
 
     void printNodes();
     void printFuction();
     void evaluateValue(std::vector<TYPE> input);
     void evaluateUsed();
     TYPE calculateFitness(TYPE lenght);
-    static CGPIndividual deserialize(std::istream& is);
+    static CGP1Individual deserialize(std::istream& is);
     bool findLoops(int nodeNum, std::vector<int> nodeSet);
     void resolveLoops();
 
-    friend std::ostream& operator<<(std::ostream& os, const CGPIndividual& ind) {
+    friend std::ostream& operator<<(std::ostream& os, const CGP1Individual& ind) {
         os << ind.rows << " " << ind.columns << " " << ind.levelsBack << " "
             << ind.inputs << " " << ind.outputs << " " << ind.evalDone << "\n";
 
@@ -56,7 +55,7 @@ public:
     }
 
     // Deserialize the Individual object
-    friend std::istream& operator>>(std::istream& is, CGPIndividual& ind) {
+    friend std::istream& operator>>(std::istream& is, CGP1Individual& ind) {
         is >> ind.rows >> ind.columns >> ind.levelsBack
             >> ind.inputs >> ind.outputs >> ind.evalDone;
 

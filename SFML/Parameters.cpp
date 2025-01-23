@@ -20,3 +20,6 @@ float Parameters::PIPE_GAP = 0.30 * Parameters::WINDOW_HEIGHT;
 float Parameters::FRAME_RATE = 300;
 
 std::vector<std::string> Parameters::maps({"Map1.txt"});
+
+ControllerType Parameters::ctrl = NONE;
+ActionType Parameters::action = BEST;

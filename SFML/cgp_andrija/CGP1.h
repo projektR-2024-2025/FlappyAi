@@ -1,13 +1,13 @@
-#ifndef CGP_H
-#define CGP_H
+#ifndef CGP1_H
+#define CGP1_H
 #define TYPE double
 
 #include <vector>
 #include <string>
-#include "CGPIndividual.h"
-#include "Node.h"
-#include "SelectionScreen.h"
-#include "Controller.h"
+#include "CGP1Individual.h"
+#include "CGP1Node.h"
+#include "../SelectionScreen.h"
+#include "../Controller.h"
 
 // max duljina mape
 // o ovom ovisi fitness
@@ -33,26 +33,28 @@ const int OUTPUTS = 1;
 const int MUTATIONS = 6;
 // broj jedinki u generaciji
 const int POPULATION = 10;
+// najbolja jedinka
+const std::string bestFile = "cgp_andrija/CGP_best.txt";
 
-class CGP {
+class CGP1 {
 private:
     int generations, rows, columns, levelsBack, inputs, outputs, mutations;
 public:
     int actualGens;
-    CGPIndividual bestOne;
+    CGP1Individual bestOne;
 
-    CGP(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations)
+    CGP1(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations)
         : generations(generations), rows(rows), columns(columns), levelsBack(levelsBack), inputs(inputs), outputs(outputs), mutations(mutations) {};
 
-    std::vector<CGPIndividual> generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs);
+    std::vector<CGP1Individual> generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs);
 
-    std::vector<CGPIndividual> mutate(int numMut, CGPIndividual parent);
+    std::vector<CGP1Individual> mutate(int numMut, CGP1Individual parent);
 
-    std::vector<CGPIndividual> mutate(CGPIndividual parent);
+    std::vector<CGP1Individual> mutate(CGP1Individual parent);
 
-    CGPIndividual runCGP();
+    CGP1Individual runCGP();
 
-    CGPController* CGPMain(ActionType action);
+    static CGP1Controller* CGPMain(ActionType action);
 };
 
 #endif

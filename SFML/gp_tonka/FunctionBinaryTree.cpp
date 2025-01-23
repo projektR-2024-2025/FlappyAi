@@ -22,7 +22,7 @@ const int MAX_MAP_SIZE = 8000;
 
 vector<string> functions0 = { "aps", "sin", "cos"}; // Type 0 functions //poslije dodati trigonometrijske
 vector<string> functions1 = { "+","-","*","/"}; // Type 1 functions
-vector<string> functions2 = { "<", ">", "==", "&&", "||"} ;//Type 2 functions -> subset of type 1 functions
+//vector<string> functions2 = { "<", ">", "==", "&&", "||"} ;//Type 2 functions -> subset of type 1 functions
 
 float funkcija0(string fja, float x){
     if(fja == "sin") return sin(x) ;
@@ -61,7 +61,7 @@ float funkcija1(string fja, float x, float y){
 }
 
 
-tonka::NodeT::NodeT(string val, int typ) :
+tonka::Node::Node(string val, int typ) : 
   value(val), type(typ), left(nullptr), right(nullptr) 
 {}
 
@@ -75,7 +75,7 @@ FunctionBinaryTree::FunctionBinaryTree(int max_dubina, int dimenzija){
     root = createRandomNode(max_dubina, 0);
 }
     
-tonka::NodeT* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
+tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
     int type;
     string value ;
     if (dubina < max_dubina) {
@@ -90,7 +90,7 @@ tonka::NodeT* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
     else{
         value = generateRandomValue(type);
     }
-    tonka::NodeT* node = new tonka::NodeT(value, type);
+    tonka::Node* node = new tonka::Node(value, type);
 
     if (type == 0 && dubina < max_dubina) { // funkcija jedan argument
         node->left = createRandomNode(max_dubina, dubina + 1); //dodaje se lijevo, desno ostaje null
@@ -112,7 +112,7 @@ string FunctionBinaryTree::generateRandomValue(int type) {
     return "greska" ;     
 }
 
-void FunctionBinaryTree::printTree(tonka::NodeT* node) {
+void FunctionBinaryTree::printTree(tonka::Node* node) {
     if (node == nullptr) return;
     if(node->type == 3){
         cout << "x" + node->value <<" " ;
@@ -132,7 +132,7 @@ void FunctionBinaryTree::printTree() {
 float FunctionBinaryTree::izracunaj(vector<float> ulaz){
         return (izracunajR(root, ulaz)) ;
     }
-float FunctionBinaryTree::izracunajR(tonka::NodeT *node, vector<float> ulaz){
+float FunctionBinaryTree::izracunajR(tonka::Node *node, vector<float> ulaz){
         if(node->type == 2){ //konstanta
             return stof(node->value) ;
         }
@@ -151,7 +151,7 @@ float FunctionBinaryTree::izracunajR(tonka::NodeT *node, vector<float> ulaz){
         }
         throw(invalid_argument("nepostojeci tip" + node->value)) ;
     }
-string FunctionBinaryTree::toString(tonka::NodeT* node) {
+string FunctionBinaryTree::toString(tonka::Node* node) {
     if (!node) return "";
 
     // konst
@@ -179,7 +179,7 @@ string FunctionBinaryTree::toString(tonka::NodeT* node) {
 string FunctionBinaryTree::toString() {
     return toString(root);
 }
-int FunctionBinaryTree::countNodes(tonka::NodeT* node) {
+int FunctionBinaryTree::countNodes(tonka::Node* node) { 
     if (node == nullptr) return 0;
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
@@ -187,15 +187,15 @@ bool FunctionBinaryTree::operator==(const FunctionBinaryTree other){
     return areNodesEqual(this->root, other.root);
 }
 
-bool FunctionBinaryTree::areNodesEqual(tonka::NodeT* node1, tonka::NodeT* node2){
+bool FunctionBinaryTree::areNodesEqual(tonka::Node* node1, tonka::Node* node2){
     if (node1 == nullptr && node2 == nullptr) return true;
     if (node1 == nullptr || node2 == nullptr) return false;    
     if (node1->type != node2->type || node1->value != node2->value) return false;
     return areNodesEqual(node1->left, node2->left) && areNodesEqual(node1->right, node2->right);
 }
 
-tonka::NodeT* tonka::NodeT::copy()  {
-    tonka::NodeT* newNode = new tonka::NodeT(value, type); // Create a new node with the current node's value and type
+tonka::Node* tonka::Node::copy()  {
+    tonka::Node* newNode = new tonka::Node(value, type); // Create a new node with the current node's value and type
     if (left) {
         newNode->left = left->copy(); // Recursively copy the left child
     }
@@ -232,104 +232,3 @@ void FunctionBinaryTree::fitness(){
     this->fit = fit ;
 }
 
-FunctionBinaryTree::FunctionBinaryTree(const string& expression, int dimenzija) {
-    dim = dimenzija;
-    size_t pos = 0;
-    root = parseFromString(expression, pos);
-}
-
-bool FunctionBinaryTree::isOperator(const string& token) {
-    return find(functions1.begin(), functions1.end(), token) != functions1.end();
-}
-
-bool FunctionBinaryTree::isFunction(const string& token) {
-    return find(functions0.begin(), functions0.end(), token) != functions0.end();
-}
-
-string FunctionBinaryTree::getNextToken(const string& expression, size_t& pos) {
-    while (pos < expression.length() && (expression[pos] == ' ' || expression[pos] == '(' || expression[pos] == ')')) {
-        pos++;
-    }
-    
-    if (pos >= expression.length()) {
-        return "";
-    }
-    
-    string token;
-    
-    // Handle variables (x0, x1, etc.)
-    if (expression[pos] == 'x') {
-        token += expression[pos++];
-        while (pos < expression.length() && isdigit(expression[pos])) {
-            token += expression[pos++];
-        }
-        return token;
-    }
-    
-    // Handle numbers (including decimals)
-    if (isdigit(expression[pos]) || expression[pos] == '-' || expression[pos] == '.') {
-        while (pos < expression.length() && 
-               (isdigit(expression[pos]) || expression[pos] == '.' || expression[pos] == '-')) {
-            token += expression[pos++];
-        }
-        return token;
-    }
-    
-    // Handle operators and functions
-    while (pos < expression.length() && 
-           !isspace(expression[pos]) && 
-           expression[pos] != '(' && 
-           expression[pos] != ')') {
-        token += expression[pos++];
-    }
-    
-    return token;
-}
-
-tonka::NodeT* FunctionBinaryTree::createNodeFromToken(const string& token) {
-    if (token.empty()) {
-        return nullptr;
-    }
-    
-    // Handle variables (x0, x1, etc.)
-    if (token[0] == 'x') {
-        string index = token.substr(1);
-        return new tonka::NodeT(index, 3);  // type 3 for variables
-    }
-    
-    // Handle numbers
-    if (isdigit(token[0]) || token[0] == '-' || token[0] == '.') {
-        return new tonka::NodeT(token, 2);  // type 2 for constants
-    }
-    
-    // Handle functions
-    if (isFunction(token)) {
-        return new tonka::NodeT(token, 0);  // type 0 for unary functions
-    }
-    
-    // Handle operators
-    if (isOperator(token)) {
-        return new tonka::NodeT(token, 1);  // type 1 for binary operators
-    }
-    
-    throw runtime_error("Invalid token: " + token);
-}
-
-tonka::NodeT* FunctionBinaryTree::parseFromString(const string& expression, size_t& pos) {
-    string token = getNextToken(expression, pos);
-    if (token.empty()) {
-        return nullptr;
-    }
-    
-    tonka::NodeT* node = createNodeFromToken(token);
-    
-    if (node->type == 0) {  // Unary function
-        node->left = parseFromString(expression, pos);
-    }
-    else if (node->type == 1) {  // Binary operator
-        node->left = parseFromString(expression, pos);
-        node->right = parseFromString(expression, pos);
-    }
-    
-    return node;
-}
