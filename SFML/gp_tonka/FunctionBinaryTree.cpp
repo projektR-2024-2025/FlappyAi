@@ -229,6 +229,6 @@ void FunctionBinaryTree::fitness(){
         }
         fit += bird.distance ;
     }
-    this->fit = fit ;
+    this->fit = fit /  Parameters::maps.size();
 }
 
