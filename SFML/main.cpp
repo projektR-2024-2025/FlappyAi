@@ -10,7 +10,7 @@
 #include "Agent.h"
 #include "Controller.h"
 #include "SelectionScreen.h"  // Include the selection screen header
-#include "NNlogic.h"
+#include "./nn/NNlogic.h"
 #include "cgp_andrija/CGP1.h"
 #include "gp_tonka/GA.h"
 #include "ConfigParser.h"
@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 
     switch (Parameters::ctrl) {
     case NN:
-        controller = NNlogic();
+        controller = NNMain();
         break;
     case GP1:
         controller = GPMain(Parameters::action);
