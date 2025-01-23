@@ -4,7 +4,7 @@ project(Flappy VERSION 0.1.0 LANGUAGES C CXX)
 find_package(OpenMP REQUIRED)
 
 add_executable(Flappy 
-    CGP.cpp CGPIndividual.cpp NNlogic.cpp NeuralNetwork.cpp 
+    cgp_andrija/CGP1.cpp cgp_andrija/CGP1Individual.cpp NNlogic.cpp NeuralNetwork.cpp
     Parameters.cpp SelectionScreen.cpp Simulator.cpp main.cpp
     gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp gp_tonka/TreeParser.cpp)
 
