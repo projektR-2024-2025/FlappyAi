@@ -249,15 +249,19 @@ Controller* GPMain(ActionType action) {
     }
     
     if (action == TRAIN) {
-        const int POPULATION_SIZE = 7000;
-        const int MAX_EVALUATIONS = 7000;
-        const int MAX_DEPTH = 7;
+        const int POPULATION_SIZE = 5000;
+        const int MAX_EVALUATIONS = 5000;
+        const int MAX_DEPTH = 8;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         
         FunctionBinaryTree bestIndividual = ga(INPUT_DIM, POPULATION_SIZE, MAX_DEPTH, MAX_EVALUATIONS);
         
         try {
-            saveBestToFile(bestIndividual);
+            FunctionBinaryTree bestTree = loadBestFromFile();
+            bestTree.fitness() ;
+            if(bestIndividual.fit > bestTree.fit){
+                saveBestToFile(bestIndividual);
+            }
         } catch (const exception& e) {
             cerr << "Error saving best GP: " << e.what() << endl;
         }

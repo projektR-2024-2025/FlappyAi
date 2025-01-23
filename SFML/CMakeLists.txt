@@ -14,6 +14,10 @@ configure_file(Map2.txt ${CMAKE_BINARY_DIR}/Map2.txt COPYONLY)
 configure_file(Map3.txt ${CMAKE_BINARY_DIR}/Map3.txt COPYONLY)
 configure_file(Map4.txt ${CMAKE_BINARY_DIR}/Map4.txt COPYONLY)
 configure_file(Map5.txt ${CMAKE_BINARY_DIR}/Map5.txt COPYONLY)
+configure_file(CGP_best.txt ${CMAKE_BINARY_DIR}/CGP_best.txt COPYONLY)
+configure_file(best_gp.txt ${CMAKE_BINARY_DIR}/best_gp.txt COPYONLY)
+configure_file(config.conf ${CMAKE_BINARY_DIR}/config.conf COPYONLY)
+
 
 target_link_libraries(Flappy -lsfml-graphics)
 target_link_libraries(Flappy -lsfml-system)
