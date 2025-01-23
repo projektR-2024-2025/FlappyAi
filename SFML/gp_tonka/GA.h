@@ -32,7 +32,7 @@ void evaluacija_populacije(vector<FunctionBinaryTree>& populacija, FunctionBinar
 vector<int> ksel(vector<FunctionBinaryTree>& p, int k);
 void preserveElites(vector<FunctionBinaryTree>& population, int eliteCount);
 FunctionBinaryTree krizanje(FunctionBinaryTree r1, FunctionBinaryTree r2);
-tonka::NodeT* changeRandomNode(tonka::NodeT* node, FunctionBinaryTree jed, int depth);
+tonka::Node* changeRandomNode(tonka::Node* node, FunctionBinaryTree jed, int depth);
 void mutacija(FunctionBinaryTree& jedinka);
 void obrisi(vector<FunctionBinaryTree>& p, int r3);
 FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWindow& window);

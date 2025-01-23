@@ -186,7 +186,6 @@ private:
 public:
     CGP1Controller(const cgp_andrija::CGP1Individual& individual) : individual(individual) {}
 
-
     bool action(Bird& bird, Simulator& simulator)
     {
         // input vector za cgp mrezu
