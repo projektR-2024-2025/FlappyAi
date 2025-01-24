@@ -3,6 +3,6 @@
 
 #include "../Controller.h"
 
-NeuralController* NNMain();
+NeuralController* NNMain(sf::RenderWindow& window);
 
 #endif

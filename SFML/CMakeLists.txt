@@ -4,7 +4,7 @@ project(Flappy VERSION 0.1.0 LANGUAGES C CXX)
 find_package(OpenMP REQUIRED)
 
 add_executable(Flappy 
-    cgp_andrija/CGP1.cpp cgp_andrija/CGP1Individual.cpp NNlogic.cpp NeuralNetwork.cpp
+    cgp_andrija/CGP1.cpp cgp_andrija/CGP1Individual.cpp nn/NNlogic.cpp nn/NeuralNetwork.cpp
     Parameters.cpp SelectionScreen.cpp Simulator.cpp main.cpp
     gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp gp_tonka/TreeParser.cpp)
 
@@ -16,6 +16,7 @@ configure_file(Map4.txt ${CMAKE_BINARY_DIR}/Map4.txt COPYONLY)
 configure_file(Map5.txt ${CMAKE_BINARY_DIR}/Map5.txt COPYONLY)
 configure_file(CGP_best.txt ${CMAKE_BINARY_DIR}/CGP_best.txt COPYONLY)
 configure_file(best_gp.txt ${CMAKE_BINARY_DIR}/best_gp.txt COPYONLY)
+configure_file(best_neural_network.txt ${CMAKE_BINARY_DIR}/best_neural_network.txt COPYONLY)
 configure_file(config.conf ${CMAKE_BINARY_DIR}/config.conf COPYONLY)
 
 

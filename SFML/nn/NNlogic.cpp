@@ -8,10 +8,19 @@
 #include "../Simulator.h"
 #include "../Controller.h"
 #include "../Parameters.h"
+#include "../SelectionScreen.h"
 
 #define GENERATION_SIZE 100
 #define GENERATION_COUNT 1500
 #define MUTATION_RATE 0.30
+
+#ifdef _WIN32
+#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
+#elif __linux__
+#define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
+#else
+#define ARIAL_FONT_PATH "arial.ttf"
+#endif
 
 //std::vector<std::string> Parameters::maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };
 
@@ -181,9 +190,14 @@ NeuralNetwork loadNeuralNetwork(const std::string& filename) {
     return nn;
 }
 
-NeuralNetwork NNlogic() {
+NeuralNetwork NNlogic(sf::RenderWindow& window) {
     // definiranje strukture neuronske mreze
     std::vector<int> layers = { 4, 5, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
+
+    sf::Font font;
+    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
+        std::cerr << "Error loading font\n";
+    }
 
     // inicijalizacija populacije
     std::vector<Individual> population;
@@ -249,6 +263,8 @@ NeuralNetwork NNlogic() {
 
         population = newPopulation;
 
+        trainingMenu(window, font, generation, GENERATION_COUNT, population[0].fitness, "NN", new NeuralController(population[0].nn));
+
         // printaj najboljeg
         std::cout << "Generation " << generation << " - Best Fitness: " << population[0].fitness << std::endl;
     }
@@ -270,11 +286,11 @@ NeuralNetwork NNlogic() {
     return population[0].nn;
 }
 
-NeuralController* NNMain() {
+NeuralController* NNMain(sf::RenderWindow& window) {
     if (Parameters::action == BEST) {        
 		return new NeuralController(loadNeuralNetwork("best_neural_network.txt"));
     }
     else {
-        return new NeuralController(NNlogic());
+        return new NeuralController(NNlogic(window));
     }
 }

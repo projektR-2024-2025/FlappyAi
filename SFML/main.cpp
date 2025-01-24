@@ -25,43 +25,47 @@ int main(int argc, char** argv) {
     sf::RenderWindow window(sf::VideoMode(Parameters::WINDOW_WIDTH, Parameters::WINDOW_HEIGHT), "Flappy AI");
     window.setFramerateLimit(Parameters::FRAME_RATE);
 
-    if (menu(window) == -1)
-        return 0;
+    
+    while (window.isOpen()) {
+        if (menu(window) == -1)
+            return 0;
 
-    Parameters::simulationOnly = (Parameters::action == BEST) ? false : true;
+        Parameters::simulationOnly = (Parameters::action == BEST) ? false : true;
 
-    Controller* controller = nullptr;
+        Controller* controller = nullptr;
 
-    switch (Parameters::ctrl) {
-    case NN:
-        controller = NNMain();
-        break;
-    case GP1:
-        controller = GPMain(Parameters::action);
-        break;
-    case CGP1:
-        controller = CGP1::CGPMain();
-        break;
-    case MANUAL:
-        controller = new Controller;
-        break;
-    default:
-        std::cerr << "Invalid controller selected, exiting.\n";
-        return -1;
+        switch (Parameters::ctrl) {
+        case NN:
+            controller = NNMain(window);
+            break;
+        case GP1:
+            controller = GPMain(window);
+            break;
+        case CGP1:
+            controller = CGP1::CGPMain(window);
+            break;
+        case MANUAL:
+            controller = new Controller;
+            break;
+        default:
+            std::cerr << "Invalid controller selected, exiting.\n";
+            return -1;
+        }
+
+        Parameters::simulationOnly = false;
+        Parameters::action = BEST;
+
+        Simulator simulator(&window);
+        Bird agent;
+        simulator.initialize(agent);
+
+        // Main game loop
+        while (simulator.isRunning()) {
+            simulator.update(agent);
+            controller->action(agent, simulator);
+        }
+
+        delete controller;
     }
-
-    Parameters::simulationOnly = false;
-
-    Simulator simulator(&window);
-    Bird agent;
-    simulator.initialize(agent);
-
-    // Main game loop
-    while (simulator.isRunning()) {
-        simulator.update(agent);
-        controller->action(agent, simulator);
-    }
-
-    delete controller;
     return 0;
 }

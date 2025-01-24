@@ -25,6 +25,14 @@ GAParameters gaParams = {
 GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 7 };
 #endif
 
+#ifdef _WIN32
+#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
+#elif __linux__
+#define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
+#else
+#define ARIAL_FONT_PATH "arial.ttf"
+#endif
+
 void GAParameters::adapt(float diversity, float best_fitness) {
     if(diversity < 0.3) {
         mutation_rate *= 1.1;  // Increase mutation when diversity is low
@@ -185,9 +193,14 @@ void obrisi(vector<FunctionBinaryTree>& p, int r3) {
     p.erase(it);
 }
 
-FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev) {
+FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWindow& window) {
     int br_ev = 0;
     vector<FunctionBinaryTree> populacija = stvori_populaciju(dim, vel, max_dubina);
+
+    sf::Font font;
+    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
+        std::cerr << "Error loading font\n";
+    }
     
     FunctionBinaryTree najbolja = populacija[0];
     evaluacija_populacije(populacija, najbolja, dim);
@@ -204,6 +217,9 @@ FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev) {
         obrisi(populacija, r3);
         populacija.push_back(dijete);
         br_ev++;
+
+        trainingMenu(window, font, br_ev, max_ev, najbolja.fit, "GP", new GPcontroller(najbolja));
+
         cout <<"evaluacija: " <<br_ev <<" najbolja: "<< najbolja.toString() <<" fit: " <<najbolja.fit <<endl ;
     }
     try {
@@ -237,24 +253,24 @@ void saveBestToFile(FunctionBinaryTree best) {
     file.close();
 }
 
-Controller* GPMain(ActionType action) {
-    if (action == BEST) {
+Controller* GPMain(sf::RenderWindow& window) {
+    if (Parameters::action == BEST) {
         try {
             FunctionBinaryTree bestTree = loadBestFromFile();
             return new GPcontroller(bestTree);
         } catch (const std::exception& e) {
             std::cerr << "Error loading best GP: " << e.what() << std::endl;
-            action = TRAIN;
+            Parameters::action = TRAIN;
         }
     }
     
-    if (action == TRAIN) {
+    if (Parameters::action == TRAIN) {
         const int POPULATION_SIZE = 5000;
         const int MAX_EVALUATIONS = 5000;
         const int MAX_DEPTH = 8;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         
-        FunctionBinaryTree bestIndividual = ga(INPUT_DIM, POPULATION_SIZE, MAX_DEPTH, MAX_EVALUATIONS);
+        FunctionBinaryTree bestIndividual = ga(INPUT_DIM, POPULATION_SIZE, MAX_DEPTH, MAX_EVALUATIONS, window);
         
         try {
             FunctionBinaryTree bestTree = loadBestFromFile();

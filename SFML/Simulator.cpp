@@ -54,6 +54,8 @@ bool Simulator::isRunning() const
 {
     if (Parameters::simulationOnly)
         return running;
+    else if (Parameters::action == TRAIN && Parameters::simulationOnly == false)
+        return running;
     return true;
 }
 
@@ -121,6 +123,10 @@ void Simulator::update(Bird& bird)
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
                     initializeMap(bird);
                     running = true;
+                }
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                    running = false;
+                    Parameters::simulationOnly = true;
                 }
             }
         }

@@ -11,6 +11,14 @@
 #include <omp.h>
 #include <sstream>
 
+#ifdef _WIN32
+#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
+#elif __linux__
+#define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
+#else
+#define ARIAL_FONT_PATH "arial.ttf"
+#endif
+
 using namespace std;
 
 vector<CGP1Individual> CGP1::generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs) {
@@ -18,7 +26,6 @@ vector<CGP1Individual> CGP1::generatePopulation(int rows, int columns, int level
 
     #pragma omp parallel for
     for (int i = 0; i < POPULATION; i++) {
-
         random_device rd;
         mt19937 gen(rd());
 
@@ -263,12 +270,18 @@ CGP1Individual CGP1::runCGP() {
 
     std::cout << "Vrijeme: " << (omp_get_wtime() - time) << "s" << endl;
 
+    sf::Font font;
+    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
+        std::cerr << "Error loading font\n";
+    }
+
     for (generacija = 0; generacija < generations; generacija++) {
         TYPE bestFit = -1;
         bestInd = 0;
         vector<int> bestInds;
         random_device rd;
         mt19937 gen(rd());
+
         for (int i = 0; i < POPULATION; i++) {
 
             float totalDistance = 0.f;
@@ -305,6 +318,8 @@ CGP1Individual CGP1::runCGP() {
 
         std::cout << "Gen: " << generacija << "; Fitness: " << bestFit << "; Indeks: " << bestInd << endl;
 
+        trainingMenu(window, font, generacija, generations, bestFit, "CGP", new CGP1Controller(population[bestInd]));
+
         if (bestFit >= MAX_MAP_SIZE)
             break;
 
@@ -329,8 +344,8 @@ CGP1Individual CGP1::runCGP() {
     return population[bestInd];
 }
 
-CGP1Controller* CGP1::CGPMain() {
-    CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+CGP1Controller* CGP1::CGPMain(sf::RenderWindow& window) {
+    CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS, window);
     CGP1Individual ind;
 
     if (Parameters::action == BEST) {
