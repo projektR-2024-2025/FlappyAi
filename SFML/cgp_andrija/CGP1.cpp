@@ -261,7 +261,7 @@ vector<CGP1Individual> CGP1::mutate(CGP1Individual parent) {
 
 CGP1Individual CGP1::runCGP() {
     vector<CGP1Individual> population;
-    int bestInd = 0, generacija = 0;
+    int bestInd = 0, generacija = 0, brEvaluacija = 0;
 
     double time;
     time = omp_get_wtime();
@@ -297,6 +297,7 @@ CGP1Individual CGP1::runCGP() {
                         break;
                 }
                 totalDistance += population[i].calculateFitness((TYPE) bird.distance);
+                brEvaluacija++;
             }
 
             TYPE fit = totalDistance / Parameters::maps.size();
@@ -318,9 +319,14 @@ CGP1Individual CGP1::runCGP() {
 
         std::cout << "Gen: " << generacija << "; Fitness: " << bestFit << "; Indeks: " << bestInd << endl;
 
-        trainingMenu(window, font, generacija, generations, bestFit, "CGP", new CGP1Controller(population[bestInd]));
+        if (Parameters::NUMBER_OF_EVALUATIONS > 0)
+            trainingMenu(window, font, brEvaluacija, Parameters::NUMBER_OF_EVALUATIONS, bestFit, "CGP", new CGP1Controller(population[bestInd]));
+        else
+            trainingMenu(window, font, generacija, generations, bestFit, "CGP", new CGP1Controller(population[bestInd]));
 
         if (bestFit >= MAX_MAP_SIZE)
+            break;
+        else if (Parameters::NUMBER_OF_EVALUATIONS > 0 && brEvaluacija >= Parameters::NUMBER_OF_EVALUATIONS)
             break;
 
         if (generacija != generations - 1)

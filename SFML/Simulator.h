@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Agent.h"
+#include "Parameters.h"
 
 struct Pipe {
     float x;        // udaljenost
@@ -49,7 +50,7 @@ private:
     std::vector<int> mapGround;
     int mapReadIndex = 0;
     bool pillarFlag = 0;
-    std::string map = "Map1.txt";
+    std::string map = Parameters::maps.at(0);
 
     bool running;
     bool scoreScreen;

@@ -81,10 +81,9 @@ bool Simulator::simulateFrame(Bird& bird, float deltaTime)
             // stvori slucajnu novu cijev kad ovu predjemo
             if (pipe.x + Parameters::PIPE_WIDTH < 0) {
                 float pipeHeight = (float)(rand() % 200 + 100);
-                pipe.x = Parameters::WINDOW_WIDTH;
+                pipe.x = pipes.size() * 300 + pipes.size() - 1 * Parameters::PIPE_WIDTH;
                 pipe.topY = pipeHeight;
                 pipe.bottomY = pipeHeight + Parameters::PIPE_GAP;
-
             }
         }
         else if(Parameters::simulationOnly) {
@@ -198,7 +197,7 @@ void Simulator::initializeMap(Bird& bird)
 
     // a) slucajne cijevi
     if (Parameters::randomPipes)
-        for (float x = Parameters::WINDOW_WIDTH / 2; x < 1.5 * Parameters::WINDOW_WIDTH; x += 300) {
+        for (float x = Parameters::WINDOW_WIDTH * 0.75; x < 2 * Parameters::WINDOW_WIDTH; x += 300) {
             float pipeHeight = (float) (rand() % 200 + 100);
             pipes.push_back({ x, pipeHeight, pipeHeight + Parameters::PIPE_GAP });
         }

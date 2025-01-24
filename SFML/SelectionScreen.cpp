@@ -23,7 +23,7 @@ void setupMenu(std::vector<MenuOption>& menu, sf::Font& font, const std::vector<
     float totalHeight = options.size() * spacing;
     float yOffset = (Parameters::WINDOW_HEIGHT - totalHeight) / 2.f;
 
-    for (size_t i = 0; i < options.size(); ++i) {
+    for (size_t i = 0; i < options.size() && i < 5; ++i) {
         MenuOption option;
         option.text.setFont(font);
         option.text.setString(options[i]);
@@ -77,7 +77,7 @@ int showMenu(sf::RenderWindow& window, std::vector<std::string> optionNames, boo
                     return selectedIndex;
                 }
                 else if (event.key.code == sf::Keyboard::Escape && exit) {
-                    return 1;
+                    return 2;
                 }
             }
 
@@ -111,16 +111,33 @@ int showMenu(sf::RenderWindow& window, std::vector<std::string> optionNames, boo
     return -1;
 }
 
+int mapSelectorMenu(sf::RenderWindow& window) {
+    sort(Parameters::maps.begin(), Parameters::maps.end());
+    int option = showMenu(window, Parameters::maps, false);
+    std::string tmpMap(Parameters::maps.at(option));
+    Parameters::maps.at(option) = Parameters::maps.at(0);
+    Parameters::maps.at(0) = tmpMap;
+
+    return 0;
+}
+
 int startMenu(sf::RenderWindow& window) {
-    std::vector<std::string> optionNames = { "Start Game", "Exit" };
-    int option;
-    option = showMenu(window, optionNames, true);
+    while (window.isOpen()) {
+        std::vector<std::string> optionNames = { "Start Game", "Map Selector", "Exit" };
+        int option;
+        option = showMenu(window, optionNames, true);
 
-    if (option == 1) {
-        window.close();
-        return -1;
+        if (option == 1) {
+            mapSelectorMenu(window);
+            continue;
+        }
+
+        if (option == 2) {
+            window.close();
+            return -1;
+        }
+        return 0;
     }
-
     return 0;
 }
 

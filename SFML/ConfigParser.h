@@ -59,5 +59,7 @@ void parseConfig(std::string fileName) {
         }
     }
 
+    Parameters::NUMBER_OF_EVALUATIONS = config.count("NUMBER_OF_EVALUATIONS") ? std::stoi(config.find("NUMBER_OF_EVALUATIONS")->second) : Parameters::NUMBER_OF_EVALUATIONS;
+
     std::cout << "Config loaded from file" << std::endl;
 }

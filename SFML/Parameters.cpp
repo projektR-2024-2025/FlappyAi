@@ -23,3 +23,5 @@ std::vector<std::string> Parameters::maps({"Map1.txt"});
 
 ControllerType Parameters::ctrl = NONE;
 ActionType Parameters::action = BEST;
+
+int Parameters::NUMBER_OF_EVALUATIONS = -1;

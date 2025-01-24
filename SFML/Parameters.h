@@ -33,6 +33,8 @@ public:
 
 	static ControllerType ctrl;
 	static ActionType action;
+
+	static int NUMBER_OF_EVALUATIONS;
 };
 
 #endif
