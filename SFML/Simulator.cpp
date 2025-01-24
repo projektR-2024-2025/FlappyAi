@@ -113,6 +113,8 @@ void Simulator::update(Bird& bird)
             while (window->pollEvent(event)) {
                 if (event.type == sf::Event::Closed) {
                     window->close();
+                    running = false;
+                    Parameters::simulationOnly = true;
                 }
                 // space za skok
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
