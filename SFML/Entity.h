@@ -20,6 +20,7 @@ public:
     float lengthTraversed;
 
     Entity();
+    ~Entity();
 
     float getFitness();
     void createGenome();
@@ -27,7 +28,7 @@ public:
     double entityFunction(vector<double> &cgpInputs);
 
     string toString();
-    Entity stringToEntity(vector<string> splicedString);
+    Entity stringToEntity(string splicedString);
 
 
 

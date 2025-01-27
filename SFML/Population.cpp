@@ -19,12 +19,17 @@ Population::Population() {
     entityList.resize(Constants::POPULATION_SIZE);
 }
 
+Population::~Population() {
+
+}
+
+
 
 void Population::entityFitnessSort() {
     sort(entityList.begin(), entityList.end(),
               [](Entity& e1, Entity& e2)
               {
-                  return e1.getFitness() < e2.getFitness();
+                  return e1.getFitness() > e2.getFitness();
               });
 }
 
@@ -63,11 +68,11 @@ void Population::chooseParents() {
 }
 
 
-void Population::entityFitnessEval() {
-    for (int i = 0; i < this->entityList.size(); i++){
-        this->entityList[i].fitness = 1 - (this->entityList[i].lengthTraversed/Constants::MAX_MAP_SIZE);
-    }
-}
+// void Population::entityFitnessEval() {
+//     for (int i = 0; i < this->entityList.size(); i++){
+//         this->entityList[i].fitness = this->entityList[i].lengthTraversed/;
+//     }
+// }
 
 
 int Population::crossingOverAndMutation(Population &NewPop, int index) {
@@ -99,75 +104,84 @@ int Population::crossingOverAndMutation(Population &NewPop, int index) {
     //cout << "mutation probability r:" << r << "\n";
 
     if(r < Constants::MUTATION_PROBABILITY) {
-        int mutatingIndex1 = randomInt(0,Constants::ENTITY_SIZE);
-        //cout << "mutating index1:" << mutatingIndex1 << "\n";
+        int a;
+        int b;
 
-        int mutatingIndex2 = randomInt(0,Constants::ENTITY_SIZE);
-        //cout << "mutating index2:" << mutatingIndex2 << "\n";
+        int mutatingGeneAmount = Constants::ENTITY_SIZE * Constants::PERCENTAGE_OF_GENES;
 
-        if(mutatingIndex1 == 0 || mutatingIndex1 == 1){//prva dva gena, bira x ili y
+        for(int i = 0; i < mutatingGeneAmount; i++) {
+            int mutatingIndex1 = randomInt(0,Constants::ENTITY_SIZE - 1);
+            int mutatingIndex2 = randomInt(0,Constants::ENTITY_SIZE - 1);
 
-            int a = randomInt(0,2);
-            int b = randomInt(0,2);
-            //cout << "a: " << a << " b: " << b << "\n";
 
-            child1.genome[mutatingIndex1] = Gene(a,b);
+            if(mutatingIndex1 == 0 || mutatingIndex1 == 1){//prva dva gena, bira x ili y
 
-        }else if(mutatingIndex1 == 2 || mutatingIndex1 == 3){//druga dva gena, bira x,y ili iz prvog stupca kucica
+                a = randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS - 1);
+                b = randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS - 1);
+                //cout << "a: " << a << " b: " << b << "\n";
 
-            int a = randomInt(0,4);
-            int b = randomInt(0,4);
-            //cout << "a: " << a << " b: " << b << "\n";
+                child1.genome[mutatingIndex1] = Gene(a,b);
 
-            child1.genome[mutatingIndex1] = Gene(a,b);
+            }else if(mutatingIndex1 == 2 || mutatingIndex1 == 3){//druga dva gena, bira x,y ili iz prvog stupca kucica
 
-        }else if(mutatingIndex1 == 4 || mutatingIndex1 == 5){//treca dva gena, bira iz prva dva stupca kucica
+                a = randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS + 1);
+                b = randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS + 1);
 
-            int a = randomInt(2,6);
-            int b = randomInt(2,6);
-            //cout << "a: " << a << " b: " << b << "\n";
+                child1.genome[mutatingIndex1] = Gene(a,b);
 
-            child1.genome[mutatingIndex1] = Gene(a,b);
+            }else if(mutatingIndex1 >= 4 && mutatingIndex1 < Constants::ENTITY_SIZE - 1) {
+                if(mutatingIndex1 % 2 == 0) {
+                    a = randomInt(mutatingIndex1, mutatingIndex1 + 3);
+                    b = randomInt(mutatingIndex1 ,mutatingIndex1 + 3);
 
-        }else if (mutatingIndex1 == 6){//output, bira iz druga dva stupca kucica
+                }else if (mutatingIndex1 % 2 == 1) {
+                    a = randomInt(mutatingIndex1 - 1, mutatingIndex1 + 2);
+                    b = randomInt(mutatingIndex1 - 1 ,mutatingIndex1 + 2);
+                }
 
-            int outPut = randomInt(4,7);
-            //cout << "output: " << outPut << "\n";
+                child1.genome[mutatingIndex1] = Gene(a,b);
 
-            child1.genome[mutatingIndex1] = Gene(outPut,outPut);
+            }else if (mutatingIndex1 == Constants::ENTITY_SIZE - 1){//output, bira iz druga dva stupca kucica
+
+                int outPut = randomInt(Constants::ENTITY_SIZE - 3, Constants::ENTITY_SIZE - 2);
+                child1.genome[mutatingIndex1] = Gene(outPut,outPut);
+            }
+
+
+            if(mutatingIndex2 == 0 || mutatingIndex2 == 1){//prva dva gena, bira x ili y
+
+                a = randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS - 1);
+                b = randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS - 1);
+                //cout << "a: " << a << " b: " << b << "\n";
+
+                child2.genome[mutatingIndex2] = Gene(a,b);
+
+            }else if(mutatingIndex2 == 2 || mutatingIndex2 == 3){//druga dva gena, bira x,y ili iz prvog stupca kucica
+
+                a = randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS + 1);
+                b = randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS + 1);
+
+                child2.genome[mutatingIndex2] = Gene(a,b);
+
+            }else if(mutatingIndex2 >= 4 && mutatingIndex2 < Constants::ENTITY_SIZE - 1) {
+                if(mutatingIndex2 % 2 == 0) {
+                    a = randomInt(mutatingIndex2, mutatingIndex2 + 3);
+                    b = randomInt(mutatingIndex2 ,mutatingIndex2 + 3);
+
+                }else if (mutatingIndex2 % 2 == 1) {
+                    a = randomInt(mutatingIndex2 - 1, mutatingIndex2 + 2);
+                    b = randomInt(mutatingIndex2 - 1 ,mutatingIndex2 + 2);
+                }
+
+                child1.genome[mutatingIndex2] = Gene(a,b);
+
+            }else if (mutatingIndex2 == Constants::ENTITY_SIZE - 1){//output, bira iz druga dva stupca kucica
+
+                int outPut = randomInt(Constants::ENTITY_SIZE - 3, Constants::ENTITY_SIZE - 2);
+                child1.genome[mutatingIndex2] = Gene(outPut,outPut);
+            }
         }
 
-
-        if(mutatingIndex2 == 0 || mutatingIndex2 == 1){//prva dva gena, bira x ili y
-
-            int a = randomInt(0,2);
-            int b = randomInt(0,2);
-            //cout << "a: " << a << " b: " << b << "\n";
-
-            child2.genome[mutatingIndex2] = Gene(a,b);
-
-        }else if(mutatingIndex2 == 2 || mutatingIndex2 == 3){//druga dva gena, bira x,y ili iz prvog stupca kucica
-
-            int a = randomInt(0,4);
-            int b = randomInt(0,4);
-            //cout << "a: " << a << " b: " << b << "\n";
-
-            child2.genome[mutatingIndex2] = Gene(a,b);
-
-        }else if(mutatingIndex2 == 4 || mutatingIndex2 == 5){//treca dva gena, bira iz prva dva stupca kucica
-
-            int a = randomInt(2,6);
-            int b = randomInt(2,6);
-            //cout << "a: " << a << " b: " << b << "\n";
-
-            child2.genome[mutatingIndex2] = Gene(a,b);
-
-        }else if (mutatingIndex2 == 6){//output, bira iz druga dva stupca kucica
-            int outPut = randomInt(4,7);
-            //cout << "output: " << outPut << "\n";
-
-            child2.genome[mutatingIndex2] = Gene(outPut,outPut);
-        }
     }else{
         //cout << "not mutating\n";
     }

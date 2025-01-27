@@ -33,6 +33,10 @@ add_executable(SMFL
         #SFML/Population.cpp
         #SFML/conioMac.h
 )
+#=================================================================================
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+#=================================================================================
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
 
     target_include_directories(SMFL PRIVATE "/opt/homebrew/opt/libomp/include")

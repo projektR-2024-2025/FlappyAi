@@ -8,7 +8,7 @@
 #include <cmath>
 
 
-int randomInt(int min, int maxExclusive);
+int randomInt(int min, int max);
 
 enum class Functions {
     PLUS, MINUS, MUL, DIV, MOD, COS, SIN, POW
@@ -22,6 +22,7 @@ public:
 
     Gene(int in1, int in2);
     Gene();
+    ~Gene();
 };
 
 

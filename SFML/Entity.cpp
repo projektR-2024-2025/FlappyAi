@@ -26,27 +26,49 @@ Entity::Entity() {
 
 }
 
+Entity::~Entity() {}
+
+
 float Entity::getFitness() {
     return fitness;
 }
 
 
 void Entity::createGenome() {
+    int a;
+    int b;
+    //int amountOfCgpInputsMin = Constants::AMOUNT_OF_CGP_INPUTS;
+   // int amountOfCgpInputsMax = Constants::AMOUNT_OF_CGP_INPUTS;
     for(int i = 0; i < Constants::ENTITY_SIZE; i++) {
-        if(i == 0 || i == 1) {
-            Gene geneSet(randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS), randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS));
+        // preprsvi da i moze ici dalje
+        if(i == 0 || i == 1) { // prvi stupac
+            a = randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS - 1);
+            b = randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS - 1);
+            Gene geneSet(a , b);
             //genome.push_back(geneSet);
             genome[i] = geneSet;
-        }else if(i == 2 || i == 3) {
-            Gene geneSet(randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS + 2), randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS + 2));
+        }else if(i == 2 || i == 3) { // drugi stupac
+            a = randomInt(0, Constants::AMOUNT_OF_CGP_INPUTS + 1);
+            b = randomInt(0,Constants::AMOUNT_OF_CGP_INPUTS + 1);
+            Gene geneSet(a , b);
             //genome.push_back(geneSet);
             genome[i] = geneSet;
-        }else if(i == 4 || i ==5) {
-            Gene geneSet(randomInt(Constants::AMOUNT_OF_CGP_INPUTS, Constants::AMOUNT_OF_CGP_INPUTS + 4), randomInt(Constants::AMOUNT_OF_CGP_INPUTS,Constants::AMOUNT_OF_CGP_INPUTS + 4));
-            //genome.push_back(geneSet);
+        }else if(i >= 4 && i < Constants::ENTITY_SIZE - 1) {
+            if(i % 2 == 0) {
+                a = randomInt(i, i + 3);
+                b = randomInt(i ,i + 3);
+
+            }else if (i % 2 == 1) {
+                a = randomInt(i - 1, i + 2);
+                b = randomInt(i - 1 ,i + 2);
+            }
+            Gene geneSet(a , b);
             genome[i] = geneSet;
-        }else if(i == 6) {
-            int output = randomInt(Constants::AMOUNT_OF_CGP_INPUTS + 2, Constants::AMOUNT_OF_CGP_INPUTS + 5);//bilo je 6 prije
+        }
+
+
+        if(i == Constants::ENTITY_SIZE - 1) {
+            int output = randomInt(Constants::ENTITY_SIZE - 3, Constants::ENTITY_SIZE - 2);//bilo je 6 prije
             Gene geneSet(output, output);
             //genome.push_back(geneSet);
             genome[i] = geneSet;
@@ -125,40 +147,40 @@ string Entity::toString() {
     string output;
 
     for(auto &gene : genome) {
-        output = output + to_string(gene.in1) + to_string(gene.in2);
+        output = output + to_string(gene.in1) + " " + to_string(gene.in2) + " ";
 
         switch (gene.function) {
             case Functions::PLUS:
                 //output = output + "PLUS ";
-                output = output + "1 ";
+                output = output + "1/";
                 break;
             case Functions::MINUS:
                 //output = output + "MINUS ";
-                output = output + "2 ";
+                output = output + "2/";
                 break;
             case Functions::MUL:
                 //output = output + "MUL ";
-                output = output + "3 ";
+                output = output + "3/";
                 break;
             case Functions::DIV:
                 //output = output + "DIV ";
-                output = output + "4 ";
+                output = output + "4/";
                 break;
             case Functions::MOD:
                 //output = output + "MOD ";
-                output = output + "5 ";
+                output = output + "5/";
                 break;
             case Functions::COS:
                 //output = output + "COS ";
-                output = output + "6 ";
+                output = output + "6/";
                 break;
             case Functions::SIN:
                 //output = output + "SIN ";
-                output = output + "7 ";
+                output = output + "7/";
                 break;
             case Functions::POW:
                 //output = output + "POW ";
-                output = output + "8 ";
+                output = output + "8/";
                 break;
         }
     }
@@ -168,57 +190,88 @@ string Entity::toString() {
 return output;
 }
 
-Entity Entity::stringToEntity(vector<string> splicedString) {
+Entity Entity::stringToEntity(string filePath) {
 
     Entity entity = Entity();
+    fstream myFile; // file iz kojeg se cita
+    string fileText;
+    stringstream textStream;
+    string gene;
+    string geneSegment;
+    stringstream geneStream;
+
+    myFile.open (filePath);
+
+    if (myFile.is_open())
+    {
+        getline(myFile, fileText);
+        myFile.close();
+    }else {
+        cout << "error opening file(Controller.h)\n";
+    }
+
+    textStream = (stringstream)fileText;
+
+    vector<vector<string>> listOfSplicedGenes;
+    vector<string> splicedGenes;
+
+    while(std::getline(textStream, gene, '/')) {
+        geneStream = (stringstream)gene;
+        while(std::getline(geneStream, geneSegment, ' ')) {
+            splicedGenes.push_back(geneSegment);
+        }
+        listOfSplicedGenes.push_back(splicedGenes);
+        splicedGenes.clear();
+    }
+
 
 
     for(int i = 0; i < Constants::ENTITY_SIZE + 1; i++) {
 
-        if(i != Constants::ENTITY_SIZE) {
-            entity.genome[i].in1 = (int)(splicedString[i][0]) - 48;
-            entity.genome[i].in2 = (int)splicedString[i][1] - 48;
+        if(i < Constants::ENTITY_SIZE) {
+            entity.genome[i].in1 = stoi(listOfSplicedGenes[i][0]);
+            entity.genome[i].in2 = stoi(listOfSplicedGenes[i][1]);
 
-            switch(splicedString[i][2]) {
+            switch(stoi(listOfSplicedGenes[i][2])) {
 
-                case '1':
+                case 1:
                     entity.genome[i].function = Functions::PLUS;
                 break;
 
-                case '2':
+                case 2:
                     entity.genome[i].function = Functions::MINUS;
                 break;
 
-                case '3':
+                case 3:
                     entity.genome[i].function = Functions::MUL;
                 break;
 
-                case '4':
+                case 4:
                     entity.genome[i].function = Functions::DIV;
                 break;
 
-                case '5':
+                case 5:
                     entity.genome[i].function = Functions::MOD;
                 break;
 
-                case '6':
+                case 6:
                     entity.genome[i].function = Functions::COS;
                 break;
 
-                case '7':
+                case 7:
                     entity.genome[i].function = Functions::SIN;
                 break;
 
-                case '8':
+                case 8:
                     entity.genome[i].function = Functions::POW;
                 break;
 
-                //dodat uvijet zadnjeg elementa
-            }
-        }else if(i == Constants::ENTITY_SIZE) {
-            entity.fitness = stof(splicedString[i]);
-        }
 
+            }
+
+        }else if(i == Constants::ENTITY_SIZE) {
+            entity.fitness = stof(listOfSplicedGenes[i][0]);
+        }
 
     }
 

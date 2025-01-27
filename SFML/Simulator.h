@@ -15,6 +15,7 @@ struct Pipe {
 class Simulator {
 public:
     Simulator();
+    ~Simulator();
     Simulator(sf::RenderWindow* window);
     Simulator(std::string map);
     void initializeMap(std::string map);

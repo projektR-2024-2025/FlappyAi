@@ -9,6 +9,7 @@
 
 Simulator::Simulator() : running(true)
 {}
+Simulator::~Simulator(){}
 
 Simulator::Simulator(sf::RenderWindow* window) : running(true), window(window)
 {}

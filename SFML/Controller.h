@@ -128,29 +128,9 @@ public:
             this->entity = learnedEntity;
 
         }else if(selectedAction == BEST) {
-            string lineFromFile;
-            stringstream lineStream;
-            vector<string> splicedString;
-            string segment;
-            fstream myFile;
 
-            myFile.open ("/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile");
-
-            if (myFile.is_open())
-            {
-                getline(myFile, lineFromFile);
-                myFile.close();
-            }else {
-                cout << "error opening file(Controller.h)\n";
-            }
-
-            lineStream = (stringstream)lineFromFile;
-
-            while(std::getline(lineStream, segment, ' '))
-            {
-                splicedString.push_back(segment);
-            }
-            this->entity = this->entity.stringToEntity(splicedString);
+            string bestEntityFilePath = "/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile";
+            this->entity = this->entity.stringToEntity(bestEntityFilePath);
 
             cout << this->entity.toString()<<"\n";
 
