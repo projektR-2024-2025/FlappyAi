@@ -218,4 +218,7 @@ void trainingMenu(sf::RenderWindow& window, sf::Font& font, int generacija, int 
 
         window.display();
     }
+    else {
+        Parameters::simulationOnly = false;
+    }
 }
