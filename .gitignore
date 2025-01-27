@@ -401,4 +401,5 @@ FodyWeavers.xsd
 .idea/*
 .DS_Store
 cmake-build-debug/*
+SFML/.idea/*
 SFML/cmake-build-debug/*
