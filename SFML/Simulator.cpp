@@ -120,6 +120,9 @@ void Simulator::update(Bird& bird)
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
                     bird.velocity = Parameters::JUMP_SPEED;
                 }
+                else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                    bird.velocity = Parameters::JUMP_SPEED;
+                }
                 // 'r' za restart
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R) {
                     initializeMap(bird);
