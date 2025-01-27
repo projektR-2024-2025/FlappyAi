@@ -398,6 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 # CLion
-SFML/.idea/*
+.idea/*
+.DS_Store
+cmake-build-debug/*
 SFML/cmake-build-debug/*
-.DS_Store/*
