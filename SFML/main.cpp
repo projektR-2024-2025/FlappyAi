@@ -67,12 +67,10 @@ int main(int argc, char** argv) {
         simulator.initialize(agent);
 
         // Main game loop
-    int i = 0;
+
         while (simulator.isRunning()) {
-            i++;
             simulator.update(agent);
             controller->action(agent, simulator);
-            cout << i << "\n";
         }
 
         delete controller;

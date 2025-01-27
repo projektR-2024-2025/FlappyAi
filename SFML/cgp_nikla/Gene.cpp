@@ -20,3 +20,5 @@ Gene::Gene(int in1, int in2)
     int index = randomInt(0, 7);  // ovo treba vidit dal daje brojeve 0 do 7
     function = static_cast<Functions>(index);
 }
+
+Gene::~Gene() {}

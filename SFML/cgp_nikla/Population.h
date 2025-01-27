@@ -16,6 +16,7 @@ public:
     Entity parent2;
 
     Population();
+    ~Population();
 
     void entityFitnessSort();
     Entity& getBestEntity();
