@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <fstream>
+#include "../LiberationSansFont.h"
 
 using namespace std;
 using namespace tonka;
@@ -185,9 +186,12 @@ void obrisi(vector<FunctionBinaryTree>& p, int r3) {
     p.erase(it);
 }
 
-FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev) {
+FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWindow& window) {
     int br_ev = 0;
     vector<FunctionBinaryTree> populacija = stvori_populaciju(dim, vel, max_dubina);
+
+    sf::Font font;
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
     
     FunctionBinaryTree najbolja = populacija[0];
     evaluacija_populacije(populacija, najbolja, dim);
@@ -204,6 +208,9 @@ FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev) {
         obrisi(populacija, r3);
         populacija.push_back(dijete);
         br_ev++;
+
+        trainingMenu(window, font, br_ev, max_ev, najbolja.fit, "GP", new GPcontroller(najbolja));
+
         cout <<"evaluacija: " <<br_ev <<" najbolja: "<< najbolja.toString() <<" fit: " <<najbolja.fit <<endl ;
     }
     try {
@@ -237,27 +244,31 @@ void saveBestToFile(FunctionBinaryTree best) {
     file.close();
 }
 
-Controller* GPMain(ActionType action) {
-    if (action == BEST) {
+Controller* GPMain(sf::RenderWindow& window) {
+    if (Parameters::action == BEST) {
         try {
             FunctionBinaryTree bestTree = loadBestFromFile();
             return new GPcontroller(bestTree);
         } catch (const std::exception& e) {
             std::cerr << "Error loading best GP: " << e.what() << std::endl;
-            action = TRAIN;
+            Parameters::action = TRAIN;
         }
     }
     
-    if (action == TRAIN) {
-        const int POPULATION_SIZE = 7000;
-        const int MAX_EVALUATIONS = 7000;
-        const int MAX_DEPTH = 7;
+    if (Parameters::action == TRAIN) {
+        const int POPULATION_SIZE = 5000;
+        const int MAX_EVALUATIONS = 5000;
+        const int MAX_DEPTH = 8;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         
-        FunctionBinaryTree bestIndividual = ga(INPUT_DIM, POPULATION_SIZE, MAX_DEPTH, MAX_EVALUATIONS);
+        FunctionBinaryTree bestIndividual = ga(INPUT_DIM, POPULATION_SIZE, MAX_DEPTH, MAX_EVALUATIONS, window);
         
         try {
-            saveBestToFile(bestIndividual);
+            FunctionBinaryTree bestTree = loadBestFromFile();
+            bestTree.fitness() ;
+            if(bestIndividual.fit > bestTree.fit){
+                saveBestToFile(bestIndividual);
+            }
         } catch (const exception& e) {
             cerr << "Error saving best GP: " << e.what() << endl;
         }

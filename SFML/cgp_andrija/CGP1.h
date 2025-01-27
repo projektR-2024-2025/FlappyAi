@@ -18,7 +18,7 @@ const int NUM_OPERANDS = 9;
 const int VIEW_DISTANCE = 13;
 
 // broj generacija
-const int GENERATIONS = 50000;
+const int GENERATIONS = 5000;
 // broj redova nodova
 const int ROWS = 20;
 // broj stupaca nodova
@@ -34,17 +34,18 @@ const int MUTATIONS = 6;
 // broj jedinki u generaciji
 const int POPULATION = 10;
 // najbolja jedinka
-const std::string bestFile = "cgp_andrija/CGP_best.txt";
+const std::string bestFile = "CGP_best.txt";
 
 class CGP1 {
 private:
     int generations, rows, columns, levelsBack, inputs, outputs, mutations;
+    sf::RenderWindow& window;
 public:
     int actualGens;
     CGP1Individual bestOne;
 
-    CGP1(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations)
-        : generations(generations), rows(rows), columns(columns), levelsBack(levelsBack), inputs(inputs), outputs(outputs), mutations(mutations) {};
+    CGP1(int generations, int rows, int columns, int levelsBack, int inputs, int outputs, int mutations, sf::RenderWindow& window)
+        : generations(generations), rows(rows), columns(columns), levelsBack(levelsBack), inputs(inputs), outputs(outputs), mutations(mutations), window(window) {};
 
     std::vector<CGP1Individual> generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs);
 
@@ -54,7 +55,7 @@ public:
 
     CGP1Individual runCGP();
 
-    static CGP1Controller* CGPMain(ActionType action);
+    static CGP1Controller* CGPMain(sf::RenderWindow& window);
 };
 
 #endif

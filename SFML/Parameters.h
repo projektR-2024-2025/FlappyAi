@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-enum ControllerType { NN, GP1, GP2, CGP1, CGP2, NONE };
+enum ControllerType { NN, GP1, GP2, CGP1, CGP2, MANUAL, NONE };
 enum ActionType { BEST, TRAIN };
 
 class Parameters
@@ -33,6 +33,8 @@ public:
 
 	static ControllerType ctrl;
 	static ActionType action;
+
+	static int NUMBER_OF_EVALUATIONS;
 };
 
 #endif

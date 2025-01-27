@@ -133,6 +133,7 @@ std::string CGP1Individual::evalFunction(int CGP1NodeNum) {
         return oss.str();
     }
 
+    return "";
 }
 
 void CGP1Individual::evaluateUsed() {

@@ -33,3 +33,5 @@ std::vector<std::string> Parameters::maps({map1, map2, map3, map4, map5});
 
 ControllerType Parameters::ctrl = NONE;
 ActionType Parameters::action = BEST;
+
+int Parameters::NUMBER_OF_EVALUATIONS = -1;

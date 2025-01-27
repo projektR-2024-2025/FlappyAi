@@ -4,14 +4,18 @@
 #include <thread>
 #include <chrono>
 #include <random>
-#include "./Simulator.h"
-#include "./Controller.h"
+#include <fstream>
+#include "../Simulator.h"
+#include "../Controller.h"
+#include "../Parameters.h"
+#include "../SelectionScreen.h"
+#include "../LiberationSansFont.h"
 
 #define GENERATION_SIZE 100
 #define GENERATION_COUNT 1500
 #define MUTATION_RATE 0.30
 
-std::vector<std::string> maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };
+//std::vector<std::string> Parameters::maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };
 
 struct Individual {
     NeuralNetwork nn;
@@ -106,9 +110,85 @@ Individual tournamentSelection(const std::vector<Individual>& population, int to
     return tournament[0];
 }
 
-NeuralController* NNlogic() {
+void saveNeuralNetwork(const NeuralNetwork& nn, const std::string& filename) {
+    std::ofstream file(filename);
+    if (file.is_open()) {
+        for (const auto& layer : nn.layers) {
+            file << layer << " ";
+        }
+        file << std::endl;
+
+        for (const auto& layer_weights : nn.weights) {
+            for (const auto& neuron_weights : layer_weights) {
+                for (const auto& weight : neuron_weights) {
+                    file << weight << " ";
+                }
+                file << std::endl;
+            }
+        }
+
+        for (const auto& layer_biases : nn.biases) {
+            for (const auto& bias : layer_biases) {
+                file << bias << " ";
+            }
+            file << std::endl;
+        }
+
+        file.close();
+    }
+}
+
+NeuralNetwork loadNeuralNetwork(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file");
+    }
+
+    std::vector<int> layers;
+    std::string line;
+
+    // Read the first line for layers
+    std::getline(file, line);
+    std::istringstream iss(line);
+    int layerSize;
+    while (iss >> layerSize) {
+        layers.push_back(layerSize);
+    }
+
+    NeuralNetwork nn(layers);
+    nn.weights.resize(layers.size() - 1);
+    nn.biases.resize(layers.size() - 1);
+
+    // Read weights
+    for (size_t l = 1; l < layers.size(); ++l) {
+        for (int j = 0; j < layers[l]; ++j) {
+            std::getline(file, line);
+            std::istringstream iss(line);
+            for (int k = 0; k < layers[l - 1]; ++k) {
+                iss >> nn.weights[l - 1][j][k];
+            }
+        }
+    }
+
+    // Read biases
+    for (size_t l = 1; l < layers.size(); ++l) {
+        std::getline(file, line);
+        std::istringstream iss(line);
+        for (int j = 0; j < layers[l]; ++j) {
+            iss >> nn.biases[l - 1][j];
+        }
+    }
+
+    file.close();
+    return nn;
+}
+
+NeuralNetwork NNlogic(sf::RenderWindow& window) {
     // definiranje strukture neuronske mreze
     std::vector<int> layers = { 4, 5, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
+
+    sf::Font font;
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
 
     // inicijalizacija populacije
     std::vector<Individual> population;
@@ -120,13 +200,13 @@ NeuralController* NNlogic() {
     // evaluacija fitnessa
     for (auto& individual : population) {
         float totalDistance = 0.f;
-		for (auto& map : maps) {
+		for (auto& map : Parameters::maps) {
 			Simulator simulator(map);
 			Bird agent;
 			simulator.initialize(agent);
 			totalDistance += evaluateFitness(individual.nn, simulator, agent);
 		}
-        individual.fitness = totalDistance / maps.size();
+        individual.fitness = totalDistance / Parameters::maps.size();
     }
 
     // sortiraj populaciju po fitnessu
@@ -158,13 +238,13 @@ NeuralController* NNlogic() {
         // evaluacija fitnessa
         for (auto& individual : newPopulation) {
             float totalDistance = 0.f;
-            for (auto& map : maps) {
+            for (auto& map : Parameters::maps) {
                 Simulator simulator(map);
                 Bird agent;
                 simulator.initialize(agent);
                 totalDistance += evaluateFitness(individual.nn, simulator, agent);
             }
-            individual.fitness = totalDistance / maps.size();
+            individual.fitness = totalDistance / Parameters::maps.size();
         }
 
         // sortiraj populaciju po fitnessu
@@ -174,10 +254,34 @@ NeuralController* NNlogic() {
 
         population = newPopulation;
 
+        trainingMenu(window, font, generation, GENERATION_COUNT, population[0].fitness, "NN", new NeuralController(population[0].nn));
+
         // printaj najboljeg
         std::cout << "Generation " << generation << " - Best Fitness: " << population[0].fitness << std::endl;
     }
 
-    return new NeuralController(population[0].nn);
+    // spremi najbolju jedinku nakon treniranja ako je bolja od trenutno najbolje spremljene
+	std::string filename = "best_neural_network.txt";
+    NeuralNetwork debug = loadNeuralNetwork(filename);
+    double totalDistance = 0.f;
+    for (auto& map : Parameters::maps) {
+        Simulator simulator(map);
+        Bird agent;
+        simulator.initialize(agent);
+        totalDistance += evaluateFitness(debug, simulator, agent);
+    }
+    double loadedFitness = totalDistance / Parameters::maps.size();
     
+    if (loadedFitness < population[0].fitness) saveNeuralNetwork(population[0].nn, "best_neural_network.txt");
+
+    return population[0].nn;
+}
+
+NeuralController* NNMain(sf::RenderWindow& window) {
+    if (Parameters::action == BEST) {        
+		return new NeuralController(loadNeuralNetwork("best_neural_network.txt"));
+    }
+    else {
+        return new NeuralController(NNlogic(window));
+    }
 }

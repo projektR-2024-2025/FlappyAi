@@ -55,6 +55,8 @@ bool Simulator::isRunning() const
 {
     if (Parameters::simulationOnly)
         return running;
+    else if (Parameters::action == TRAIN && Parameters::simulationOnly == false)
+        return running;
     return true;
 }
 
@@ -80,10 +82,9 @@ bool Simulator::simulateFrame(Bird& bird, float deltaTime)
             // stvori slucajnu novu cijev kad ovu predjemo
             if (pipe.x + Parameters::PIPE_WIDTH < 0) {
                 float pipeHeight = (float)(rand() % 200 + 100);
-                pipe.x = Parameters::WINDOW_WIDTH;
+                pipe.x = pipes.size() * 300 + pipes.size() - 1 * Parameters::PIPE_WIDTH;
                 pipe.topY = pipeHeight;
                 pipe.bottomY = pipeHeight + Parameters::PIPE_GAP;
-
             }
         }
         else if(Parameters::simulationOnly) {
@@ -113,9 +114,14 @@ void Simulator::update(Bird& bird)
             while (window->pollEvent(event)) {
                 if (event.type == sf::Event::Closed) {
                     window->close();
+                    running = false;
+                    Parameters::simulationOnly = true;
                 }
                 // space za skok
                 if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+                    bird.velocity = Parameters::JUMP_SPEED;
+                }
+                else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                     bird.velocity = Parameters::JUMP_SPEED;
                 }
                 // 'r' za restart
@@ -123,6 +129,14 @@ void Simulator::update(Bird& bird)
                     initializeMap(bird);
                     running = true;
                 }
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                    running = false;
+                    Parameters::simulationOnly = true;
+                }
+            }
+            if (!Parameters::randomPipes && pipes.at(pipes.size() - 1).x + Parameters::PIPE_WIDTH < 0) {
+                running = false;
+                Parameters::simulationOnly = true;
             }
         }
 
@@ -193,7 +207,7 @@ void Simulator::initializeMap(Bird& bird)
 
     // a) slucajne cijevi
     if (Parameters::randomPipes)
-        for (float x = Parameters::WINDOW_WIDTH / 2; x < 1.5 * Parameters::WINDOW_WIDTH; x += 300) {
+        for (float x = Parameters::WINDOW_WIDTH * 0.75; x < 2 * Parameters::WINDOW_WIDTH; x += 300) {
             float pipeHeight = (float) (rand() % 200 + 100);
             pipes.push_back({ x, pipeHeight, pipeHeight + Parameters::PIPE_GAP });
         }

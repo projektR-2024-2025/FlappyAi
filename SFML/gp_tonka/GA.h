@@ -34,8 +34,8 @@ FunctionBinaryTree krizanje(FunctionBinaryTree r1, FunctionBinaryTree r2);
 tonka::Node* changeRandomNode(tonka::Node* node, FunctionBinaryTree jed, int depth);
 void mutacija(FunctionBinaryTree& jedinka);
 void obrisi(vector<FunctionBinaryTree>& p, int r3);
-FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev);
-Controller* GPMain(ActionType action);
+FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWindow& window);
+Controller* GPMain(sf::RenderWindow& window);
 void saveBestToFile(FunctionBinaryTree best);
 FunctionBinaryTree loadBestFromFile() ;
 

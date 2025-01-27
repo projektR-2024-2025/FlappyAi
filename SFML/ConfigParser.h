@@ -30,8 +30,6 @@ void parseConfig(std::string fileName) {
         }
     }
 
-    if(config.count("simulationOnly"))
-        std::istringstream(config.find("simulationOnly")->second) >> std::boolalpha >> Parameters::simulationOnly;
     if (config.count("randomPipes"))
         std::istringstream(config.find("randomPipes")->second) >> std::boolalpha >> Parameters::randomPipes;
     if (config.count("variableFPS"))
@@ -58,6 +56,8 @@ void parseConfig(std::string fileName) {
             Parameters::maps.push_back(tmp);
         }
     }
+
+    Parameters::NUMBER_OF_EVALUATIONS = config.count("NUMBER_OF_EVALUATIONS") ? std::stoi(config.find("NUMBER_OF_EVALUATIONS")->second) : Parameters::NUMBER_OF_EVALUATIONS;
 
     std::cout << "Config loaded from file" << std::endl;
 }

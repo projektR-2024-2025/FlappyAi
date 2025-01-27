@@ -1,6 +1,7 @@
 #include "CGP1.h"
 #include "../Simulator.h"
 #include "../Controller.h"
+#include "../LiberationSansFont.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -18,7 +19,6 @@ vector<CGP1Individual> CGP1::generatePopulation(int rows, int columns, int level
 
     #pragma omp parallel for
     for (int i = 0; i < POPULATION; i++) {
-
         random_device rd;
         mt19937 gen(rd());
 
@@ -254,14 +254,12 @@ vector<CGP1Individual> CGP1::mutate(CGP1Individual parent) {
 
 CGP1Individual CGP1::runCGP() {
     vector<CGP1Individual> population;
-    int bestInd = 0, generacija = 0;
-
-    double time;
-    time = omp_get_wtime();
+    int bestInd = 0, generacija = 0, brEvaluacija = 0;
 
     population = generatePopulation(rows, columns, levelsBack, inputs, outputs);
 
-    std::cout << "Vrijeme: " << (omp_get_wtime() - time) << "s" << endl;
+    sf::Font font;
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
 
     for (generacija = 0; generacija < generations; generacija++) {
         TYPE bestFit = -1;
@@ -269,6 +267,7 @@ CGP1Individual CGP1::runCGP() {
         vector<int> bestInds;
         random_device rd;
         mt19937 gen(rd());
+
         for (int i = 0; i < POPULATION; i++) {
 
             float totalDistance = 0.f;
@@ -284,6 +283,7 @@ CGP1Individual CGP1::runCGP() {
                         break;
                 }
                 totalDistance += population[i].calculateFitness((TYPE) bird.distance);
+                brEvaluacija++;
             }
 
             TYPE fit = totalDistance / Parameters::maps.size();
@@ -305,7 +305,14 @@ CGP1Individual CGP1::runCGP() {
 
         std::cout << "Gen: " << generacija << "; Fitness: " << bestFit << "; Indeks: " << bestInd << endl;
 
+        if (Parameters::NUMBER_OF_EVALUATIONS > 0)
+            trainingMenu(window, font, brEvaluacija, Parameters::NUMBER_OF_EVALUATIONS, bestFit, "CGP", new CGP1Controller(population[bestInd]));
+        else
+            trainingMenu(window, font, generacija, generations, bestFit, "CGP", new CGP1Controller(population[bestInd]));
+
         if (bestFit >= MAX_MAP_SIZE)
+            break;
+        else if (Parameters::NUMBER_OF_EVALUATIONS > 0 && brEvaluacija >= Parameters::NUMBER_OF_EVALUATIONS)
             break;
 
         if (generacija != generations - 1)
@@ -329,11 +336,11 @@ CGP1Individual CGP1::runCGP() {
     return population[bestInd];
 }
 
-CGP1Controller* CGP1::CGPMain(ActionType action) {
-    CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+CGP1Controller* CGP1::CGPMain(sf::RenderWindow& window) {
+    CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS, window);
     CGP1Individual ind;
 
-    if (action == BEST) {
+    if (Parameters::action == BEST) {
         try {
             std::ifstream inFile(bestFile);
             if (inFile.is_open()) {
@@ -347,7 +354,7 @@ CGP1Controller* CGP1::CGPMain(ActionType action) {
             cerr << "Error loading CGP: " << e.what() << endl;
         }
     }
-    else if (action == TRAIN) {
+    else if (Parameters::action == TRAIN) {
         ind = cgp.runCGP();
         ind.printFuction();
     }
