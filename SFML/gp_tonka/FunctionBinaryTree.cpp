@@ -79,7 +79,16 @@ tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
     int type;
     string value ;
     if (dubina < max_dubina) {
-        type = rand() % 4; //  0, 1, 2, 3
+        int random_value = rand() % 10; // Create a range of 10 values: 0-9
+        if (random_value < 4) {
+            type = 0; // 40% chance
+        } else if (random_value < 8) {
+            type = 1; // 40% chance
+        } else if (random_value == 8) {
+            type = 2; // 10% chance
+        } else {
+            type = 3; // 10% chance
+        }
     } else {
         type = rand() % 2 + 2; // na kraju mogu biti samo konstante i varijable (2 ili 3)
     }

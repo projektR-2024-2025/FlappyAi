@@ -20,10 +20,10 @@ GAParameters gaParams = {
     .br = 4,
     .elite_percentage = 0.05,
     .tooBad = 0.1,
-    .max_depth = 7
+    .max_depth = 8
 };
 #else
-GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 7 };
+GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 8 };
 #endif
 
 void GAParameters::adapt(float diversity, float best_fitness) {
@@ -84,7 +84,7 @@ float penalty(string f, int dim) {
 void evaluacija_jedinke(FunctionBinaryTree& jedinka, FunctionBinaryTree& najbolja, int dim) {
     jedinka.fitness();
     float pen = penalty(jedinka.toString(), dim);
-    jedinka.fit *= (1 - pen/100);
+    //jedinka.fit *= (1 - pen/100);
     if(jedinka.fit > najbolja.fit)
         najbolja = jedinka;
 }
@@ -189,6 +189,9 @@ void obrisi(vector<FunctionBinaryTree>& p, int r3) {
 FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWindow& window) {
     int br_ev = 0;
     vector<FunctionBinaryTree> populacija = stvori_populaciju(dim, vel, max_dubina);
+    for (auto f: populacija){
+        //cout << f.toString() <<endl ;
+    }
 
     sf::Font font;
     font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
@@ -256,9 +259,9 @@ Controller* GPMain(sf::RenderWindow& window) {
     }
     
     if (Parameters::action == TRAIN) {
-        const int POPULATION_SIZE = 5000;
+        const int POPULATION_SIZE = 10000;
         const int MAX_EVALUATIONS = 5000;
-        const int MAX_DEPTH = 8;
+        const int MAX_DEPTH = gaParams.max_depth;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         
         FunctionBinaryTree bestIndividual = ga(INPUT_DIM, POPULATION_SIZE, MAX_DEPTH, MAX_EVALUATIONS, window);

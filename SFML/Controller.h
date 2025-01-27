@@ -168,10 +168,11 @@ public:
         
         //trazimo najblizu prepreku
         for (const auto& pipe : simulator.pipes) {
-            if (pipe.x < obstacle_distance) { 
-               obstacle_distance = pipe.x ;
-               hole_start=pipe.bottomY ;
-               hole_end=pipe.topY ;
+            if (pipe.x > 0 && pipe.x < 250){
+                obstacle_distance = pipe.x ;
+                hole_start=pipe.bottomY ;
+                hole_end=pipe.topY ;
+                break ;
             }
         }
         
