@@ -263,13 +263,6 @@ CGP1Individual CGP1::runCGP() {
     vector<CGP1Individual> population;
     int bestInd = 0, generacija = 0, brEvaluacija = 0;
 
-    double time;
-    time = omp_get_wtime();
-
-    population = generatePopulation(rows, columns, levelsBack, inputs, outputs);
-
-    std::cout << "Vrijeme: " << (omp_get_wtime() - time) << "s" << endl;
-
     sf::Font font;
     if (!font.loadFromFile(ARIAL_FONT_PATH)) {
         std::cerr << "Error loading font\n";
