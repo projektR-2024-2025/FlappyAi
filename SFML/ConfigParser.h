@@ -30,8 +30,6 @@ void parseConfig(std::string fileName) {
         }
     }
 
-    if(config.count("simulationOnly"))
-        std::istringstream(config.find("simulationOnly")->second) >> std::boolalpha >> Parameters::simulationOnly;
     if (config.count("randomPipes"))
         std::istringstream(config.find("randomPipes")->second) >> std::boolalpha >> Parameters::randomPipes;
     if (config.count("variableFPS"))

@@ -1,6 +1,7 @@
 #include "CGP1.h"
 #include "../Simulator.h"
 #include "../Controller.h"
+#include "../LiberationSansFont.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -10,14 +11,6 @@
 #include <string>
 #include <omp.h>
 #include <sstream>
-
-#ifdef _WIN32
-#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
-#elif __linux__
-#define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
-#else
-#define ARIAL_FONT_PATH "arial.ttf"
-#endif
 
 using namespace std;
 
@@ -263,10 +256,10 @@ CGP1Individual CGP1::runCGP() {
     vector<CGP1Individual> population;
     int bestInd = 0, generacija = 0, brEvaluacija = 0;
 
+    population = generatePopulation(rows, columns, levelsBack, inputs, outputs);
+
     sf::Font font;
-    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
-        std::cerr << "Error loading font\n";
-    }
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
 
     for (generacija = 0; generacija < generations; generacija++) {
         TYPE bestFit = -1;

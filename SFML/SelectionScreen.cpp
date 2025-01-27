@@ -4,14 +4,7 @@
 #include <vector>
 #include <string>
 #include "Parameters.h"
-
-#ifdef _WIN32
-#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
-#elif __linux__
-#define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf" 
-#else
-#define ARIAL_FONT_PATH "arial.ttf" // ako nisi na windowsu za naseg jedinog apple usera
-#endif
+#include "LiberationSansFont.h"
 
 struct MenuOption {
     sf::Text text;
@@ -49,10 +42,7 @@ void updateMenu(std::vector<MenuOption>& menu, int selectedIndex) {
 
 int showMenu(sf::RenderWindow& window, std::vector<std::string> optionNames, bool exit) {
     sf::Font font;
-    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
-        std::cerr << "Error loading font\n";
-        return -1;
-    }
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
 
     std::vector<MenuOption> menu;
     setupMenu(menu, font, optionNames);

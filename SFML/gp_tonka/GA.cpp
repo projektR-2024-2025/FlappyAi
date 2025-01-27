@@ -7,6 +7,7 @@
 #include <ctime>
 #include <cmath>
 #include <fstream>
+#include "../LiberationSansFont.h"
 
 using namespace std;
 using namespace tonka;
@@ -23,14 +24,6 @@ GAParameters gaParams = {
 };
 #else
 GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 7 };
-#endif
-
-#ifdef _WIN32
-#define ARIAL_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
-#elif __linux__
-#define ARIAL_FONT_PATH "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
-#else
-#define ARIAL_FONT_PATH "arial.ttf"
 #endif
 
 void GAParameters::adapt(float diversity, float best_fitness) {
@@ -198,9 +191,7 @@ FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWi
     vector<FunctionBinaryTree> populacija = stvori_populaciju(dim, vel, max_dubina);
 
     sf::Font font;
-    if (!font.loadFromFile(ARIAL_FONT_PATH)) {
-        std::cerr << "Error loading font\n";
-    }
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
     
     FunctionBinaryTree najbolja = populacija[0];
     evaluacija_populacije(populacija, najbolja, dim);
