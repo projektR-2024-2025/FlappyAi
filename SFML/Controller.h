@@ -2,7 +2,8 @@
 #include "Agent.h"
 #include "Simulator.h"
 #include "Parameters.h"
-#include "./NeuralNetwork.h"
+//#include "./NeuralNetwork.h"
+#include "./nn/NeuralNetwork.h"
 #include "cgp_nikla/Entity.h"
 #include "cgp_andrija/CGP1Individual.h"
 #include <cmath>
