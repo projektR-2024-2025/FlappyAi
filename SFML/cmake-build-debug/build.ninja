@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: SMFL
+# Project: SFML
 # Configurations: Debug
 # =============================================================================
 
@@ -41,135 +41,135 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target SMFL
+# Object build statements for EXECUTABLE target SFML
 
 
 #############################################
-# Order-only phony target for SMFL
+# Order-only phony target for SFML
 
-build cmake_object_order_depends_target_SMFL: phony || CMakeFiles/SMFL.dir
+build cmake_object_order_depends_target_SFML: phony || CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/main.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/main.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/main.cpp.o.d
+build CMakeFiles/SFML.dir/main.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/main.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/main.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/NeuralNetwork.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/NeuralNetwork.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/NeuralNetwork.cpp.o.d
+build CMakeFiles/SFML.dir/NeuralNetwork.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/NeuralNetwork.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/NeuralNetwork.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/NNlogic.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/NNlogic.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/NNlogic.cpp.o.d
+build CMakeFiles/SFML.dir/NNlogic.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/NNlogic.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/NNlogic.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/SelectionScreen.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/SelectionScreen.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/SelectionScreen.cpp.o.d
+build CMakeFiles/SFML.dir/SelectionScreen.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/SelectionScreen.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/SelectionScreen.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/Simulator.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Simulator.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/Simulator.cpp.o.d
+build CMakeFiles/SFML.dir/Simulator.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Simulator.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/Simulator.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/Entity.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Entity.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/Entity.cpp.o.d
+build CMakeFiles/SFML.dir/Parameters.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Parameters.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/Parameters.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir
 
-build CMakeFiles/SMFL.dir/Gene.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Gene.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/Gene.cpp.o.d
+build CMakeFiles/SFML.dir/cgp_nikla/Entity.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_nikla/Entity.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/cgp_nikla/Entity.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/cgp_nikla
 
-build CMakeFiles/SMFL.dir/Population.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Population.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/Population.cpp.o.d
+build CMakeFiles/SFML.dir/cgp_nikla/Gene.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_nikla/Gene.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/cgp_nikla/Gene.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/cgp_nikla
 
-build CMakeFiles/SMFL.dir/Parameters.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/Parameters.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/Parameters.cpp.o.d
+build CMakeFiles/SFML.dir/cgp_nikla/Population.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_nikla/Population.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/cgp_nikla/Population.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/cgp_nikla
 
-build CMakeFiles/SMFL.dir/gp_tonka/tonka.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/tonka.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/gp_tonka/tonka.cpp.o.d
+build CMakeFiles/SFML.dir/gp_tonka/tonka.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/tonka.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/gp_tonka/tonka.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir/gp_tonka
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/gp_tonka
 
-build CMakeFiles/SMFL.dir/gp_tonka/GA.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/GA.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/gp_tonka/GA.cpp.o.d
+build CMakeFiles/SFML.dir/gp_tonka/GA.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/GA.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/gp_tonka/GA.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir/gp_tonka
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/gp_tonka
 
-build CMakeFiles/SMFL.dir/gp_tonka/FunctionBinaryTree.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/FunctionBinaryTree.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/gp_tonka/FunctionBinaryTree.cpp.o.d
+build CMakeFiles/SFML.dir/gp_tonka/FunctionBinaryTree.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/FunctionBinaryTree.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/gp_tonka/FunctionBinaryTree.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir/gp_tonka
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/gp_tonka
 
-build CMakeFiles/SMFL.dir/cgp_andrija/CGP1.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_andrija/CGP1.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/cgp_andrija/CGP1.cpp.o.d
+build CMakeFiles/SFML.dir/cgp_andrija/CGP1.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_andrija/CGP1.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/cgp_andrija/CGP1.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir/cgp_andrija
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/cgp_andrija
 
-build CMakeFiles/SMFL.dir/cgp_andrija/CGP1Individual.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_andrija/CGP1Individual.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/cgp_andrija/CGP1Individual.cpp.o.d
+build CMakeFiles/SFML.dir/cgp_andrija/CGP1Individual.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/cgp_andrija/CGP1Individual.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/cgp_andrija/CGP1Individual.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir/cgp_andrija
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/cgp_andrija
 
-build CMakeFiles/SMFL.dir/gp_tonka/TreeParser.cpp.o: CXX_COMPILER__SMFL_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/TreeParser.cpp || cmake_object_order_depends_target_SMFL
-  DEP_FILE = CMakeFiles/SMFL.dir/gp_tonka/TreeParser.cpp.o.d
+build CMakeFiles/SFML.dir/gp_tonka/TreeParser.cpp.o: CXX_COMPILER__SFML_unscanned_Debug /Users/nikson/Documents/GitHub/FlappyAi/SFML/gp_tonka/TreeParser.cpp || cmake_object_order_depends_target_SFML
+  DEP_FILE = CMakeFiles/SFML.dir/gp_tonka/TreeParser.cpp.o.d
   FLAGS = -g -g -O0 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -Xpreprocessor -fopenmp -Wno-unused-command-line-argument
   INCLUDES = -I/opt/homebrew/opt/libomp/include -isystem /opt/homebrew/opt/sfml@2/include
-  OBJECT_DIR = CMakeFiles/SMFL.dir
-  OBJECT_FILE_DIR = CMakeFiles/SMFL.dir/gp_tonka
+  OBJECT_DIR = CMakeFiles/SFML.dir
+  OBJECT_FILE_DIR = CMakeFiles/SFML.dir/gp_tonka
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target SMFL
+# Link build statements for EXECUTABLE target SFML
 
 
 #############################################
-# Link the executable SMFL
+# Link the executable SFML
 
-build SMFL: CXX_EXECUTABLE_LINKER__SMFL_Debug CMakeFiles/SMFL.dir/main.cpp.o CMakeFiles/SMFL.dir/NeuralNetwork.cpp.o CMakeFiles/SMFL.dir/NNlogic.cpp.o CMakeFiles/SMFL.dir/SelectionScreen.cpp.o CMakeFiles/SMFL.dir/Simulator.cpp.o CMakeFiles/SMFL.dir/Entity.cpp.o CMakeFiles/SMFL.dir/Gene.cpp.o CMakeFiles/SMFL.dir/Population.cpp.o CMakeFiles/SMFL.dir/Parameters.cpp.o CMakeFiles/SMFL.dir/gp_tonka/tonka.cpp.o CMakeFiles/SMFL.dir/gp_tonka/GA.cpp.o CMakeFiles/SMFL.dir/gp_tonka/FunctionBinaryTree.cpp.o CMakeFiles/SMFL.dir/cgp_andrija/CGP1.cpp.o CMakeFiles/SMFL.dir/cgp_andrija/CGP1Individual.cpp.o CMakeFiles/SMFL.dir/gp_tonka/TreeParser.cpp.o | /opt/homebrew/opt/libomp/lib/libomp.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
+build SFML: CXX_EXECUTABLE_LINKER__SFML_Debug CMakeFiles/SFML.dir/main.cpp.o CMakeFiles/SFML.dir/NeuralNetwork.cpp.o CMakeFiles/SFML.dir/NNlogic.cpp.o CMakeFiles/SFML.dir/SelectionScreen.cpp.o CMakeFiles/SFML.dir/Simulator.cpp.o CMakeFiles/SFML.dir/Parameters.cpp.o CMakeFiles/SFML.dir/cgp_nikla/Entity.cpp.o CMakeFiles/SFML.dir/cgp_nikla/Gene.cpp.o CMakeFiles/SFML.dir/cgp_nikla/Population.cpp.o CMakeFiles/SFML.dir/gp_tonka/tonka.cpp.o CMakeFiles/SFML.dir/gp_tonka/GA.cpp.o CMakeFiles/SFML.dir/gp_tonka/FunctionBinaryTree.cpp.o CMakeFiles/SFML.dir/cgp_andrija/CGP1.cpp.o CMakeFiles/SFML.dir/cgp_andrija/CGP1Individual.cpp.o CMakeFiles/SFML.dir/gp_tonka/TreeParser.cpp.o | /opt/homebrew/opt/libomp/lib/libomp.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
   FLAGS = -g -g -O0 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/opt/sfml@2/lib  /opt/homebrew/opt/libomp/lib/libomp.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-graphics.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-window.2.6.2.dylib  /opt/homebrew/opt/sfml@2/lib/libsfml-system.2.6.2.dylib
-  OBJECT_DIR = CMakeFiles/SMFL.dir
+  OBJECT_DIR = CMakeFiles/SFML.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = SMFL
-  TARGET_PDB = SMFL.dbg
+  TARGET_FILE = SFML
+  TARGET_PDB = SFML.dbg
 
 
 #############################################
@@ -205,7 +205,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug
 
-build all: phony SMFL
+build all: phony SFML
 
 # =============================================================================
 # Built-in targets

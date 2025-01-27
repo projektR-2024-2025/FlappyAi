@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "SMFL",
+					"name" : "SFML",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "SMFL::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SMFL-Debug-9aeba8e9f067a70695d9.json",
-					"name" : "SMFL",
+					"id" : "SFML::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SFML-Debug-2b8cd1718cbf0a541570.json",
+					"name" : "SFML",
 					"projectIndex" : 0
 				}
 			]

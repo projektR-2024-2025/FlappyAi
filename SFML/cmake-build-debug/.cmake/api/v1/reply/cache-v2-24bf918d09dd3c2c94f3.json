@@ -819,7 +819,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "SMFL"
+			"value" : "SFML"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1118,6 +1118,18 @@
 			"value" : "FALSE"
 		},
 		{
+			"name" : "SFML_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug"
+		},
+		{
 			"name" : "SFML_DOC_DIR",
 			"properties" : 
 			[
@@ -1128,6 +1140,30 @@
 			],
 			"type" : "PATH",
 			"value" : "SFML_DOC_DIR-NOTFOUND"
+		},
+		{
+			"name" : "SFML_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "SFML_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/Users/nikson/Documents/GitHub/FlappyAi/SFML"
 		},
 		{
 			"name" : "SMFL_BINARY_DIR",

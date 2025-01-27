@@ -19,9 +19,7 @@ Population::Population() {
     entityList.resize(Constants::POPULATION_SIZE);
 }
 
-Population::~Population() {
-
-}
+Population::~Population() {}
 
 
 

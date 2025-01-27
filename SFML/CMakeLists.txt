@@ -1,80 +1,134 @@
+
+
 #==========!!!MOLIM DA SE OVO NE DIRA!!!===========
-cmake_minimum_required(VERSION 3.28)
-project(SMFL)
+if(APPLE)
+    cmake_minimum_required(VERSION 3.28)
+    project(SFML)
 
-set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD 17)
 
-add_executable(SMFL
-        main.cpp
-        Agent.h
-        NeuralNetwork.cpp
-        NNlogic.cpp
-        SelectionScreen.cpp
-        Simulator.cpp
-        Entity.h
-        Entity.cpp
-        Entity.cpp
-        Gene.cpp
-        mainFunctionsHeader.h
-        Constants.h
-        Population.h
-        Population.cpp
-        Parameters.cpp
-        Controller.h
-        gp_tonka/tonka.cpp
-        gp_tonka/GA.cpp
-        gp_tonka/FunctionBinaryTree.cpp
-        cgp_andrija/CGP1.cpp
-        cgp_andrija/CGP1Individual.cpp
-        gp_tonka/TreeParser.cpp
-        #SFML/Node.h
-        #SFML/Entity.cpp
-        #SFML/Gene.cpp
-        #SFML/Population.cpp
-        #SFML/conioMac.h
-)
-#=================================================================================
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
-#=================================================================================
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-
-    target_include_directories(SMFL PRIVATE "/opt/homebrew/opt/libomp/include")
-    target_compile_options(SMFL PRIVATE
-            -Xpreprocessor -fopenmp
-            -Wno-unused-command-line-argument
+    add_executable(SFML
+            main.cpp
+            Agent.h
+            NeuralNetwork.cpp
+            NNlogic.cpp
+            SelectionScreen.cpp
+            Simulator.cpp
+            Parameters.cpp
+            Controller.h
+            cgp_nikla/Entity.h
+            cgp_nikla/Entity.cpp
+            cgp_nikla/Entity.cpp
+            cgp_nikla/Gene.cpp
+            cgp_nikla/mainFunctionsHeader.h
+            cgp_nikla/Constants.h
+            cgp_nikla/Population.h
+            cgp_nikla/Population.cpp
+            gp_tonka/tonka.cpp
+            gp_tonka/GA.cpp
+            gp_tonka/FunctionBinaryTree.cpp
+            cgp_andrija/CGP1.cpp
+            cgp_andrija/CGP1Individual.cpp
+            gp_tonka/TreeParser.cpp
     )
-    target_link_libraries(SMFL PRIVATE
-            /opt/homebrew/opt/libomp/lib/libomp.dylib
+    #=================================================================================
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+    #=================================================================================
+
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+
+        target_include_directories(SFML PRIVATE "/opt/homebrew/opt/libomp/include")
+        target_compile_options(SFML PRIVATE
+                -Xpreprocessor -fopenmp
+                -Wno-unused-command-line-argument
+        )
+        target_link_libraries(SFML PRIVATE
+                /opt/homebrew/opt/libomp/lib/libomp.dylib
+        )
+    endif()
+
+    set(SFML_DIR "/opt/homebrew/opt/sfml@2/lib/cmake/SFML")
+
+    find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+    target_link_libraries(SFML PRIVATE
+            sfml-graphics
+            sfml-window
+            sfml-system
     )
+
+    
+#==========!!!MOLIM DA SE OVO NE DIRA!!!===========
+elseif(WIN32)
+    # Windows configuration
+    cmake_minimum_required(VERSION 3.5.0)
+    project(FlappyAI VERSION 0.1.0 LANGUAGES C CXX)
+
+    set(SFML_STATIC_LIBRARIES TRUE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -fopenmp")
+
+    find_package(OpenMP REQUIRED)
+    find_package(SFML 2.5.1 COMPONENTS graphics REQUIRED)
+
+    add_executable(FlappyAI WIN32
+            cgp_andrija/CGP1.cpp cgp_andrija/CGP1Individual.cpp nn/NNlogic.cpp nn/NeuralNetwork.cpp
+            Parameters.cpp SelectionScreen.cpp Simulator.cpp main.cpp
+            gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp gp_tonka/TreeParser.cpp)
+
+    # Copy the config.txt file to the build directory
+    configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)
+    configure_file(Map2.txt ${CMAKE_BINARY_DIR}/Map2.txt COPYONLY)
+    configure_file(Map3.txt ${CMAKE_BINARY_DIR}/Map3.txt COPYONLY)
+    configure_file(Map4.txt ${CMAKE_BINARY_DIR}/Map4.txt COPYONLY)
+    configure_file(Map5.txt ${CMAKE_BINARY_DIR}/Map5.txt COPYONLY)
+    configure_file(CGP_best.txt ${CMAKE_BINARY_DIR}/CGP_best.txt COPYONLY)
+    configure_file(best_gp.txt ${CMAKE_BINARY_DIR}/best_gp.txt COPYONLY)
+    configure_file(best_neural_network.txt ${CMAKE_BINARY_DIR}/best_neural_network.txt COPYONLY)
+    configure_file(config.conf ${CMAKE_BINARY_DIR}/config.conf COPYONLY)
+
+    target_link_libraries(FlappyAI sfml-graphics)
+    target_link_libraries(FlappyAI "${OPENMP_CXX_FLAGS}")
+
+else()
+    cmake_minimum_required(VERSION 3.5.0)
+    project(Flappy VERSION 0.1.0 LANGUAGES C CXX)
+
+    find_package(OpenMP REQUIRED)
+
+    add_executable(Flappy
+            cgp_andrija/CGP1.cpp
+            cgp_andrija/CGP1Individual.cpp
+            nn/NNlogic.cpp
+            nn/NeuralNetwork.cpp
+            Parameters.cpp
+            SelectionScreen.cpp
+            Simulator.cpp
+            main.cpp
+            gp_tonka/FunctionBinaryTree.cpp
+            gp_tonka/GA.cpp
+            gp_tonka/TreeParser.cpp
+    )
+
+    configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)
+    configure_file(Map2.txt ${CMAKE_BINARY_DIR}/Map2.txt COPYONLY)
+    configure_file(Map3.txt ${CMAKE_BINARY_DIR}/Map3.txt COPYONLY)
+    configure_file(Map4.txt ${CMAKE_BINARY_DIR}/Map4.txt COPYONLY)
+    configure_file(Map5.txt ${CMAKE_BINARY_DIR}/Map5.txt COPYONLY)
+    configure_file(CGP_best.txt ${CMAKE_BINARY_DIR}/CGP_best.txt COPYONLY)
+    configure_file(best_gp.txt ${CMAKE_BINARY_DIR}/best_gp.txt COPYONLY)
+    configure_file(best_neural_network.txt ${CMAKE_BINARY_DIR}/best_neural_network.txt COPYONLY)
+    configure_file(config.conf ${CMAKE_BINARY_DIR}/config.conf COPYONLY)
+
+    target_link_libraries(Flappy -lsfml-graphics)
+    target_link_libraries(Flappy -lsfml-system)
+    target_link_libraries(Flappy -lsfml-window)
+    target_link_libraries(Flappy -lgomp)
+
 endif()
 
-set(SFML_DIR "/opt/homebrew/opt/sfml@2/lib/cmake/SFML")
-
-find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
-
-target_link_libraries(SMFL PRIVATE
-        sfml-graphics
-        sfml-window
-        sfml-system
-)
-
-#==========!!!MOLIM DA SE OVO NE DIRA!!!===========
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-#
 #cmake_minimum_required(VERSION 3.5.0)
 #project(Flappy VERSION 0.1.0 LANGUAGES C CXX)
 #

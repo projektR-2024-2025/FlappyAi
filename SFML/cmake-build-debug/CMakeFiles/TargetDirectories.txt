@@ -1,3 +1,3 @@
-/Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug/CMakeFiles/SMFL.dir
+/Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug/CMakeFiles/SFML.dir
 /Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug/CMakeFiles/edit_cache.dir
 /Users/nikson/Documents/GitHub/FlappyAi/SFML/cmake-build-debug/CMakeFiles/rebuild_cache.dir

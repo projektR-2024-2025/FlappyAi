@@ -9,9 +9,9 @@
 //
 #include <iostream>
 #include <thread>
-#include "Controller.h"
+#include "../Controller.h"
 #include "Population.h"
-#include "Simulator.h"
+#include "../Simulator.h"
 #include <fstream>
 #include <cstdlib>
 
@@ -19,16 +19,6 @@
 Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
 
     srand(time(NULL));
-    //cout << "runs starting\n";
-    //int x = 0;
-    // string map1 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map1.txt";//jer je out folder pokrenut
-    // string map2 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map2.txt";//jer je out folder pokrenut
-    // string map3 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map3.txt";
-    // string map4 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map4.txt";
-    // string map5 = "/Users/nikson/Documents/FER/ProjektC/FlappyAICpp/Map5.txt";
-
-    // vector<string> mapList = {map1, map2, map3, map4, map5};
-
 
     if(selectedAction == BEST) {
         Entity en = Entity();
