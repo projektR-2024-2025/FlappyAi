@@ -5,7 +5,6 @@
 #include "./nn/NeuralNetwork.h"
 #include "cgp_andrija/CGP1Individual.h"
 #include <cmath>
-#include "SelectionScreen.h"
 #include "./gp_tonka/FunctionBinaryTree.h"
 
 class Controller
@@ -125,9 +124,6 @@ public:
         }else {
             cout << "Answer unvalid";
         }
-
-
-
     }
 
     bool action(Bird& agent, Simulator& simulator)

@@ -15,7 +15,6 @@
 #include <fstream>
 #include <cstdlib>
 
-
 Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
 
     srand(time(NULL));
@@ -128,6 +127,65 @@ Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
 }
 
 
+
+
+
+
+
+//=========================================================================
+
+// CGP1Controller* CGP1::CGPMain(sf::RenderWindow& window) {
+//     CGP1 cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS, window);
+//     CGP1Individual ind;
+//
+//     if (Parameters::action == BEST) {
+//         try {
+//             std::ifstream inFile(bestFile);
+//             if (inFile.is_open()) {
+//                 ind = CGP1Individual::deserialize(inFile);
+//                 inFile.close();
+//                 std::cout << "CGP read from text file." << std::endl;
+//                 ind.printFuction();
+//             }
+//         }
+//         catch (const exception& e) {
+//             cerr << "Error loading CGP: " << e.what() << endl;
+//         }
+//     }
+//     else if (Parameters::action == TRAIN) {
+//         ind = cgp.runCGP();
+//         ind.printFuction();
+//     }
+//
+//     return new CGP1Controller(ind);
+// }
+
+
+
+// CGPController2* CGP2Main(sf::RenderWindow& window) {
+//
+//     Entity entity = runCgp(Parameters::action);
+//
+//     if(Parameters::action == TRAIN) {
+//         entity = runCgp(Parameters::action);
+//
+//     }else if(Parameters::action == BEST) {
+//
+//         string bestEntityFilePath = "/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile";
+//         entity = entity.stringToEntity(bestEntityFilePath);
+//
+//         cout << entity.toString()<<"\n";
+//
+//     }else {
+//         cout << "Answer unvalid";
+//     }
+//
+//
+//     return new CGPController2(entity);
+// }
+
+
+//=========================================================================
 
 
 #endif //MAINFUNCTIONSHEADER_H
