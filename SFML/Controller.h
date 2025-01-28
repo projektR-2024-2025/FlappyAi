@@ -36,31 +36,6 @@ public:
     }
 };
 
-//class MyController : public Controller
-//{
-//public:
-//    // dodaj model
-//    bool action(Bird& agent, Simulator& simulator)
-//    {
-//        // get current position
-//        int yPos = agent.position * simulator.groundLevel;
-//        // is obstacle ahead
-//        bool obstacleAhead = false;
-//        simulator.obstacleMap;
-//        for (int i = 0; i < simulator.viewWidth; i++)
-//            if (simulator.obstacleMap[yPos][i] == true) {
-//                obstacleAhead = true;
-//                break;
-//            }
-//        // jump if obstacle ahead or too low, but not if too high
-//        if ((yPos > simulator.groundLevel * 0.35) && (obstacleAhead || yPos > simulator.groundLevel * 0.85)) {
-//            agent.isJumping = true;
-//            return true;
-//        }
-//        return false;
-//    }
-//};
-
 class NeuralController : public Controller
 {
 private:
@@ -130,11 +105,11 @@ public:
         // is obstacle ahead
         double obstacleAhead = 0;
         for (const auto& pipe : simulator.pipes)
-            if (pipe.x > 0 && pipe.x < 250) {
+            if (pipe.x > 30 && pipe.x < 250) {
                 input[0] = (pipe.x);
                 input[1] = (pipe.bottomY);
                 input[2] = (pipe.topY);
-                if (bird.position + Parameters::BIRD_SIZE > pipe.bottomY) {
+                if (bird.position + Parameters::BIRD_SIZE > pipe.bottomY || bird.position < pipe.topY) {
                     obstacleAhead = 1;
                 }
                 break;

@@ -189,7 +189,11 @@ void trainingMenu(sf::RenderWindow& window, sf::Font& font, int generacija, int 
             window.draw(prog1);
 
             float spacing = 150.f;
-            std::vector<std::string> textOptions = { "Training with " + model + "...", std::to_string((float)generacija / (float)generations * 100.f) + "%", "Best Fitenss: " + std::to_string(fitness) };
+            std::string prog = std::to_string((float)generacija / (float)generations * 100.f);
+            prog.erase(prog.end() - 4, prog.end());
+            std::string fit = std::to_string(fitness);
+            fit.erase(fit.end() - 3, fit.end());
+            std::vector<std::string> textOptions = { "Training with " + model + "...", prog + "%", "Best Fitenss: " + fit};
             for (int i = 0; i < 3; i++) {
                 sf::Text text;
                 text.setFont(font);

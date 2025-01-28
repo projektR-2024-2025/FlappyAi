@@ -24,7 +24,7 @@ TYPE computeNode(int operand, TYPE value1, TYPE value2) {
     case 6:
         return cos(value1);
     case 7:
-        return sqrt(value1);
+        return value1 > 0 ? sqrt(value1) : value1;
     case 8:
         return pow(value1, 2);
     case 9:

@@ -184,8 +184,7 @@ vector<CGP1Individual> CGP1::mutate(CGP1Individual parent) {
     uniform_int_distribution<> operandDis(1, NUM_OPERANDS);
     uniform_int_distribution<> outputDis(0, parent.outputs - 1);
 
-    // upali ovo ako zelis cpu stress test
-    //#pragma omp parallel for
+    #pragma omp parallel for
     for (int n = 0; n < POPULATION - 1; n++) {
         vector<CGP1Node> genes = parent.genes;
         vector<CGP1Output> outputGene = parent.outputGene;
@@ -244,7 +243,7 @@ vector<CGP1Individual> CGP1::mutate(CGP1Individual parent) {
         CGP1Individual individual(genes, outputGene, parent.rows, parent.columns, parent.levelsBack, parent.inputs, parent.outputs);
         individual.resolveLoops();
 
-        //#pragma omp critical
+        #pragma omp critical
         population.push_back(individual);
     }
 

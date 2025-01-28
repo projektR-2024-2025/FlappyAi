@@ -32,7 +32,7 @@ const int OUTPUTS = 1;
 // broj mutacije genoma po jedinki
 const int MUTATIONS = 6;
 // broj jedinki u generaciji
-const int POPULATION = 10;
+const int POPULATION = 50;
 // najbolja jedinka
 const std::string bestFile = "CGP_best.txt";
 
