@@ -11,7 +11,7 @@
 
 // max duljina mape
 // o ovom ovisi fitness
-const int MAX_MAP_SIZE = 10000;
+const int MAX_MAP_SIZE = 5000;
 // broj operanada za nodeove
 const int NUM_OPERANDS = 9;
 // koliko daleko ispred sebe pticica vidi
@@ -32,7 +32,7 @@ const int OUTPUTS = 1;
 // broj mutacije genoma po jedinki
 const int MUTATIONS = 6;
 // broj jedinki u generaciji
-const int POPULATION = 50;
+const int POPULATION = 20;
 // najbolja jedinka
 const std::string bestFile = "CGP_best.txt";
 

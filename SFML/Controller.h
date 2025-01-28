@@ -97,9 +97,9 @@ public:
         // input vector za cgp mrezu
         std::vector<double> input;
 
-        input.push_back(-1);
-        input.push_back(-1);
-        input.push_back(-1);
+        input.push_back(0);
+        input.push_back(0);
+        input.push_back(0);
 
         // get current position
         // is obstacle ahead

@@ -133,7 +133,7 @@ void Simulator::update(Bird& bird)
                     Parameters::simulationOnly = true;
                 }
             }
-            if (!Parameters::randomPipes && pipes.at(pipes.size() - 1).x + Parameters::PIPE_WIDTH < 0) {
+            if (!Parameters::randomPipes && pipes.at(pipes.size() - 1).x + Parameters::PIPE_WIDTH + 200 < 0) {
                 running = false;
                 Parameters::simulationOnly = true;
             }
