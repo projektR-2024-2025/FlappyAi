@@ -32,36 +32,37 @@ int main(int argc, char** argv) {
 
         Parameters::simulationOnly = (Parameters::action == BEST) ? false : true;
 
-    Controller* controller = nullptr;
-    //CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
+        Controller* controller = nullptr;
+        //CGP cgp(GENERATIONS, ROWS, COLUMNS, LEVELS_BACK, INPUTS, OUTPUTS, MUTATIONS);
 
-    switch (Parameters::ctrl) {
-    case NN:
-        controller = NNMain(window);
-        break;
-    case GP1:
-        controller = GPMain(window);
-        break;
-    case CGP1:
-        controller = CGP1::CGPMain(window);
-        break;
-    case CGP2:
-        controller = new CGPController2(runCgp(Parameters::action), Parameters::action);
-        break;
-    case MANUAL:
-        controller = new Controller;
-        break;
-    default:
-        std::cerr << "Invalid controller selected, exiting.\n";
-        return -1;
-    }
+        switch (Parameters::ctrl) {
+            case NN:
+                controller = NNMain(window);
+            break;
+            case GP1:
+                controller = GPMain(window);
+            break;
+            case CGP1:
+                controller = CGP1::CGPMain(window);
+            break;
+            case CGP2:
+                controller = new CGPController2(runCgp(Parameters::action), Parameters::action);
 
-    Parameters::simulationOnly = false;
-    Parameters::action = BEST;
+            break;
+            case MANUAL:
+                controller = new Controller;
+            break;
+            default:
+                std::cerr << "Invalid controller selected, exiting.\n";
+            return -1;
+        }
 
-    Simulator simulator(&window);
-    Bird agent;
-    simulator.initialize(agent);
+        Parameters::simulationOnly = false;
+        Parameters::action = BEST;
+
+        Simulator simulator(&window);
+        Bird agent;
+        simulator.initialize(agent);
 
         // Main game loop
 
@@ -70,7 +71,9 @@ int main(int argc, char** argv) {
             controller->action(agent, simulator);
         }
 
-    cout << "main done\n";
-    delete controller;
+        cout << "main done\n";
+        delete controller;
+    }
+
     return 0;
 }

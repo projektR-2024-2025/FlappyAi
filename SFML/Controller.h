@@ -6,7 +6,6 @@
 #include "cgp_nikla/Entity.h"
 #include "cgp_andrija/CGP1Individual.h"
 #include <cmath>
-#include "SelectionScreen.h"
 #include "./gp_tonka/FunctionBinaryTree.h"
 
 using namespace std;
@@ -137,9 +136,6 @@ public:
         }else {
             cout << "Answer unvalid";
         }
-
-
-
     }
 
     bool action(Bird& agent, Simulator& simulator)

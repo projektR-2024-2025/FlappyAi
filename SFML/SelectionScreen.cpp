@@ -5,6 +5,7 @@
 #include <string>
 #include "Parameters.h"
 #include "LiberationSansFont.h"
+#include "Controller.h"
 
 
 struct MenuOption {
