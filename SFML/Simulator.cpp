@@ -86,11 +86,6 @@ bool Simulator::simulateFrame(Bird& bird, float deltaTime)
                 pipe.bottomY = pipeHeight + Parameters::PIPE_GAP;
             }
         }
-        else if(Parameters::simulationOnly) {
-            if (pipe.x + Parameters::PIPE_WIDTH < 0) {
-                pipes.erase(pipes.begin());
-            }
-        }
     }
 
     // je li sudar s tlom ili vrhom prozora

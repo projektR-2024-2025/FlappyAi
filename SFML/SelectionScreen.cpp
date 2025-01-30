@@ -193,7 +193,7 @@ void trainingMenu(sf::RenderWindow& window, sf::Font& font, int generacija, int 
             prog.erase(prog.end() - 4, prog.end());
             std::string fit = std::to_string(fitness);
             fit.erase(fit.end() - 3, fit.end());
-            std::vector<std::string> textOptions = { "Training with " + model + "...", prog + "%", "Best Fitenss: " + fit};
+            std::vector<std::string> textOptions = { "Training with " + model + "...", prog + "%", "Best Fitness: " + fit};
             for (int i = 0; i < 3; i++) {
                 sf::Text text;
                 text.setFont(font);

@@ -12,8 +12,9 @@
 #include "../LiberationSansFont.h"
 
 #define GENERATION_SIZE 100
-#define GENERATION_COUNT 1500
+#define GENERATION_COUNT 150
 #define MUTATION_RATE 0.30
+#define MAX_MAP_DISTANCE 5000
 
 //std::vector<std::string> Parameters::maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };
 
@@ -30,7 +31,7 @@ double evaluateFitness(NeuralNetwork& nn, Simulator& simulator, Bird& agent) {
     while (simulator.isRunning()) {
         simulator.update(agent);
         controller->action(agent, simulator);
-        if (agent.distance >= 10000) break;
+        if (agent.distance >= MAX_MAP_DISTANCE) break;
     }
     return agent.distance;
 }
@@ -184,8 +185,11 @@ NeuralNetwork loadNeuralNetwork(const std::string& filename) {
 }
 
 NeuralNetwork NNlogic(sf::RenderWindow& window) {
+    // br. evaluacija
+    int evaluationNumber = 0;
+
     // definiranje strukture neuronske mreze
-    std::vector<int> layers = { 4, 5, 2 }; // npr. 4 input neurona, 5 hidden i 2 output
+    std::vector<int> layers = { 7, 5, 2 }; // npr. 7 input neurona, 5 hidden i 2 output
 
     sf::Font font;
     font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
@@ -205,6 +209,7 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
 			Bird agent;
 			simulator.initialize(agent);
 			totalDistance += evaluateFitness(individual.nn, simulator, agent);
+            evaluationNumber++;
 		}
         individual.fitness = totalDistance / Parameters::maps.size();
     }
@@ -243,6 +248,7 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
                 Bird agent;
                 simulator.initialize(agent);
                 totalDistance += evaluateFitness(individual.nn, simulator, agent);
+                evaluationNumber++;
             }
             individual.fitness = totalDistance / Parameters::maps.size();
         }
@@ -258,6 +264,9 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
 
         // printaj najboljeg
         std::cout << "Generation " << generation << " - Best Fitness: " << population[0].fitness << std::endl;
+		
+        if (evaluationNumber >= Parameters::NUMBER_OF_EVALUATIONS && Parameters::NUMBER_OF_EVALUATIONS > 0) break;
+        if (population[0].fitness >= MAX_MAP_DISTANCE) break;
     }
 
     // spremi najbolju jedinku nakon treniranja ako je bolja od trenutno najbolje spremljene
@@ -271,14 +280,14 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
         totalDistance += evaluateFitness(debug, simulator, agent);
     }
     double loadedFitness = totalDistance / Parameters::maps.size();
-    
+	std::cout << "Loaded fitness: " << loadedFitness << std::endl;
     if (loadedFitness < population[0].fitness) saveNeuralNetwork(population[0].nn, "best_neural_network.txt");
 
     return population[0].nn;
 }
 
 NeuralController* NNMain(sf::RenderWindow& window) {
-    if (Parameters::action == BEST) {        
+    if (Parameters::action == BEST) {
 		return new NeuralController(loadNeuralNetwork("best_neural_network.txt"));
     }
     else {

@@ -60,10 +60,27 @@ public:
                 break;
             }
 
+        float obstacle_distance = simulator.pipes[0].x;
+        float hole_start = simulator.pipes[0].bottomY;
+        float hole_end = simulator.pipes[0].topY;
+
+        //trazimo najblizu prepreku
+        for (const auto& pipe : simulator.pipes) {
+            if (pipe.x > 30 && pipe.x < 250) {
+                obstacle_distance = pipe.x;
+                hole_start = pipe.bottomY;
+                hole_end = pipe.topY;
+                break;
+            }
+        }
+
         // priprema input data
         input.push_back(obstacleAhead);
         input.push_back(bird.position);
         input.push_back(bird.velocity);
+        input.push_back(obstacle_distance);
+		input.push_back(hole_start);
+		input.push_back(hole_end);
         input.push_back(simulator.groundLevel);
 
         // dobi outpute iz nn
