@@ -6,6 +6,8 @@
 #include "../Parameters.h"
 
 
+int myrand();
+
 using namespace std;
 
 namespace tonka{

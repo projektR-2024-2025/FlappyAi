@@ -17,6 +17,7 @@ struct GAParameters {
     float elite_percentage;
     float tooBad;
     int max_depth;
+    float crossover_rate;
 
     void adapt(float diversity, float best_fitness);
 };

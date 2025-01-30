@@ -3,6 +3,7 @@
 #include "TreeParser.h"
 #include <iostream>
 #include <algorithm>
+#include <numeric>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
@@ -12,18 +13,21 @@
 using namespace std;
 using namespace tonka;
 
+
+
 #if ((defined(_MSVC_LANG) && _MSVC_LANG >= 202002L) || __cplusplus >= 202002L)
 GAParameters gaParams = {
-    .mutation_rate = 0.9,
+    .mutation_rate = 0.5,
     .k = 4,
     .penalty = 30,
-    .br = 4,
+    .br = 7,
     .elite_percentage = 0.05,
     .tooBad = 0.1,
-    .max_depth = 8
+    .max_depth = 15
+    .crossover_rate
 };
 #else
-GAParameters gaParams = { 0.9, 4, 30, 4, 0.05, 0.1, 8 };
+GAParameters gaParams = { 0.5, 4, 30, 7, 0.05, 0.1, 15, 0.95 };
 #endif
 
 void GAParameters::adapt(float diversity, float best_fitness) {
@@ -36,7 +40,7 @@ void GAParameters::adapt(float diversity, float best_fitness) {
 }
 
 void resetMutation(FunctionBinaryTree& jedinka) {
-    if(rand() % 2 == 0 && jedinka.root->left) {
+    if(myrand() % 2 == 0 && jedinka.root->left) {
         tonka::Node* n = jedinka.root->left;
         jedinka.root->left = jedinka.createRandomNode(gaParams.max_depth, 1);
         delete n;
@@ -90,22 +94,32 @@ void evaluacija_jedinke(FunctionBinaryTree& jedinka, FunctionBinaryTree& najbolj
 }
 
 void evaluacija_populacije(vector<FunctionBinaryTree>& populacija, FunctionBinaryTree& najbolja, int dim) {
+    int i = 0 ;
     for(FunctionBinaryTree& jed: populacija) {
+        i++ ;
         evaluacija_jedinke(jed, najbolja, dim);
+        cout << "evaluacija... " <<i <<endl ;
     }
 }
 
 vector<int> ksel(vector<FunctionBinaryTree>& p, int k) {
     int dim = p.size();
-    vector<int> v;
-    int best = rand() % dim;
-    int worst = best;
-    double bestFit = p[best].fit;
-    double worstFit = bestFit;
     
+    // Get first random individual
+    int idx = myrand() % dim;
+    int best = idx;
+    int worst = idx;
+    double bestFit = p[idx].fit;
+    double worstFit = p[idx].fit;
+    
+    //cout << "Initial selection: idx=" << idx << " fitness=" << bestFit << endl;
+    
+    // Start tournament from 1 since we already used first selection
     for(int i = 1; i < k; i++) {
-        int idx = rand() % dim;
+        idx = myrand() % dim;
         double currentFit = p[idx].fit;
+        
+        //cout << "Tournament round " << i << ": idx=" << idx << " fitness=" << currentFit << endl;
         
         if(currentFit > bestFit) {
             best = idx;
@@ -115,10 +129,13 @@ vector<int> ksel(vector<FunctionBinaryTree>& p, int k) {
             worst = idx;
             worstFit = currentFit;
         }
+        
+        //cout << "Current best=" << best << " (fitness " << bestFit << ")" << endl;
+        //cout << "Current worst=" << worst << " (fitness " << worstFit << ")" << endl;
     }
-    v.push_back(best);
-    v.push_back(worst);
-    return v;
+
+  
+    return {best, worst};
 }
 
 void preserveElites(vector<FunctionBinaryTree>& population, int eliteCount) {
@@ -136,7 +153,7 @@ void preserveElites(vector<FunctionBinaryTree>& population, int eliteCount) {
     }
     
     for(int i = 0; i < eliteCount; i++) {
-        int replaceIdx = rand() % (population.size() - eliteCount) + eliteCount;
+        int replaceIdx = myrand() % (population.size() - eliteCount) + eliteCount;
         population[replaceIdx] = elites[i];
     }
 }
@@ -144,7 +161,7 @@ void preserveElites(vector<FunctionBinaryTree>& population, int eliteCount) {
 FunctionBinaryTree krizanje(FunctionBinaryTree r1, FunctionBinaryTree r2) {
     FunctionBinaryTree dijete;
     dijete.root = r1.root->copy();
-    if(rand() % 2 == 0) {
+    if(myrand() % 2 == 0) {
         dijete.root->left = r2.root->left->copy();
     } else {
         dijete.root->right = r2.root->right->copy();
@@ -159,7 +176,7 @@ tonka::Node* changeRandomNode(tonka::Node* node, FunctionBinaryTree jed, int dep
     double mutationChance = gaParams.mutation_rate + (depth * 0.1);
     mutationChance = min(mutationChance, 0.8);
     
-    if ((rand() % 100) < (mutationChance * 100)) {
+    if ((myrand() % 100) < (mutationChance * 100)) {
         node->value = jed.generateRandomValue(node->type);
         return node;
     }
@@ -171,9 +188,9 @@ tonka::Node* changeRandomNode(tonka::Node* node, FunctionBinaryTree jed, int dep
 }
 
 void mutacija(FunctionBinaryTree& jedinka) {
-    int br = 3;    
+    int br = gaParams.br;    
     for(int i = 0; i < br; i++) {
-        if(rand() % 2 == 0) {
+        if(myrand() % 2 == 0) {
             changeRandomNode(jedinka.root->left, jedinka, 0);
         } else {
             changeRandomNode(jedinka.root->right, jedinka, 0);
@@ -188,9 +205,12 @@ void obrisi(vector<FunctionBinaryTree>& p, int r3) {
 
 FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWindow& window) {
     int br_ev = 0;
+
+    srand(time(0));
+
     vector<FunctionBinaryTree> populacija = stvori_populaciju(dim, vel, max_dubina);
     for (auto f: populacija){
-        //cout << f.toString() <<endl ;
+        cout << f.toString() <<endl ;
     }
 
     sf::Font font;
@@ -201,20 +221,61 @@ FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWi
     
     while(br_ev <= max_ev) {
         FunctionBinaryTree r1 = populacija[ksel(populacija, gaParams.k)[0]];
+        //FunctionBinaryTree r1 = najbolja;
         FunctionBinaryTree r2 = populacija[ksel(populacija, gaParams.k)[0]];
         int r3 = ksel(populacija, 2*gaParams.k)[1];
-        FunctionBinaryTree dijete = krizanje(r1, r2);
-        if((static_cast<float>(rand()) / RAND_MAX) < gaParams.mutation_rate)
+        FunctionBinaryTree dijete ;
+        if((static_cast<float>(myrand()) / RAND_MAX) < gaParams.mutation_rate)
+            dijete = krizanje(r1, r2);
+        else{
+            dijete.root = r1.root->copy();
+            dijete.dim = r1.dim;
+        }
+        if((static_cast<float>(myrand()) / RAND_MAX) < gaParams.mutation_rate)
             mutacija(dijete);
         evaluacija_jedinke(dijete, najbolja, dim);
         
+        cout <<"r1: " << r1.toString() << r1.fit<< endl ;
+        cout <<"r2: " << r2.toString() <<  r2.fit <<endl ;
+        cout <<"r3: " << populacija[r3].toString() <<  populacija[r3].fit << endl ;
+        cout <<"dijete: " << dijete.toString() <<dijete.fit << endl ;
+
         obrisi(populacija, r3);
         populacija.push_back(dijete);
+        //populacija[r3]=dijete;
         br_ev++;
+
+        // std::vector<float> F;
+        // std::map<std::string, int> M;
+        // using pair_type = decltype(M)::value_type;
+        // for (auto f: populacija){
+        //     M[f.toString()]++;
+        //     F.push_back(f.fit);
+        //    // cout << f.toString() <<endl ;
+        // }
+        // std::sort(F.begin(), F.end());
+        // int maxrep = std::max_element(M.begin(), M.end(),
+        //   [] (pair_type& p1, pair_type& p2) {
+        //     return p1.second < p2.second;
+        //   })->second;
+        // int sumrep = std::accumulate(M.begin(), M.end(), 0,
+        //   [](std::size_t previous, pair_type& p) {
+        //     return previous + p.second; }
+        //   );
+
+        // cout <<"Populacija max=" <<F.back()
+        //      <<" min=" <<F.front() 
+        //      <<" med=" <<F[F.size()/2]
+        //      <<" maxrep=" <<maxrep
+        //      <<" avgrep=" <<F.size()/(float)M.size()
+        //      <<"\n";
 
         trainingMenu(window, font, br_ev, max_ev, najbolja.fit, "GP", new GPcontroller(najbolja));
 
-        cout <<"evaluacija: " <<br_ev <<" najbolja: "<< najbolja.toString() <<" fit: " <<najbolja.fit <<endl ;
+        cout <<"evaluacija: " <<br_ev <<" najbolja: "<< najbolja.toString() <<" fit: " <<najbolja.fit <<endl <<endl ;
+    }
+    for (auto a: populacija){
+        //cout << a.toString() << " fit: " <<a.fit <<endl ;
     }
     try {
         saveBestToFile(najbolja);
@@ -259,8 +320,8 @@ Controller* GPMain(sf::RenderWindow& window) {
     }
     
     if (Parameters::action == TRAIN) {
-        const int POPULATION_SIZE = 10000;
-        const int MAX_EVALUATIONS = 5000;
+        const int POPULATION_SIZE = 5000;
+        const int MAX_EVALUATIONS = 50000;
         const int MAX_DEPTH = gaParams.max_depth;
         const int INPUT_DIM = 4; // yPos, obstacle_distance, hole_start, hole_end
         

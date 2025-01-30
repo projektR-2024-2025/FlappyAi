@@ -12,6 +12,7 @@
 #include<string>
 #include<cmath>
 #include <stdexcept>
+#include<random>
 
 
 using namespace std ;
@@ -23,6 +24,20 @@ const int MAX_MAP_SIZE = 8000;
 vector<string> functions0 = { "aps", "sin", "cos"}; // Type 0 functions //poslije dodati trigonometrijske
 vector<string> functions1 = { "+","-","*","/"}; // Type 1 functions
 //vector<string> functions2 = { "<", ">", "==", "&&", "||"} ;//Type 2 functions -> subset of type 1 functions
+
+int myrand(){
+  static std::random_device rd;  // Used to get a truly random seed
+  static std::mt19937 gen(rd()); // Mersenne Twister generator
+
+  // For getting random integers in range [0, max):
+  static std::uniform_int_distribution<> dis(0, RAND_MAX);
+  return dis(gen);
+}
+
+int myrandrand(){
+  return rand();
+}
+
 
 float funkcija0(string fja, float x){
     if(fja == "sin") return sin(x) ;
@@ -79,7 +94,7 @@ tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
     int type;
     string value ;
     if (dubina < max_dubina) {
-        int random_value = rand() % 10; // Create a range of 10 values: 0-9
+        int random_value = myrand() % 10; // Create a range of 10 values: 0-9
         if (random_value < 4) {
             type = 0; // 40% chance
         } else if (random_value < 8) {
@@ -90,11 +105,11 @@ tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
             type = 3; // 10% chance
         }
     } else {
-        type = rand() % 2 + 2; // na kraju mogu biti samo konstante i varijable (2 ili 3)
+        type = myrand() % 2 + 2; // na kraju mogu biti samo konstante i varijable (2 ili 3)
     }
     if(dubina == 0){
         type = 1 ; //root moze biti samo funkcija
-        value = functions1[rand() % functions1.size()] ; //neka root bude bool fja
+        value = functions1[myrand() % functions1.size()] ; //neka root bude bool fja
     }
     else{
         value = generateRandomValue(type);
@@ -113,11 +128,11 @@ tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
 string FunctionBinaryTree::generateRandomValue(int type) {    
     string s = "" ;
 
-    if (type == 0) return functions0[rand() % functions0.size()];
-    if (type == 1) return functions1[rand() % functions1.size()];
+    if (type == 0) return functions0[myrand() % functions0.size()];
+    if (type == 1) return functions1[myrand() % functions1.size()];
 
-    if(type == 2) return to_string( static_cast<float>(rand()) / RAND_MAX);
-    if(type == 3) return to_string(rand() % dim) ; //index varijable  
+    if(type == 2) return to_string( static_cast<float>(myrand()) / RAND_MAX);
+    if(type == 3) return to_string(myrand() % dim) ; //index varijable  
     return "greska" ;     
 }
 
