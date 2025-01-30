@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
                 controller = CGP1::CGPMain(window);
             break;
             case CGP2:
-                controller = new CGPController2(runCgp(Parameters::action), Parameters::action);
+                controller = new CGPController2(runCgp(Parameters::action, window), Parameters::action);
 
             break;
             case MANUAL:

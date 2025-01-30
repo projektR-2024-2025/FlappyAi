@@ -8,7 +8,7 @@
 namespace Constants {
     //static final int POPULATION_SIZE = 500;
     static const int POPULATION_SIZE = 100; //@@@@@@@@
-    static const int ENTITY_SIZE = 50;  //@@@@@@@@number of geneSets in genome must be odd
+    static const int ENTITY_SIZE = 200;  //@@@@@@@@number of geneSets in genome must be odd
     static const float PERCENTAGE_OF_GENES = 0.3f;
     static const float MUTATION_PROBABILITY = 0.6f;   //  [0.01, 0.05]
     static const float CROSSING_PROBABILITY = 0.7f;    //  [0.6,0.9]
@@ -20,7 +20,7 @@ namespace Constants {
     static const int VISIBILTY_DISTANCE = 12;
     static const int DO_I_JUMP = 0;
     static const int MAX_MAP_SIZE = 10000;
-    static const int NUMBER_OF_GENERATIONS = 20;//@@@@@@@@
+    static const int NUMBER_OF_GENERATIONS = 5000;//@@@@@@@@
     //static final int NUMBER_OF_POPULATIONS_BEFORE_EVAL = 5;
 }
 

@@ -51,8 +51,8 @@ private:
     std::vector<int> mapGround;
     int mapReadIndex = 0;
     bool pillarFlag = 0;
-    //std::string map = Parameters::maps.at(0);
-    std::string map = "/Users/nikson/Documents/GitHub/FlappyAi/SFML/Map1.txt";
+    std::string map = Parameters::maps.at(0);
+    //std::string map = "/Users/nikson/Documents/GitHub/FlappyAi/SFML/Map1.txt";
 
     bool running;
     bool scoreScreen;

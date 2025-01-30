@@ -127,7 +127,7 @@ public:
 
         }else if(selectedAction == BEST) {
 
-            string bestEntityFilePath = "/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile";
+            string bestEntityFilePath = "/Users/nikson/Documents/GitHub/FlappyAi/BestEntityFile.txt";
             this->entity = this->entity.stringToEntity(bestEntityFilePath);
 
             cout << this->entity.toString()<<"\n";

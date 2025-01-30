@@ -25,6 +25,20 @@ if(APPLE)
             SFML/gp_tonka/TreeParser.cpp
 
     )
+
+    configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)
+    configure_file(Map2.txt ${CMAKE_BINARY_DIR}/Map2.txt COPYONLY)
+    configure_file(Map3.txt ${CMAKE_BINARY_DIR}/Map3.txt COPYONLY)
+    configure_file(Map4.txt ${CMAKE_BINARY_DIR}/Map4.txt COPYONLY)
+    configure_file(Map5.txt ${CMAKE_BINARY_DIR}/Map5.txt COPYONLY)
+    configure_file(CGP_best.txt ${CMAKE_BINARY_DIR}/CGP_best.txt COPYONLY)
+    configure_file(best_gp.txt ${CMAKE_BINARY_DIR}/best_gp.txt COPYONLY)
+    configure_file(BestEntityFile.txt ${CMAKE_BINARY_DIR}/BestEntityFile.txt COPYONLY)
+    configure_file(best_neural_network.txt ${CMAKE_BINARY_DIR}/best_neural_network.txt COPYONLY)
+    configure_file(config.conf ${CMAKE_BINARY_DIR}/config.conf COPYONLY)
+
+
+
     if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
         target_include_directories(FlappyAi PRIVATE "/opt/homebrew/opt/libomp/include")
         target_compile_options(FlappyAi PRIVATE
@@ -66,6 +80,7 @@ elseif(WIN32)
     configure_file(Map5.txt ${CMAKE_BINARY_DIR}/Map5.txt COPYONLY)
     configure_file(CGP_best.txt ${CMAKE_BINARY_DIR}/CGP_best.txt COPYONLY)
     configure_file(best_gp.txt ${CMAKE_BINARY_DIR}/best_gp.txt COPYONLY)
+    #configure_file(BestEntityFile.txt ${CMAKE_BINARY_DIR}/BestEntityFile.txt COPYONLY)
     configure_file(best_neural_network.txt ${CMAKE_BINARY_DIR}/best_neural_network.txt COPYONLY)
     configure_file(config.conf ${CMAKE_BINARY_DIR}/config.conf COPYONLY)
 
