@@ -14,10 +14,14 @@
 #include "../Simulator.h"
 #include <fstream>
 #include <cstdlib>
+#include "../LiberationSansFont.h"
 
-Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
+Entity runCgp(ActionType selectedAction, sf::RenderWindow& window) { // selectedAction => TRAIN BEST
 
     srand(time(NULL));
+    sf::Font font;
+    font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
+
 
     if(selectedAction == BEST) {
         Entity en = Entity();
@@ -97,6 +101,10 @@ Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
         // cout << "new population 1\n";
 
          cout << "fitness: "<<population1.getBestEntity().fitness << "\n";
+         Entity bestEnt = population1.getBestEntity();
+
+         trainingMenu(window, font, i, Constants::NUMBER_OF_GENERATIONS,population1.getBestEntity().fitness, "CGP2", new CGPController2(bestEnt));
+         //trainingMenu(sf::RenderWindow& window, sf::Font& font, int generacija, int generations, float fitness, std::string model, Controller* controller);
      }
     //cout << "done\n";
 
@@ -105,7 +113,7 @@ Entity runCgp(ActionType selectedAction) { // selectedAction => TRAIN BEST
 
     if (selectedAction == TRAIN) {
         fstream myfile;
-        myfile.open ("/Users/nikson/Documents/GitHub/FlappyAi/SFML/BestEntityFile");
+        myfile.open ("/Users/nikson/Documents/GitHub/FlappyAi/BestEntityFile.txt");
 
         if (myfile.is_open())
         {
