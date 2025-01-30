@@ -12,9 +12,9 @@ Simulator::Simulator(int mapNum) : running(true), scoreScreen(true) {
         }
     }
     std::string mapFileName = "";
-    if (mapNum == 1) mapFileName = "map1.txt";
-    else if (mapNum == 2) mapFileName = "map2.txt";
-    else mapFileName = "map3.txt";
+    if (mapNum == 1) mapFileName = "map5.txt";
+    else if (mapNum == 2) mapFileName = "map4.txt";
+    else mapFileName = "map5.txt";
     initializeMap(mapFileName);
 }
 

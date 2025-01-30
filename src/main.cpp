@@ -10,8 +10,8 @@
 #include "Controller.h"
 #include "TreeControll.h"
 
-int populationSize = 1000;
-int crossingNumber = 15000;
+int populationSize = 600;
+int crossingNumber = 30000;
 int populationCullings = 50; // sort take half of the best;
 int displayMapNum = 0;
 
@@ -91,7 +91,7 @@ double calculateFitnessDisplay(Tree& calcTree, int mapNum) {
             controller->action(agent, simulator);
         simulator.update(agent);
         controller->distFlown += 1; // counting for fitness
-        std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Control game speed
+        std::this_thread::sleep_for(std::chrono::milliseconds(1)); // Control game speed
     }
     //calcTree.printTree();
     simulator.render();
@@ -136,7 +136,7 @@ void deleteCrossMutate(Tree population[], int delInd, int par1Ind, int par2Ind) 
     mutate(population[delInd].root);
 
     // Calculate new fitness.
-    population[delInd].printTree();
+    //population[delInd].printTree();
     population[delInd].fitness = (calculateFitness(population[delInd], 1) + calculateFitness(population[delInd], 2)) / 2;
 }
 
