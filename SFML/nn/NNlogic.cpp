@@ -12,9 +12,9 @@
 #include "../LiberationSansFont.h"
 
 #define GENERATION_SIZE 100
-#define GENERATION_COUNT 150
+#define GENERATION_COUNT 250
 #define MUTATION_RATE 0.30
-#define MAX_MAP_DISTANCE 5000
+#define MAX_MAP_DISTANCE 7000
 
 //std::vector<std::string> Parameters::maps = { "Map1.txt", "Map2.txt", "Map3.txt", "Map4.txt", "Map5.txt" };
 
@@ -189,7 +189,7 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
     int evaluationNumber = 0;
 
     // definiranje strukture neuronske mreze
-    std::vector<int> layers = { 7, 5, 2 }; // npr. 7 input neurona, 5 hidden i 2 output
+    std::vector<int> layers = { 6, 5, 2 }; // npr. 6 input neurona, 5 hidden i 2 output
 
     sf::Font font;
     font.loadFromMemory(&LiberationSans_Regular_ttf, LiberationSans_Regular_ttf_len);
@@ -204,13 +204,13 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
     // evaluacija fitnessa
     for (auto& individual : population) {
         float totalDistance = 0.f;
-		for (auto& map : Parameters::maps) {
-			Simulator simulator(map);
-			Bird agent;
-			simulator.initialize(agent);
-			totalDistance += evaluateFitness(individual.nn, simulator, agent);
+        for (auto& map : Parameters::maps) {
+            Simulator simulator(map);
+            Bird agent;
+            simulator.initialize(agent);
+            totalDistance += evaluateFitness(individual.nn, simulator, agent);
             evaluationNumber++;
-		}
+        }
         individual.fitness = totalDistance / Parameters::maps.size();
     }
 
@@ -264,13 +264,13 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
 
         // printaj najboljeg
         std::cout << "Generation " << generation << " - Best Fitness: " << population[0].fitness << std::endl;
-		
+
         if (evaluationNumber >= Parameters::NUMBER_OF_EVALUATIONS && Parameters::NUMBER_OF_EVALUATIONS > 0) break;
         if (population[0].fitness >= MAX_MAP_DISTANCE) break;
     }
 
     // spremi najbolju jedinku nakon treniranja ako je bolja od trenutno najbolje spremljene
-	std::string filename = "best_neural_network.txt";
+    std::string filename = "best_neural_network.txt";
     NeuralNetwork debug = loadNeuralNetwork(filename);
     double totalDistance = 0.f;
     for (auto& map : Parameters::maps) {
@@ -280,7 +280,6 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
         totalDistance += evaluateFitness(debug, simulator, agent);
     }
     double loadedFitness = totalDistance / Parameters::maps.size();
-	std::cout << "Loaded fitness: " << loadedFitness << std::endl;
     if (loadedFitness < population[0].fitness) saveNeuralNetwork(population[0].nn, "best_neural_network.txt");
 
     return population[0].nn;
@@ -288,7 +287,7 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
 
 NeuralController* NNMain(sf::RenderWindow& window) {
     if (Parameters::action == BEST) {
-		return new NeuralController(loadNeuralNetwork("best_neural_network.txt"));
+        return new NeuralController(loadNeuralNetwork("best_neural_network.txt"));
     }
     else {
         return new NeuralController(NNlogic(window));

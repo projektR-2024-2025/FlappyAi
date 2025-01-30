@@ -81,8 +81,8 @@ public:
         input.push_back(obstacle_distance);
 		input.push_back(hole_start);
 		input.push_back(hole_end);
-        input.push_back(simulator.groundLevel);
-
+        //input.push_back(simulator.groundLevel);
+        
         // dobi outpute iz nn
         std::vector<double> output = nn.predict(input);
 
