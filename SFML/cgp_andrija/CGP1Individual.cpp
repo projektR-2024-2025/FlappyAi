@@ -8,6 +8,7 @@
 #include <omp.h>
 
 using namespace std;
+using namespace cgp_andrija;
 
 TYPE computeNode(int operand, TYPE value1, TYPE value2) {
     switch (operand) {

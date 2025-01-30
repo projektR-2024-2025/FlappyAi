@@ -13,6 +13,7 @@
 #include <sstream>
 
 using namespace std;
+using namespace cgp_andrija;
 
 vector<CGP1Individual> CGP1::generatePopulation(int rows, int columns, int levelsBack, int inputs, int outputs) {
     vector<CGP1Individual> population;
@@ -317,8 +318,6 @@ CGP1Individual CGP1::runCGP() {
         if (generacija != generations - 1)
             population = mutate(population[bestInd]);
     }
-
-    actualGens = generacija;
 
     try {
         ofstream outFile(bestFile);

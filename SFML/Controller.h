@@ -105,9 +105,9 @@ public:
 class CGP1Controller : public Controller
 {
 private:
-    CGP1Individual individual;
+    cgp_andrija::CGP1Individual individual;
 public:
-    CGP1Controller(const CGP1Individual& individual) : individual(individual) {}
+    CGP1Controller(const cgp_andrija::CGP1Individual& individual) : individual(individual) {}
 
     bool action(Bird& bird, Simulator& simulator)
     {

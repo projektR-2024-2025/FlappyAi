@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
             controller = GPMain(window);
             break;
         case CGP1:
-            controller = CGP1::CGPMain(window);
+            controller = cgp_andrija::CGP1::CGPMain(window);
             break;
         case MANUAL:
             controller = new Controller;

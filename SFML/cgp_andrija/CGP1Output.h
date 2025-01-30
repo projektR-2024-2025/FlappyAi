@@ -6,20 +6,36 @@
 
 #define TYPE double
 
-// struktura za opisivanje output noda
-struct CGP1Output {
-    int connection;
-    TYPE value;
+namespace cgp_andrija {
+    /**
+     * Struktura koja opisuje izlazne gene CGP jedinke.
+     */
+    struct CGP1Output {
+        /**
+         * Broj koji reprezentira na koji gen je spojen izlazni gen.
+         */
+        int connection;
+        /**
+         * Izlazna vrijednost gena nakon izracuna.
+         */
+        TYPE value;
 
-    friend std::ostream& operator<<(std::ostream& os, const CGP1Output& output) {
-        os << output.connection << " " << output.value;
-        return os;
-    }
+        /**
+         * Operator overloading za pisanje izlaznog gena u datoteku.
+         */
+        friend std::ostream& operator<<(std::ostream& os, const CGP1Output& output) {
+            os << output.connection << " " << output.value;
+            return os;
+        }
 
-    friend std::istream& operator>>(std::istream& is, CGP1Output& output) {
-        is >> output.connection >> output.value;
-        return is;
-    }
-};
+        /**
+         * Operator overloading za citanje izlaznog gena iz datoteke.
+         */
+        friend std::istream& operator>>(std::istream& is, CGP1Output& output) {
+            is >> output.connection >> output.value;
+            return is;
+        }
+    };
+}
 
 #endif // !NODE_H
