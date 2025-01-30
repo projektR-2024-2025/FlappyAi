@@ -260,7 +260,10 @@ NeuralNetwork NNlogic(sf::RenderWindow& window) {
 
         population = newPopulation;
 
-        trainingMenu(window, font, generation, GENERATION_COUNT, population[0].fitness, "NN", new NeuralController(population[0].nn));
+        if (Parameters::NUMBER_OF_EVALUATIONS > 0) {
+            trainingMenu(window, font, evaluationNumber, Parameters::NUMBER_OF_EVALUATIONS, population[0].fitness, "NN", new NeuralController(population[0].nn));
+        }
+        else trainingMenu(window, font, generation, GENERATION_COUNT, population[0].fitness, "NN", new NeuralController(population[0].nn));
 
         // printaj najboljeg
         std::cout << "Generation " << generation << " - Best Fitness: " << population[0].fitness << std::endl;
