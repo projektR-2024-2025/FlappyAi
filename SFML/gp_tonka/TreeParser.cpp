@@ -15,7 +15,7 @@ FunctionBinaryTree TreeParser::fromString(const string& str, int dimension) {
     return tree;
 }
 
-tonka::Node* TreeParser::parseExpression(const string& str, size_t& pos) {
+tonka::NodeT* TreeParser::parseExpression(const string& str, size_t& pos) {
     // Skip whitespace
     while (pos < str.length() && isspace(str[pos])) pos++;
     
@@ -26,11 +26,11 @@ tonka::Node* TreeParser::parseExpression(const string& str, size_t& pos) {
         pos++; // Skip '('
         
         // Parse left expression
-        tonka::Node* left = parseExpression(str, pos);
+        tonka::NodeT* left = parseExpression(str, pos);
         
         // Get operator
         string op = parseToken(str, pos);
-        tonka::Node* node = new tonka::Node(op, 1); // Type 1 for binary operator
+        tonka::NodeT* node = new tonka::NodeT(op, 1); // Type 1 for binary operator
         node->left = left;
         
         // Parse right expression
@@ -46,7 +46,7 @@ tonka::Node* TreeParser::parseExpression(const string& str, size_t& pos) {
     // Handle functions (e.g., sin(x))
     string token = parseToken(str, pos);
     if (find(functions0.begin(), functions0.end(), token) != functions0.end()) {
-        tonka::Node* node = new tonka::Node(token, 0); // Type 0 for unary function
+        tonka::NodeT* node = new tonka::NodeT(token, 0); // Type 0 for unary function
         
         // Skip opening parenthesis
         while (pos < str.length() && str[pos] != '(') pos++;
@@ -65,13 +65,13 @@ tonka::Node* TreeParser::parseExpression(const string& str, size_t& pos) {
     // Handle variables (x0, x1, etc.)
     if (token[0] == 'x') {
         string index = token.substr(1); // Remove 'x' prefix
-        return new tonka::Node(index, 3); // Type 3 for variable
+        return new tonka::NodeT(index, 3); // Type 3 for variable
     }
     
     // Handle constants
     try {
         stof(token); // Verify it's a valid float
-        return new tonka::Node(token, 2); // Type 2 for constant
+        return new tonka::NodeT(token, 2); // Type 2 for constant
     } catch (...) {
         throw runtime_error("Invalid token: " + token);
     }

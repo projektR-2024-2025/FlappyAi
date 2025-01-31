@@ -12,6 +12,7 @@
 #include <fstream>
 #include <random>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 Population::Population() {

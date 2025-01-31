@@ -58,7 +58,8 @@ elseif(WIN32)
 	add_executable(FlappyAI WIN32
 		cgp_andrija/CGP1.cpp cgp_andrija/CGP1Individual.cpp nn/NNlogic.cpp nn/NeuralNetwork.cpp
 		Parameters.cpp SelectionScreen.cpp Simulator.cpp main.cpp
-		gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp gp_tonka/TreeParser.cpp)
+		gp_tonka/FunctionBinaryTree.cpp gp_tonka/GA.cpp gp_tonka/TreeParser.cpp
+		cgp_nikla/Entity.cpp cgp_nikla/Gene.cpp cgp_nikla/Population.cpp)
 
 	# Copy the config.txt file to the build directory
 	configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)
@@ -92,6 +93,9 @@ else()
         gp_tonka/FunctionBinaryTree.cpp 
         gp_tonka/GA.cpp 
         gp_tonka/TreeParser.cpp
+		cgp_nikla/Entity.cpp
+		cgp_nikla/Gene.cpp
+		cgp_nikla/Population.cpp
     )
 
     configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)

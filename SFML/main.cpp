@@ -11,7 +11,6 @@
 #include "SelectionScreen.h"  // Include the selection screen header
 #include "cgp_nikla/mainFunctionsHeader.h"
 #include "./nn/NNlogic.h"
-#include "cgp_nikla/mainFunctionsHeader.h"
 #include "cgp_andrija/CGP1.h"
 #include "gp_tonka/GA.h"
 #include "ConfigParser.h"
