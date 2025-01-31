@@ -270,7 +270,13 @@ FunctionBinaryTree ga(int dim, int vel, int max_dubina, int max_ev, sf::RenderWi
         //      <<" avgrep=" <<F.size()/(float)M.size()
         //      <<"\n";
 
-        trainingMenu(window, font, br_ev, max_ev, najbolja.fit, "GP", new GPcontroller(najbolja));
+        if (Parameters::NUMBER_OF_EVALUATIONS > 0 && br_ev * Parameters::maps.size() > Parameters::NUMBER_OF_EVALUATIONS)
+            break;
+
+        if (Parameters::NUMBER_OF_EVALUATIONS > 0)
+            trainingMenu(window, font, br_ev * Parameters::maps.size(), Parameters::NUMBER_OF_EVALUATIONS, najbolja.fit, "GP", new GPcontroller(najbolja));
+        else
+            trainingMenu(window, font, br_ev, max_ev, najbolja.fit, "GP", new GPcontroller(najbolja));
 
         cout <<"evaluacija: " <<br_ev <<" najbolja: "<< najbolja.toString() <<" fit: " <<najbolja.fit <<endl <<endl ;
     }

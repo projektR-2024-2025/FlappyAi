@@ -46,11 +46,16 @@ if(APPLE)
     )
 elseif(WIN32)
 	# Windows configuration
-    cmake_minimum_required(VERSION 3.5.0)
+    	cmake_minimum_required(VERSION 3.5.0)
 	project(FlappyAI VERSION 0.1.0 LANGUAGES C CXX)
+
+	if(NOT CMAKE_BUILD_TYPE)
+	  set(CMAKE_BUILD_TYPE Release)
+	endif()
 
 	set(SFML_STATIC_LIBRARIES TRUE)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -fopenmp")
+	set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 	find_package(OpenMP REQUIRED)
 	find_package(SFML 2.5.1 COMPONENTS graphics REQUIRED)
@@ -93,9 +98,9 @@ else()
         gp_tonka/FunctionBinaryTree.cpp 
         gp_tonka/GA.cpp 
         gp_tonka/TreeParser.cpp
-		cgp_nikla/Entity.cpp
-		cgp_nikla/Gene.cpp
-		cgp_nikla/Population.cpp
+	cgp_nikla/Entity.cpp
+	cgp_nikla/Gene.cpp
+	cgp_nikla/Population.cpp
     )
 
     configure_file(Map1.txt ${CMAKE_BINARY_DIR}/Map1.txt COPYONLY)
