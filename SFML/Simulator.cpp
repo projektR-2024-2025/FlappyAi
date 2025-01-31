@@ -9,6 +9,7 @@
 
 Simulator::Simulator() : running(true)
 {}
+Simulator::~Simulator(){}
 
 Simulator::Simulator(sf::RenderWindow* window) : running(true), window(window)
 {}
@@ -215,7 +216,7 @@ void Simulator::initializeMap(Bird& bird)
 
         // Check if the file opened successfully
         if (!file.is_open()) {
-            std::cerr << "Error opening file!" << std::endl;
+            std::cerr << "Error opening file!(Simulator.cpp)" << std::endl;
             return;
         }
 

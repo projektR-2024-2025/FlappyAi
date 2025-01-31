@@ -3,9 +3,12 @@
 #include "Simulator.h"
 #include "Parameters.h"
 #include "./nn/NeuralNetwork.h"
+#include "cgp_nikla/Entity.h"
 #include "cgp_andrija/CGP1Individual.h"
 #include <cmath>
 #include "./gp_tonka/FunctionBinaryTree.h"
+
+using namespace std;
 
 class Controller
 {
@@ -82,7 +85,6 @@ public:
 		input.push_back(hole_start);
 		input.push_back(hole_end);
         //input.push_back(simulator.groundLevel);
-        
         // dobi outpute iz nn
         std::vector<double> output = nn.predict(input);
 
@@ -99,6 +101,59 @@ public:
             agent.isJumping = false;
         }
         return agent.isJumping;*/
+    }
+};
+
+class CGPController2 : public Controller {
+private:
+    Entity entity;
+
+public:
+
+    CGPController2(const Entity& entity) : entity(entity) {}
+
+    CGPController2(const Entity& learnedEntity, ActionType selectedAction) {
+        if(selectedAction == TRAIN) {
+            this->entity = learnedEntity;
+
+        }else if(selectedAction == BEST) {
+
+            string bestEntityFilePath = "/Users/nikson/Documents/GitHub/FlappyAi/BestEntityFile.txt";
+            this->entity = this->entity.stringToEntity(bestEntityFilePath);
+
+            cout << this->entity.toString()<<"\n";
+
+
+        }else {
+            cout << "Answer unvalid";
+        }
+    }
+
+    bool action(Bird& agent, Simulator& simulator)
+    {
+        vector<double> input(Constants::AMOUNT_OF_CGP_INPUTS);
+
+        bool obstacleAhead = false;
+        for (const auto& pipe : simulator.pipes)
+            if (pipe.x > 30 && pipe.x < 250) {
+                if (agent.position + Parameters::BIRD_SIZE > pipe.bottomY) {
+                    obstacleAhead = 1;
+                }
+                break;
+            }
+
+        input[0] = obstacleAhead ? 1.0 : 0.0;
+        input[1] = agent.position;
+        input[2] = agent.velocity;
+        input[3] = simulator.groundLevel;
+
+        double output = entity.entityFunction(input);
+
+        if(output > Constants::DO_I_JUMP) {
+            agent.velocity = Parameters::JUMP_SPEED;
+            return true;
+        }
+        return false;
     }
 };
 

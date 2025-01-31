@@ -5,12 +5,13 @@
 #include <vector>
 #include <cstdlib> 
 #include <ctime>
-
 #include "Simulator.h"
 #include "Agent.h"
 #include "Controller.h"
 #include "SelectionScreen.h"  // Include the selection screen header
+#include "cgp_nikla/mainFunctionsHeader.h"
 #include "./nn/NNlogic.h"
+#include "cgp_nikla/mainFunctionsHeader.h"
 #include "cgp_andrija/CGP1.h"
 #include "gp_tonka/GA.h"
 #include "ConfigParser.h"
@@ -24,7 +25,6 @@ int main(int argc, char** argv) {
 
     sf::RenderWindow window(sf::VideoMode(Parameters::WINDOW_WIDTH, Parameters::WINDOW_HEIGHT), "Flappy AI");
     window.setFramerateLimit(Parameters::FRAME_RATE);
-
     
     while (window.isOpen()) {
         if (menu(window) == -1)
@@ -44,6 +44,9 @@ int main(int argc, char** argv) {
         case CGP1:
             controller = cgp_andrija::CGP1::CGPMain(window);
             break;
+        case CGP2:
+            controller = new CGPController2(runCgp(Parameters::action, window), Parameters::action);
+            break;
         case MANUAL:
             controller = new Controller;
             break;
@@ -60,6 +63,7 @@ int main(int argc, char** argv) {
         simulator.initialize(agent);
 
         // Main game loop
+
         while (simulator.isRunning()) {
             simulator.update(agent);
             controller->action(agent, simulator);
@@ -67,5 +71,5 @@ int main(int argc, char** argv) {
 
         delete controller;
     }
-    return 0;
+	return 0;
 }

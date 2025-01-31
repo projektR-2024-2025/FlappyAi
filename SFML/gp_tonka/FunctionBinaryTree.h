@@ -11,15 +11,15 @@ int myrand();
 using namespace std;
 
 namespace tonka{
-class Node {
+class NodeT {
 public:
     string value;
     int type; // 0 - funkcija s jednim argumentom, 1 - funkcija s 2 argumenta, 2 - konstanta, 3 - varijabla
-    Node* left;
-    Node* right;
+    NodeT* left;
+    NodeT* right;
 
-    Node(string val, int typ);
-    Node* copy() ; 
+    NodeT(string val, int typ);
+    NodeT* copy() ;
 };
 }
 
@@ -27,7 +27,7 @@ public:
 class FunctionBinaryTree {
 public:
     // Deklaracije funkcija i članova
-    tonka::Node* root;
+    tonka::NodeT* root;
     int dim;
     float fit ;
     vector<string> variable_names ={};
@@ -36,16 +36,16 @@ public:
     FunctionBinaryTree(int max_dubina, int dimenzija);
     
     void printTree();
-    void printTree(tonka::Node* node) ;
+    void printTree(tonka::NodeT* node) ;
     string toString() ;
-    string toString(tonka::Node* node) ;
+    string toString(tonka::NodeT* node) ;
     float izracunaj(vector<float> ulaz);
-    tonka::Node* createRandomNode(int max_dubina, int dubina);
+    tonka::NodeT* createRandomNode(int max_dubina, int dubina);
     string generateRandomValue(int type);
-    float izracunajR(tonka::Node* node, vector<float> ulaz);
-    int countNodes(tonka::Node* node) ;
+    float izracunajR(tonka::NodeT* node, vector<float> ulaz);
+    int countNodes(tonka::NodeT* node) ;
     bool operator==(const FunctionBinaryTree other) ;
-    bool areNodesEqual(tonka::Node* node, tonka::Node* other) ;
+    bool areNodesEqual(tonka::NodeT* node, tonka::NodeT* other) ;
     void fitness() ;
     
 };

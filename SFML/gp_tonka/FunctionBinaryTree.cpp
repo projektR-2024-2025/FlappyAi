@@ -76,7 +76,7 @@ float funkcija1(string fja, float x, float y){
 }
 
 
-tonka::Node::Node(string val, int typ) : 
+tonka::NodeT::NodeT(string val, int typ) :
   value(val), type(typ), left(nullptr), right(nullptr) 
 {}
 
@@ -90,7 +90,7 @@ FunctionBinaryTree::FunctionBinaryTree(int max_dubina, int dimenzija){
     root = createRandomNode(max_dubina, 0);
 }
     
-tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
+tonka::NodeT* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
     int type;
     string value ;
     if (dubina < max_dubina) {
@@ -114,7 +114,7 @@ tonka::Node* FunctionBinaryTree::createRandomNode(int max_dubina, int dubina) {
     else{
         value = generateRandomValue(type);
     }
-    tonka::Node* node = new tonka::Node(value, type);
+    tonka::NodeT* node = new tonka::NodeT(value, type);
 
     if (type == 0 && dubina < max_dubina) { // funkcija jedan argument
         node->left = createRandomNode(max_dubina, dubina + 1); //dodaje se lijevo, desno ostaje null
@@ -136,7 +136,7 @@ string FunctionBinaryTree::generateRandomValue(int type) {
     return "greska" ;     
 }
 
-void FunctionBinaryTree::printTree(tonka::Node* node) {
+void FunctionBinaryTree::printTree(tonka::NodeT* node) {
     if (node == nullptr) return;
     if(node->type == 3){
         cout << "x" + node->value <<" " ;
@@ -156,7 +156,7 @@ void FunctionBinaryTree::printTree() {
 float FunctionBinaryTree::izracunaj(vector<float> ulaz){
         return (izracunajR(root, ulaz)) ;
     }
-float FunctionBinaryTree::izracunajR(tonka::Node *node, vector<float> ulaz){
+float FunctionBinaryTree::izracunajR(tonka::NodeT *node, vector<float> ulaz){
         if(node->type == 2){ //konstanta
             return stof(node->value) ;
         }
@@ -175,7 +175,7 @@ float FunctionBinaryTree::izracunajR(tonka::Node *node, vector<float> ulaz){
         }
         throw(invalid_argument("nepostojeci tip" + node->value)) ;
     }
-string FunctionBinaryTree::toString(tonka::Node* node) {
+string FunctionBinaryTree::toString(tonka::NodeT* node) {
     if (!node) return "";
 
     // konst
@@ -203,7 +203,7 @@ string FunctionBinaryTree::toString(tonka::Node* node) {
 string FunctionBinaryTree::toString() {
     return toString(root);
 }
-int FunctionBinaryTree::countNodes(tonka::Node* node) { 
+int FunctionBinaryTree::countNodes(tonka::NodeT* node) {
     if (node == nullptr) return 0;
     return 1 + countNodes(node->left) + countNodes(node->right);
 }
@@ -211,15 +211,15 @@ bool FunctionBinaryTree::operator==(const FunctionBinaryTree other){
     return areNodesEqual(this->root, other.root);
 }
 
-bool FunctionBinaryTree::areNodesEqual(tonka::Node* node1, tonka::Node* node2){
+bool FunctionBinaryTree::areNodesEqual(tonka::NodeT* node1, tonka::NodeT* node2){
     if (node1 == nullptr && node2 == nullptr) return true;
     if (node1 == nullptr || node2 == nullptr) return false;    
     if (node1->type != node2->type || node1->value != node2->value) return false;
     return areNodesEqual(node1->left, node2->left) && areNodesEqual(node1->right, node2->right);
 }
 
-tonka::Node* tonka::Node::copy()  {
-    tonka::Node* newNode = new tonka::Node(value, type); // Create a new node with the current node's value and type
+tonka::NodeT* tonka::NodeT::copy()  {
+    tonka::NodeT* newNode = new tonka::NodeT(value, type); // Create a new node with the current node's value and type
     if (left) {
         newNode->left = left->copy(); // Recursively copy the left child
     }
@@ -255,4 +255,3 @@ void FunctionBinaryTree::fitness(){
     }
     this->fit = fit /  Parameters::maps.size();
 }
-
