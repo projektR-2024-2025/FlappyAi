@@ -3,9 +3,12 @@
 #include "Simulator.h"
 #include "Parameters.h"
 #include "./nn/NeuralNetwork.h"
+#include "cgp_nikla/Entity.h"
 #include "cgp_andrija/CGP1Individual.h"
 #include <cmath>
 #include "./gp_tonka/FunctionBinaryTree.h"
+
+using namespace std;
 
 class Controller
 {

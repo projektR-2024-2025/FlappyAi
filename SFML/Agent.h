@@ -1,7 +1,6 @@
 #ifndef AGENT_H
 #define AGENT_H
 
-
 class Bird {
 public:
     float position; // y pozicija u pikselima
